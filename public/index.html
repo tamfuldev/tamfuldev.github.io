@@ -6,29 +6,26 @@
 	<link rel="icon" href="./assets/img/fac.ico" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<meta name="theme-color" content="#000000" />
-	<meta name="description" content="Tr Ng Tam" />
+	<meta name="description" content="Tam Saitama" />
 	<link rel="apple-touch-icon" href="./assets/img/logo.png" />
 	<link rel="shortcut icon" href="./assets/img/fac.ico" type="image/x-icon">
 	<link rel="icon" href="./assets/img/logo.png" sizes="any" type="image/svg+xml">
-
 	<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,800&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="assets/css/style.css">
-	<link rel="stylesheet" href="assets/css/preview.css">
-	<title>Tam Saitama | FullStack</title>
+	<title>Tam Saitama — FullStack</title>
 </head>
 
-<body class="with-header position-relative" data-spy="scroll" data-target="#sections-nav" data-offset="80">
+<body>
 	<div id="root"></div>
 </body>
 <script>
-	// Bootstrap form validation example
 	(function() {
 		'use strict';
 		window.addEventListener('load', function() {
 			var forms = document.getElementsByClassName('needs-validation');
 			var validation = Array.prototype.filter.call(forms, function(form) {
 				form.addEventListener('submit', function(event) {
-					if (form.checkValidity() === false) {
+					if (form.checkValidity() === true) {
 						event.preventDefault();
 						event.stopPropagation();
 					}
@@ -38,5 +35,4 @@
 		}, false);
 	})();
 </script>
-
 </html>
