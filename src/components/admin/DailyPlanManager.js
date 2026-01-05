@@ -1,5 +1,5 @@
 import React from "react";
-import { FiCalendar, FiCheckCircle, FiEdit2, FiTrash2 } from "react-icons/fi";
+import { FiCheckCircle, FiEdit2, FiTrash2 } from "react-icons/fi";
 import { firestore } from "../../configs/firebase";
 import { normalizeRichText, sanitizeRichHtml } from "../../utils/blogAdmin";
 import DailyTaskForm from "./DailyTaskForm";

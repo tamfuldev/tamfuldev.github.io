@@ -4,7 +4,7 @@ import Base from './pages/Base';
 
 import Loader from './components/Loader';
 import { LanguageProvider } from './components/LanguageContext';
-import { isAdminUser } from './utils/adminAccess';
+import { hasAdminClaim } from './utils/adminAccess';
 
 const Admin = React.lazy(() => import('./pages/Admin'));
 const AdminDailyPlan = React.lazy(() => import('./pages/AdminDailyPlan'));
@@ -16,6 +16,7 @@ const NotFound = React.lazy(() => import('./components/NotFound'));
 
 function App() {
   const [user, setUser] = React.useState(null);
+  const [isAdmin, setIsAdmin] = React.useState(false);
   const [loading, setLoading] = React.useState(true);
 
   React.useEffect(() => {
@@ -30,9 +31,28 @@ function App() {
         return;
       }
 
-      unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
+        if (!mounted) {
+          return;
+        }
+
         setUser(currentUser);
-        setLoading(false);
+
+        if (!currentUser) {
+          setIsAdmin(false);
+          setLoading(false);
+          return;
+        }
+
+        try {
+          setIsAdmin(await hasAdminClaim(currentUser));
+        } catch {
+          setIsAdmin(false);
+        } finally {
+          if (mounted) {
+            setLoading(false);
+          }
+        }
       });
     }).catch(() => {
       if (mounted) {
@@ -55,8 +75,6 @@ function App() {
       document.body.classList.remove('light');
     }
   }, []);
-
-  const isAdmin = isAdminUser(user);
 
   const ProtectedRoute = ({ adminOnly = true, children }) => {
     if (loading) {

@@ -1,23 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-github-pages-fallback="true">
 
 <head>
     <meta charset="utf-8" />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; form-action 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com data:; img-src 'self' https: data: blob:; connect-src 'self' http://localhost:* ws://localhost:* https://api.binance.com https://api.coingecko.com https://*.googleapis.com https://*.firebaseio.com https://*.firebaseapp.com https://*.gstatic.com https://*.google.com; upgrade-insecure-requests" />
     <title>Redirecting...</title>
-    <script>
-        (function () {
-            var redirect = sessionStorage.redirect;
-            delete sessionStorage.redirect;
-
-            if (redirect && redirect !== location.href) {
-                history.replaceState(null, null, redirect);
-                return;
-            }
-
-            sessionStorage.redirect = location.href;
-            location.replace(location.origin + "/");
-        })();
-    </script>
+    <script src="/assets/js/github-pages-redirect.js"></script>
 </head>
 
 <body>

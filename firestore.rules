@@ -2,45 +2,108 @@ rules_version = '2';
 
 service cloud.firestore {
   match /databases/{database}/documents {
-    function isAdmin() {
-      return request.auth != null
-        && request.auth.token.email in ["admin@gmail.com"];
-    }
-
     function isSignedIn() {
       return request.auth != null;
     }
 
+    function isAdmin() {
+      return isSignedIn() && request.auth.token.admin == true;
+    }
+
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    function blogRef(blogId) {
+      return /databases/$(database)/documents/blogs/$(blogId);
+    }
+
+    function isPublishedBlog(blogId) {
+      return exists(blogRef(blogId)) && get(blogRef(blogId)).data.status == "published";
+    }
+
+    function currentViews() {
+      return resource.data.views is number ? resource.data.views : 0;
+    }
+
+    function isPublicViewUpdate() {
+      return resource.data.status == "published"
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(["views", "lastViewedAt"])
+        && request.resource.data.views == currentViews() + 1
+        && request.resource.data.lastViewedAt == request.time;
+    }
+
+    function validComment() {
+      return request.resource.data.keys().hasOnly([
+          "body",
+          "createdAt",
+          "uid",
+          "userEmail",
+          "userName"
+        ])
+        && request.resource.data.body is string
+        && request.resource.data.body.size() > 0
+        && request.resource.data.body.size() <= 1000
+        && request.resource.data.uid == request.auth.uid
+        && request.resource.data.userEmail is string
+        && request.resource.data.userEmail == request.auth.token.email
+        && request.resource.data.userEmail.size() <= 254
+        && request.resource.data.userName is string
+        && request.resource.data.userName.size() <= 120
+        && request.resource.data.createdAt == request.time;
+    }
+
+    function validReaction() {
+      return request.resource.data.keys().hasOnly([
+          "reaction",
+          "uid",
+          "updatedAt",
+          "userEmail",
+          "userName"
+        ])
+        && request.resource.data.reaction in ["like", "fire", "love", "clap", "think"]
+        && request.resource.data.uid == request.auth.uid
+        && request.resource.data.userEmail is string
+        && request.resource.data.userEmail == request.auth.token.email
+        && request.resource.data.userEmail.size() <= 254
+        && request.resource.data.userName is string
+        && request.resource.data.userName.size() <= 120
+        && request.resource.data.updatedAt == request.time;
+    }
+
     match /blogs/{blogId} {
       allow read: if resource.data.status == "published" || isAdmin();
-      allow write: if isAdmin();
+      allow create, delete: if isAdmin();
+      allow update: if isAdmin() || isPublicViewUpdate();
 
       match /comments/{commentId} {
-        allow read: if true;
-        allow create: if isSignedIn()
-          && request.resource.data.uid == request.auth.uid;
-        allow update, delete: if isAdmin()
-          || (isSignedIn() && resource.data.uid == request.auth.uid);
+        allow read: if isPublishedBlog(blogId) || isAdmin();
+        allow create: if isSignedIn() && isPublishedBlog(blogId) && validComment();
+        allow update: if isAdmin();
+        allow delete: if isAdmin() || isOwner(resource.data.uid);
       }
 
       match /reactions/{reactionId} {
-        allow read: if true;
+        allow read: if isPublishedBlog(blogId) || isAdmin();
         allow create, update: if isSignedIn()
+          && isPublishedBlog(blogId)
           && reactionId == request.auth.uid
-          && request.resource.data.uid == request.auth.uid;
-        allow delete: if isAdmin()
-          || (isSignedIn() && reactionId == request.auth.uid);
+          && validReaction();
+        allow delete: if isAdmin() || (isSignedIn() && reactionId == request.auth.uid);
       }
     }
 
-    match /roadmap/{document=**} {
-      allow read: if isAdmin();
+    match /icons/{iconId} {
+      allow read: if true;
       allow write: if isAdmin();
     }
 
+    match /roadmap/{document=**} {
+      allow read, write: if isAdmin();
+    }
+
     match /dailyPlan/{document=**} {
-      allow read: if isAdmin();
-      allow write: if isAdmin();
+      allow read, write: if isAdmin();
     }
 
     match /projects/{document=**} {
@@ -49,8 +112,7 @@ service cloud.firestore {
     }
 
     match /users/{userId}/{document=**} {
-      allow read, write: if request.auth != null
-        && request.auth.uid == userId;
+      allow read, write: if isOwner(userId);
     }
 
     match /{document=**} {

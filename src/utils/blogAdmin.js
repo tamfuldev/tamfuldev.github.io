@@ -1,3 +1,5 @@
+import DOMPurify from "dompurify";
+
 export const emptyBlogForm = {
     title: "",
     titleVi: "",
@@ -80,15 +82,61 @@ export const hasHtmlContent = (value = "") => /<\/?[a-z][\s\S]*>/i.test(String(v
 
 const hasImageContent = (value = "") => /<img\b[^>]*\bsrc=(["'])[^"']+\1[^>]*>/i.test(String(value || ""));
 
-export const sanitizeRichHtml = (value = "") =>
-    String(value || "")
-        .replace(/<script[\s\S]*?>[\s\S]*?<\/script>/gi, "")
-        .replace(/<style[\s\S]*?>[\s\S]*?<\/style>/gi, "")
-        .replace(/\son\w+="[^"]*"/gi, "")
-        .replace(/\son\w+='[^']*'/gi, "")
-        .replace(/\son\w+=\S+/gi, "")
-        .replace(/href=(["'])\s*javascript:[\s\S]*?\1/gi, "href=\"#\"")
-        .replace(/\ssrc=(["'])\s*(?!https?:\/\/|data:image\/(?:png|jpe?g|gif|webp);base64,)[^"']*\1/gi, "");
+const richHtmlSanitizeConfig = {
+    ALLOWED_TAGS: [
+        "a",
+        "b",
+        "blockquote",
+        "br",
+        "code",
+        "em",
+        "h2",
+        "h3",
+        "i",
+        "img",
+        "li",
+        "ol",
+        "p",
+        "pre",
+        "s",
+        "span",
+        "strong",
+        "u",
+        "ul",
+    ],
+    ALLOWED_ATTR: [
+        "alt",
+        "class",
+        "height",
+        "href",
+        "rel",
+        "src",
+        "target",
+        "title",
+        "width",
+    ],
+    ADD_ATTR: ["target"],
+    ALLOW_DATA_ATTR: false,
+    ALLOWED_URI_REGEXP: /^(?:(?:https?|mailto|tel):|data:image\/(?:png|jpe?g|gif|webp);base64,)/i,
+    FORBID_TAGS: ["button", "embed", "form", "iframe", "input", "link", "meta", "object", "script", "style"],
+};
+
+const enforceSafeLinks = (html) => {
+    const template = document.createElement("template");
+    template.innerHTML = html;
+
+    template.content.querySelectorAll("a[target=\"_blank\"]").forEach((link) => {
+        link.setAttribute("rel", "noopener noreferrer");
+    });
+
+    return template.innerHTML;
+};
+
+export const sanitizeRichHtml = (value = "") => {
+    const sanitized = DOMPurify.sanitize(String(value || ""), richHtmlSanitizeConfig);
+
+    return enforceSafeLinks(sanitized);
+};
 
 export const normalizeRichText = (value = "") => {
     const content = sanitizeRichHtml(value).trim();

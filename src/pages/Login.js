@@ -1,9 +1,9 @@
 import React from 'react';
-import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
 import { auth } from '../configs/firebase';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import "../styles/admin.css";
+import { hasAdminClaim } from '../utils/adminAccess';
 
 const Login = () => {
     const [email, setEmail] = React.useState('');
@@ -15,21 +15,15 @@ const Login = () => {
         e.preventDefault();
         setError(null);
         try {
-            await auth.signInWithEmailAndPassword(email, password);
+            const credential = await auth.signInWithEmailAndPassword(email, password);
+            const isAdmin = await hasAdminClaim(credential.user);
+
+            if (!isAdmin) {
+                await auth.signOut();
+                throw new Error("This account is signed in, but it does not have admin access.");
+            }
+
             navigate('/admin');
-        } catch (err) {
-            setError(err.message);
-        }
-    };
-
-    const handleGoogleLogin = async () => {
-        setError(null);
-
-        try {
-            const provider = new firebase.auth.GoogleAuthProvider();
-
-            await auth.signInWithPopup(provider);
-            navigate('/admin/expense');
         } catch (err) {
             setError(err.message);
         }

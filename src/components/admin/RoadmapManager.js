@@ -1,7 +1,7 @@
 import React from "react";
-import { FiLayers, FiPlus, FiSave, FiX } from "react-icons/fi";
-import ReactQuill from "react-quill";
-import "react-quill/dist/quill.snow.css";
+import { FiPlus, FiSave, FiX } from "react-icons/fi";
+import ReactQuill from "react-quill-new";
+import "react-quill-new/dist/quill.snow.css";
 import { firestore } from "../../configs/firebase";
 import { normalizeRichText } from "../../utils/blogAdmin";
 import { quillFormats, quillModules } from "./quillConfig";

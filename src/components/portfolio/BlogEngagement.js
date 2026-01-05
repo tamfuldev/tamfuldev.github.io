@@ -148,6 +148,11 @@ const BlogEngagement = ({ blogId, language = "en" }) => {
             return;
         }
 
+        if (!user.email) {
+            setAuthError("Email account is required.");
+            return;
+        }
+
         setSavingReaction(reactionId);
         setAuthError("");
 
@@ -181,6 +186,16 @@ const BlogEngagement = ({ blogId, language = "en" }) => {
         }
 
         if (!comment.trim()) {
+            return;
+        }
+
+        if (!user.email) {
+            setAuthError("Email account is required.");
+            return;
+        }
+
+        if (comment.trim().length > 1000) {
+            setAuthError("Comment is too long.");
             return;
         }
 
@@ -252,6 +267,7 @@ const BlogEngagement = ({ blogId, language = "en" }) => {
                                 value={displayName}
                                 onChange={(event) => setDisplayName(event.target.value)}
                                 placeholder={text.displayName}
+                                maxLength={120}
                             />
                         )}
 
@@ -260,6 +276,7 @@ const BlogEngagement = ({ blogId, language = "en" }) => {
                             value={email}
                             onChange={(event) => setEmail(event.target.value)}
                             placeholder={text.email}
+                            maxLength={254}
                             required
                         />
                         <input
@@ -296,6 +313,7 @@ const BlogEngagement = ({ blogId, language = "en" }) => {
                             value={comment}
                             onChange={(event) => setComment(event.target.value)}
                             placeholder={text.commentPlaceholder}
+                            maxLength={1000}
                             rows="4"
                         />
                         <button type="submit" disabled={savingComment || !comment.trim()}>

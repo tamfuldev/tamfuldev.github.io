@@ -3,8 +3,8 @@ import { FiEdit2, FiExternalLink, FiSave, FiTrash2, FiX } from "react-icons/fi";
 import { auth, firestore } from "../../configs/firebase";
 import { hasHtmlContent, normalizeRichText, sanitizeRichHtml, stripHtml } from "../../utils/blogAdmin";
 import { quillFormats, quillModules } from "./quillConfig";
-import ReactQuill from "react-quill";
-import "react-quill/dist/quill.snow.css";
+import ReactQuill from "react-quill-new";
+import "react-quill-new/dist/quill.snow.css";
 
 const PROJECT_COLLECTION = "projects";
 

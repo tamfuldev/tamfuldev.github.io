@@ -9,7 +9,6 @@ import {
     FiLogOut,
     FiMap,
     FiPlus,
-    FiShield,
 } from "react-icons/fi";
 import { Link, NavLink } from "react-router-dom";
 
