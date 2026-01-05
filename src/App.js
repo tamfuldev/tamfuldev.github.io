@@ -9,6 +9,7 @@ import { onAuthStateChanged } from 'firebase/auth';
 import { Blog, CreateBlog } from './pages/Blog';
 import NotFound from './components/NotFound';
 import Loader from './components/Loader';
+import { LanguageProvider } from './components/LanguageContext';
 
 
 function App() {
@@ -45,10 +46,16 @@ function App() {
   };
 
   return (
-    <React.Suspense>
+    <LanguageProvider>
       <Router>
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={
+            <>
+              <Loader delay={400}/>
+              <Home />
+            </>
+          }
+          />
           <Route path="/login" element={<Login />} />
           <Route path="/admin"
             element={
@@ -75,10 +82,16 @@ function App() {
           <Route path="/" element={<Navigate to="/admin" />} />
           <Route path="/admin/blog" element={<Blog to="/admin/blog" />} />
           <Route path="/admin/blog/create" element={<CreateBlog to="/admin/blog/create" />} />
-          <Route path="*" element={<NotFound />} />
+          <Route path="*" element={
+            <>
+              <Loader delay={200} />
+              <NotFound />
+            </>
+          }
+          />
         </Routes>
       </Router>
-    </React.Suspense>
+    </LanguageProvider>
   );
 }
 

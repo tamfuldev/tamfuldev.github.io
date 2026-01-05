@@ -1,7 +1,7 @@
 import React from 'react';
 
-const Loader = () => {
-    const [loadingProgress, setLoadingProgress] = React.useState(0);
+const Loader = ({ delay = 300 }) => {
+    const [loadingProgress, setLoadingProgress] = React.useState(false);
 
     React.useEffect(() => {
         const interval = setInterval(() => {
@@ -12,9 +12,9 @@ const Loader = () => {
                 }
                 return prev + 10;
             });
-        }, 300);
+        }, delay);
         return () => clearInterval(interval);
-    }, []);
+    }, [delay]);
 
     return (
         <div id="loader" className={loadingProgress >= 100 ? 'hidden' : ''}>
@@ -23,9 +23,9 @@ const Loader = () => {
                 <span className="loader-dot">.</span>
             </div>
             <div className="loader-bar">
-                <div className="loader-progress"></div>
+                <div className="progress-fill"></div>
             </div>
-            <div className="loader-status" data-en="INITIALIZING SECURITY SYSTEMS..." data-vi="Khởi tạo hệ thống bảo mật...">INITIALIZING SECURITY SYSTEMS...</div>
+            <div className="loader-status" data-en="OPEN SESAME..." data-vi="VỪNG ƠI, MỞ RA...">OPEN SESAME...</div>
         </div>
     );
 }

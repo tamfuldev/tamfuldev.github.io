@@ -1,6 +1,8 @@
 import React from 'react';
 
-const Translate = () => {
+const LanguageContext = React.createContext();
+
+export const LanguageProvider = ({ children }) => {
     const [language, setLanguage] = React.useState(() => {
         return localStorage.getItem("language") || "en";
     });
@@ -26,10 +28,11 @@ const Translate = () => {
     };
 
     return (
-        <button id="langToggle" className="control-btn" aria-label="Toggle language" onClick={toggleLanguage}>
-            <span className="lang-label">{language.toUpperCase()}</span>
-        </button>
+        <LanguageContext.Provider value={{ language, toggleLanguage }}>
+            {children}
+        </LanguageContext.Provider>
     );
 }
 
-export default Translate;
+export const useLanguage = () => React.useContext(LanguageContext);
+

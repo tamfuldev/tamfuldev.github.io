@@ -1,4 +1,5 @@
 /* style.css - Optimized & Lightweight */
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css');
 
 :root {
     --bg: #000;
@@ -71,11 +72,12 @@ body {
 
 .loader-bar {
     width: 200px;
-    height: 3px;
+    height: 5px;
     background: var(--border);
     border-radius: 10px;
-    overflow: hidden;
-    margin-bottom: 20px;
+    /* overflow: hidden; */
+    margin-bottom: 15px;
+    position: relative;
 }
 
 .loader-progress {
@@ -92,17 +94,64 @@ body {
     text-transform: uppercase;
 }
 
-@keyframes load {
+.progress-fill {
+    height: 100%;
+    width: 0;
+    /* background: linear-gradient(-90deg, #ff4757); */
+    background: repeating-linear-gradient(90deg, #ff7f50, #ff4757 15px);
+    position: relative;
+    animation: load 4s linear forwards;
+}
+
+.progress-fill::after {
+    content: "\f135";
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    position: absolute;
+    right: -35px;
+    top: -20px;
+    font-size: 28px;
+    display: inline-block;
+    animation: 
+        rocket-vibrate 0.2s linear infinite,
+        rocket-glow 0.2s ease-in-out infinite alternate;
+    transform: rotate(45deg);
+}
+
+@keyframes rocket-vibrate {
+    0% { transform: rotate(45deg) translate(0, 0); }
+    25% { transform: rotate(46deg) translate(1px, -1px); }
+    50% { transform: rotate(44deg) translate(-1px, 1px); }
+    75% { transform: rotate(45deg) translate(1px, 1px); }
+    100% { transform: rotate(45deg) translate(0, 0); }
+}
+
+@keyframes rocket-glow {
+    from {
+        text-shadow: 
+            -2px 2px 5px #ff4757, 
+    }
     to {
+        text-shadow: 
+            -8px 8px 25px #ff7f50;
+    }
+}
+
+@keyframes load {
+    0% {
+        width: 0;
+    }
+
+    100% {
         width: 100%;
     }
 }
 
 @keyframes pulse {
-
     0%,
     100% {
         opacity: 1;
+        text-shadow: 0 5px 0px #ff4757;
     }
 
     50% {
@@ -734,11 +783,6 @@ body.light-theme .main-header {
     margin-bottom: 5px;
 }
 
-.online {
-    color: #0f0;
-    font-weight: 700;
-}
-
 #notfound {
     position: relative;
     height: 100vh;
@@ -750,6 +794,7 @@ body.light-theme .main-header {
     top: 50%;
     transform: translate(-50%, -50%);
 }
+
 .notfound .notfound-404 {
     position: absolute;
     left: 0;
@@ -760,6 +805,7 @@ body.light-theme .main-header {
     background-image: url(../img/emoji.png);
     background-size: cover;
 }
+
 .notfound .notfound-404:before {
     content: '';
     position: absolute;
@@ -771,11 +817,13 @@ body.light-theme .main-header {
     border-radius: 50%;
     z-index: -1;
 }
+
 .notfound p {
     font-family: 'Nunito', sans-serif;
     color: #999fa5;
     font-weight: 400;
 }
+
 .notfound a {
     display: inline-block;
     font-weight: 700;
@@ -783,12 +831,14 @@ body.light-theme .main-header {
     text-decoration: none;
     color: #388dbc;
 }
+
 .notfound {
     max-width: 560px;
     width: 100%;
     padding-left: 160px;
     line-height: 1.1;
 }
+
 .notfound h1 {
     font-family: 'Nunito', sans-serif;
     font-size: 65px;
@@ -797,6 +847,7 @@ body.light-theme .main-header {
     margin-bottom: 10px;
     text-transform: uppercase;
 }
+
 .notfound h2 {
     font-family: 'Nunito', sans-serif;
     font-size: 21px;
@@ -913,6 +964,7 @@ body.light-theme .main-header {
         padding-right: 10px;
         padding-top: 100px;
     }
+
     .notfound .notfound-404 {
         width: 100px;
         height: 100px;

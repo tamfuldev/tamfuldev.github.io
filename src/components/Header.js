@@ -1,6 +1,6 @@
 import React from 'react';
-import Translate from './Translate';
 import ThemeToggle from './ThemeToggle';
+import LanguageButton from './LanguageButton';
 
 const Header = () => {
     return (
@@ -16,7 +16,7 @@ const Header = () => {
                 </nav>
 
                 <div className="header-controls">
-                    <Translate />
+                    <LanguageButton />
 
                     <ThemeToggle />
                 </div>
