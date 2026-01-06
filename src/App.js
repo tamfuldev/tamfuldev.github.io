@@ -84,7 +84,7 @@ function App() {
           <Route path="/admin/blog/create" element={<CreateBlog to="/admin/blog/create" />} />
           <Route path="*" element={
             <>
-              <Loader delay={200} />
+              <Loader delay={300} />
               <NotFound />
             </>
           }

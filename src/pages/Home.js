@@ -1,3 +1,4 @@
+import CryptoTicker from "../components/CryptoTicker";
 import Header from "../components/Header";
 
 const Home = () => {
@@ -52,7 +53,7 @@ const Home = () => {
 
                         <div className="hero-right">
                             <div className="portrait-box">
-                                <img src="assets/img/avatar.gif" alt="Mr. White" className="portrait" />
+                                <img src="assets/img/avatar.png" alt="Saitama" className="portrait" />
                                 <div className="portrait-glow"></div>
                             </div>
                         </div>
@@ -60,7 +61,7 @@ const Home = () => {
                 </div>
             </section>
 
-            {/* <section id="about" className="section">
+            <section id="about" className="section">
                 <div className="container">
                     <h2 className="section-title" data-en="About Me" data-vi="Thông tin của tôi">About Me</h2>
 
@@ -71,12 +72,40 @@ const Home = () => {
                     <div className="mission-box">
                         <div className="mission-icon">⚡</div>
                         <div>
-                            <div className="mission-title" data-en="Mission Statement" data-vi="">Mission Statement</div>
+                            <div className="mission-title" data-en="Mission Statement" data-vi="Tầm nhìn & Sứ mệnh">Mission Statement</div>
                             <div className="mission-text" data-en="" data-vi=""></div>
                         </div>
                     </div>
                 </div>
-            </section> */}
+            </section>
+
+            <section id="projects" className="section">
+                <div className="container">
+                    <h2 className="section-title" data-en="Featured Projects" data-vi="Dự án nổi bật">Featured Projects</h2>
+                    <article className="project-card">
+                        <div className="project-header">
+                            <span className="project-status" data-en="Active" data-vi="Hoạt động">Active</span>
+                            <span className="project-cat" data-en="E-commerce" data-vi="Thương mại điện tử">E-commerce</span>
+                        </div>
+                        <div className="project-body">
+                            <h3 className="project-title">TONEIP</h3>
+                            <p className="project-desc" data-en="TONEIP is a fast and accurate IP geolocation tool providing IP location, ISP, connection type, and VPN/Proxy details." data-vi="TONEIPは、高速かつ正確なIPジオロケーションツールで、IPの位置情報、ISP、接続タイプ、VPN/プロキシの詳細を提供します。">
+                                TONEIP is a fast and accurate IP geolocation tool providing IP location, ISP, connection type, and VPN/Proxy details.
+                            </p>
+                            <div className="project-tech">
+                                <span>Shell</span>
+                                <span>OSINT</span>
+                                <span>Location</span>
+                            </div>
+                            <a href="#" target="_blank" className="project-link" data-en="View on GitHub" data-vi="Xem trên GitHub">
+                                View on GitHub →
+                            </a>
+                        </div>
+                    </article>
+                </div>
+
+            </section>
+
 
             <footer className="footer">
                 <div className="container">
@@ -91,6 +120,7 @@ const Home = () => {
                     </div>
                 </div>
             </footer>
+            <CryptoTicker />
         </>
     );
 }

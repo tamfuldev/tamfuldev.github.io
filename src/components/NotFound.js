@@ -18,10 +18,9 @@ const NotFound = () => {
             <div className="notfound">
                 <div className="notfound-404"></div>
                 <h1>404</h1>
-                <h2 data-en="Oops! Page Not Be Found" data-vi="Thông tin">Ối! Không tìm thấy trang</h2>
-                <p data-en="Sorry but the page you are looking for does not exist. "
-                    data-vi="Xin lỗi nhưng trang bạn đang tìm kiếm không tồn tại">Sorry but the page you are looking for does not exist. </p>
-                <a href="/" data-en="Back to homepage" data-vi="Quay lại trang chủ">Back to homepage</a>
+                <h2 data-en="Oh no! It seems you've encountered a page that doesn't exist." data-vi="Thông tin">Oh no! It seems you've encountered a page that doesn't exist. </h2>
+                <p data-en="Let's get you back on track." data-vi="Xin lỗi nhưng trang bạn đang tìm kiếm không tồn tại">Let's get you back on track.</p>
+                <a href="/" data-en="Go to Home Page" data-vi="Quay lại">Go to Home Page</a>
             </div>
         </div>
     );
