@@ -1,19 +1,15 @@
-import CryptoTicker from "../components/CryptoTicker";
-import Header from "../components/Header";
-
 const Home = () => {
+
     return (
         <>
-            <Header />
-
-            <section id="hero" className="hero">
+            <section className="hero">
                 <div className="container">
                     <div className="hero-content">
                         <div className="hero-left">
                             <div className="hero-badges">
                                 <span className="badge" data-en="🚀 FULLSTACK" data-vi="🚀 FULLSTACK">🚀 FULLSTACK</span>
-                                <span className="badge" data-en="💻 WEB DEV" data-vi="💻 LẬP TRÌNH WEB">💻 WEB DEV</span>
                                 <span className="badge" data-en="⛓️ BLOCKCHAIN" data-vi="⛓️ CHUỖI BLOCKCHAIN">⛓️ BLOCKCHAIN</span>
+                                <span className="badge" data-en="🌐 WEB3" data-vi="🌐 WEB3">🌐 WEB3</span>
                             </div>
 
                             <h1 className="hero-title" data-en="Hi — My name's Tam" data-vi="Chào — Tên tôi là Tâm">
@@ -46,34 +42,86 @@ const Home = () => {
                                 <a className="btn secondary" href="#contact" data-en="Let's Talk" data-vi="Liên hệ ngay">Let's Talk</a>
                             </div>
 
-                            <div className="tech-stack">
-                                <span>PHP</span><span>JavaScript</span><span>Java</span><span>React</span><span>MySQL</span>
+                            <div className="hero-socials">
+                                <a href="https://github.com/yourusername" target="_blank" rel="noreferrer"><i className="fa-brands fa-github"></i></a>
+                                <a href="https://linkedin.com/in/yourusername" target="_blank" rel="noreferrer"><i className="fa-brands fa-linkedin"></i></a>
+                                <a href="https://twitter.com/yourusername" target="_blank" rel="noreferrer"><i className="fa-brands fa-x-twitter"></i></a>
                             </div>
                         </div>
 
                         <div className="hero-right">
                             <div className="portrait-box">
-                                <img src="assets/img/avatar.png" alt="Saitama" className="portrait" />
+                                <img src="assets/img/avatar.png" alt="Saitama" className="portrait floating" />
                                 <div className="portrait-glow"></div>
+
+                                <div className="tech-icon-float php"><i className="fa-brands fa-php"></i></div>
+                                <div className="tech-icon-float laravel"><i className="fa-brands fa-laravel"></i></div>
+                                <div className="tech-icon-float html5"><i className="fa-brands fa-html5"></i></div>
+                                <div className="tech-icon-float css3"><i className="fa-brands fa-css3"></i></div>
+                                <div className="tech-icon-float react"><i className="fa-brands fa-react"></i></div>
+                                <div className="tech-icon-float node"><i className="fa-brands fa-node-js"></i></div>
+                                <div className="tech-icon-float ethereum"><i className="fa-brands fa-ethereum"></i></div>
                             </div>
                         </div>
                     </div>
                 </div>
             </section>
 
-            <section id="about" className="section">
+            <section className="section">
                 <div className="container">
-                    <h2 className="section-title" data-en="About Me" data-vi="Thông tin của tôi">About Me</h2>
+                    <h2 className="section-title" data-en="Technical Skills" data-vi="技術スキル">Technical Skills</h2>
 
-                    <p className="about-text" data-en="" data-vi="">
+                    <div className="skills-grid">
+                        <div className="skill-card">
+                            <div className="skill-header">
+                                <span className="skill-icon">🎯</span>
+                                <span className="skill-name" data-en="Offensive Security" data-vi="攻撃的セキュリティ">Offensive Security</span>
+                            </div>
+                        </div>
 
-                    </p>
+                        <div className="skill-card">
+                            <div className="skill-header">
+                                <span className="skill-icon">🔍</span>
+                                <span className="skill-name" data-en="Penetration Testing" data-vi="ペネトレーションテスト">Penetration Testing</span>
+                            </div>
+                        </div>
 
-                    <div className="mission-box">
-                        <div className="mission-icon">⚡</div>
-                        <div>
-                            <div className="mission-title" data-en="Mission Statement" data-vi="Tầm nhìn & Sứ mệnh">Mission Statement</div>
-                            <div className="mission-text" data-en="" data-vi=""></div>
+                        <div className="skill-card">
+                            <div className="skill-header">
+                                <span className="skill-icon">⚔️</span>
+                                <span className="skill-name" data-en="Red Team Operations" data-vi="レッドチーム作戦">Red Team Operations</span>
+                            </div>
+                        </div>
+
+                        <div className="skill-card">
+                            <div className="skill-header">
+                                <span className="skill-icon">💣</span>
+                                <span className="skill-name" data-en="Exploit Development" data-vi="エクスプロイト開発">Exploit Development</span>
+                            </div>
+                        </div>
+
+                        <div className="skill-card">
+                            <div className="skill-header">
+                                <span className="skill-icon">🌐</span>
+                                <span className="skill-name" data-en="Web Security" data-vi="ウェブセキュリティ">Web Security</span>
+                            </div>
+                        </div>
+
+                        <div className="skill-card">
+                            <div className="skill-header">
+                                <span className="skill-icon">🏆</span>
+                                <span className="skill-name" data-en="Bug Bounty" data-vi="バグ報奨金">Bug Bounty</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="lang-showcase">
+                        <h3 data-en="Programming Languages" data-vi="プログラミング言語">Programming Languages</h3>
+                        <div className="lang-grid">
+                            <span>PHP</span>
+                            <span>Java</span><span>TypeScript</span><span>JavaScript</span>
+                            <span>PowerShell</span><span>Bash</span>
+                            <span>HTML5</span><span>CSS3</span>
                         </div>
                     </div>
                 </div>
@@ -106,21 +154,12 @@ const Home = () => {
 
             </section>
 
-
-            <footer className="footer">
+            <section id="blogs" className="section">
                 <div className="container">
-                    <div className="footer-content">
-                        <div className="footer-left">
-                            <div className="footer-logo">Tam Saitama<span className="dot">.</span></div>
-                            <p className="footer-tag" data-en="Analysis. Action. Precision. Results." data-vi="Phân tích. Hành động. Độ chính xác. Kết quả.">Analysis. Action. Precision. Results.</p>
-                        </div>
-                        <div className="footer-right">
-                            <p>&copy; <span id="year">2026</span> Tam Saitama. All Rights Reserved.</p>
-                        </div>
-                    </div>
+                    <h2 className="section-title" data-en="Recent posts" data-vi="Bài viết gần đây">Recent posts</h2>
+
                 </div>
-            </footer>
-            <CryptoTicker />
+            </section>
         </>
     );
 }

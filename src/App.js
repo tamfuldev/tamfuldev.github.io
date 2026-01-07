@@ -2,7 +2,7 @@ import * as React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Admin from './pages/Admin';
 import Login from './pages/Login';
-import Home from './pages/Home';
+import Base from './pages/Base';
 
 import { auth } from './configs/firebase';
 import { onAuthStateChanged } from 'firebase/auth';
@@ -10,7 +10,6 @@ import { Blog, CreateBlog } from './pages/Blog';
 import NotFound from './components/NotFound';
 import Loader from './components/Loader';
 import { LanguageProvider } from './components/LanguageContext';
-
 
 function App() {
   const [user, setUser] = React.useState(null);
@@ -52,7 +51,7 @@ function App() {
           <Route path="/" element={
             <>
               <Loader delay={400}/>
-              <Home />
+              <Base />
             </>
           }
           />

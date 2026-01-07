@@ -2,17 +2,23 @@ import React from 'react';
 import ThemeToggle from './ThemeToggle';
 import LanguageButton from './LanguageButton';
 
-const Header = () => {
+const Header = ({ tab, setActiveTab }) => {
+
+    const handleTabClick = (tabName) => {
+        setActiveTab(tabName);
+
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+
     return (
         <header className="main-header">
             <div className='content'>
-                <div className='logo'>Tam Saitama<span className='dot'>.</span></div>
+                <div className='logo' onClick={() => handleTabClick('home')}>Tam Saitama<span className='dot'>.</span></div>
 
                 <nav className="nav">
-                    <a href="#about" data-en="About" data-vi="Thông tin">About</a>
-                    <a href="#projects" data-en="Projects" data-vi="Dự án">Projects</a>
-                    <a href="#contact" data-en="Contact" data-vi="Liên hệ">Contact</a>
-                    <a href="/blog" data-en="Blog" data-vi="Blog">Blog</a>
+                    <div className={`nav-link ${tab === 'home' ? 'active' : ''}`} data-en="Home" data-vi="Trang chủ" onClick={() => handleTabClick('home')}>Home</div>
+                    <div className={`nav-link ${tab === 'about' ? 'active' : ''}`} data-en="About" data-vi="Thông tin" onClick={() => handleTabClick('about')}>About</div>
+                    <div className={`nav-link ${tab === 'report' ? 'active' : ''}`} data-en="Report" data-vi="Báo cáo" onClick={() => handleTabClick('report')}>Report</div>
                 </nav>
 
                 <div className="header-controls">
