@@ -40,13 +40,13 @@
     // Theme Toggle
     const savedTheme = localStorage.getItem('theme') || 'dark';
     if (savedTheme === 'light') {
-        document.body.classList.add('light-theme');
+        document.body.classList.add('light');
     }
 
     themeToggle.addEventListener('click', () => {
-        document.body.classList.toggle('light-theme');
+        document.body.classList.toggle('light');
         
-        const theme = document.body.classList.contains('light-theme') ? 'light' : 'dark';
+        const theme = document.body.classList.contains('light') ? 'light' : 'dark';
         localStorage.setItem('theme', theme);
     });
 
@@ -81,7 +81,7 @@
         }
 
         draw() {
-            const isLight = document.body.classList.contains('light-theme');
+            const isLight = document.body.classList.contains('light');
             ctx.fillStyle = isLight ? `rgba(0,0,0,${this.opacity})` : `rgba(255,255,255,${this.opacity})`;
             ctx.beginPath();
             ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
@@ -98,7 +98,7 @@
     // }
 
     function connectParticles() {
-        const isLight = document.body.classList.contains('light-theme');
+        const isLight = document.body.classList.contains('light');
         for (let i = 0; i < particles.length; i++) {
             for (let j = i + 1; j < particles.length; j++) {
                 const dx = particles[i].x - particles[j].x;
