@@ -3,7 +3,7 @@ import "firebase/compat/firestore";
 import "firebase/compat/auth";
 
 
-const db = firebase.initializeApp({
+const app = firebase.initializeApp({
     apiKey: "AIzaSyCd2l6sMc3Z2mnRsCbXcPZ2AfrkFYolhrs",
     authDomain: "post-89756.firebaseapp.com",
     databaseURL: "https://post-89756-default-rtdb.firebaseio.com",
@@ -16,5 +16,6 @@ const db = firebase.initializeApp({
 
 const firestore = firebase.firestore();
 const auth = firebase.auth();
+export const db = firebase.firestore(app);
 
-export { db, firestore, auth };
+export { firestore, auth };

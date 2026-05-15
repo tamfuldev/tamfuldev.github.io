@@ -9,9 +9,9 @@ const CryptoTicker = () => {
     const fetchCryptoData = async () => {
         try {
             const symbols = [
-                "BTCUSDT", "ETHUSDT", "BNBUSDT", "SOLUSDT", "XRPUSDT", 
-                "ADAUSDT", "AVAXUSDT", "DOGEUSDT", "DOTUSDT", "TRXUSDT",
-                "LINKUSDT", "SUIUSDT", "NEARUSDT", "LTCUSDT", "SHIBUSDT",
+                "BTCUSDT", "ETHUSDT", "BNBUSDT", "SOLUSDT", "PAXGUSDT", 
+                "ADAUSDT", "AVAXUSDT", "DOGEUSDT",
+                "LINKUSDT", "SUIUSDT", "NEARUSDT", "LTCUSDT", "SHIBUSDT", // "DOTUSDT", "TRXUSDT",
                 "PEPEUSDT", "BCHUSDT","UNIUSDT",
             ];
             

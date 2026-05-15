@@ -1,7 +1,8 @@
 import React from 'react';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../configs/firebase';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import "../styles/admin.css";
 
 const Login = () => {
     const [email, setEmail] = React.useState('');
@@ -15,37 +16,55 @@ const Login = () => {
         try {
             await signInWithEmailAndPassword(auth, email, password);
             navigate('/admin');
-            console.log('User logged in successfully');
         } catch (err) {
             setError(err.message);
         }
     };
 
     return (
-        <div className="login-container">
-            <h2>Login</h2>
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <label>Email:</label>
-                    <input
-                        type="email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        required
-                    />
+        <div className="admin-login-page">
+            <section className="admin-login-card">
+                <p className="admin-kicker">{"// firebase_admin"}</p>
+                <h2>Admin Login</h2>
+                <p className="admin-login-copy">
+                    Login de vao Blog Manager. Tu day ban co the tao, edit va publish blog len trang public.
+                </p>
+
+                <form onSubmit={handleSubmit} className="admin-login-form">
+                    <label>
+                        Email
+                        <input
+                            type="email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            placeholder="admin@example.com"
+                            required
+                        />
+                    </label>
+
+                    <label>
+                        Password
+                        <input
+                            type="password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            placeholder="password"
+                            required
+                        />
+                    </label>
+
+                    {error && <p className="admin-login-error">{error}</p>}
+
+                    <button type="submit" className="admin-btn admin-btn-primary">
+                        Login admin
+                    </button>
+                </form>
+
+                <div className="admin-login-links">
+                    <Link to="/blog">View public blog</Link>
+                    <Link to="/">Back to portfolio</Link>
                 </div>
-                <div>
-                    <label>Password:</label>
-                    <input
-                        type="password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        required
-                    />
-                </div>
-                {error && <p className="error">{error}</p>}
-                <button type="submit">Login</button>
-            </form>
+            </section>
         </div>
     );
 }

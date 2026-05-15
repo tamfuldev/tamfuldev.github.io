@@ -5,7 +5,12 @@ const LanguageButton = () => {
     const { language, toggleLanguage } = useLanguage();
 
     return (
-        <button onClick={toggleLanguage} className="control-btn">
+        <button
+            type="button"
+            onClick={toggleLanguage}
+            className="control-btn"
+            aria-label="Toggle language"
+        >
             {language.toUpperCase()}
         </button>
     );

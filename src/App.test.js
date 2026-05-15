@@ -1,8 +1,20 @@
-import { render, screen } from '@testing-library/react';
-import App from './App';
+import { render, screen } from "@testing-library/react";
 
-test('renders learn react link', () => {
-  render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+jest.mock("./configs/firebase", () => ({
+    auth: {},
+}));
+
+jest.mock("firebase/auth", () => ({
+    __esModule: true,
+    onAuthStateChanged: (_auth, callback) => {
+        callback(null);
+        return () => {};
+    },
+}));
+
+import App from "./App";
+
+test("renders the portfolio hero content", () => {
+    render(<App />);
+    expect(screen.getByText(/i build backends/i)).toBeInTheDocument();
 });

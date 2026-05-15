@@ -8,9 +8,9 @@ const ThemeToggle = () => {
     React.useEffect(() => {
         const body = document.body;
         if (theme === 'light') {
-            body.classList.add('light-theme');
+            body.classList.add('light');
         } else {
-            body.classList.remove('light-theme');
+            body.classList.remove('light');
         }
         localStorage.setItem('theme', theme);
     }, [theme])
@@ -20,7 +20,12 @@ const ThemeToggle = () => {
     }
 
     return (
-        <button className="control-btn" onClick={toggleTheme}>
+        <button
+            type="button"
+            className="control-btn"
+            onClick={toggleTheme}
+            aria-label="Toggle color theme"
+        >
             <i className={`fa-${(theme === 'light') ? 'regular fa-sun' : 'solid fa-moon'}`}></i>
         </button>
     );

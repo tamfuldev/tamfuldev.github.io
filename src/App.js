@@ -6,7 +6,6 @@ import Base from './pages/Base';
 
 import { auth } from './configs/firebase';
 import { onAuthStateChanged } from 'firebase/auth';
-import { Blog, CreateBlog } from './pages/Blog';
 import NotFound from './components/NotFound';
 import Loader from './components/Loader';
 import { LanguageProvider } from './components/LanguageContext';
@@ -28,9 +27,9 @@ function App() {
   React.useEffect(() => {
     const currentTheme = localStorage.getItem("theme") || "dark";
     if (currentTheme === 'light') {
-      document.body.classList.add('light-theme');
+      document.body.classList.add('light');
     } else {
-      document.body.classList.remove('light-theme');
+      document.body.classList.remove('light');
     }
   }, []);
 
@@ -55,6 +54,20 @@ function App() {
             </>
           }
           />
+          <Route path="/blog" element={
+            <>
+              <Loader delay={300} />
+              <Base initialPage="blog" />
+            </>
+          }
+          />
+          <Route path="/blog/:slug" element={
+            <>
+              <Loader delay={300} />
+              <Base initialPage="blog" />
+            </>
+          }
+          />
           <Route path="/login" element={<Login />} />
           <Route path="/admin"
             element={
@@ -66,21 +79,24 @@ function App() {
           <Route path="admin/blog"
             element={
               <ProtectedRoute>
-                <Blog />
+                <Admin />
+              </ProtectedRoute>
+            }
+          />
+          <Route path="admin/blog/edit/:blogId"
+            element={
+              <ProtectedRoute>
+                <Admin initialMode="edit" />
               </ProtectedRoute>
             }
           />
           <Route path="admin/blog/create"
             element={
               <ProtectedRoute>
-                <CreateBlog />
+                <Admin initialMode="create" />
               </ProtectedRoute>
             }
           />
-
-          <Route path="/" element={<Navigate to="/admin" />} />
-          <Route path="/admin/blog" element={<Blog to="/admin/blog" />} />
-          <Route path="/admin/blog/create" element={<CreateBlog to="/admin/blog/create" />} />
           <Route path="*" element={
             <>
               <Loader delay={300} />
