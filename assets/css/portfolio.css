@@ -213,33 +213,6 @@ body.light .portfolio-nav {
     z-index: 1;
 }
 
-.portfolio-reveal {
-    opacity: 0;
-    transform: translate3d(0, 26px, 0) scale(0.985);
-    transition:
-        opacity 0.72s cubic-bezier(0.2, 0.8, 0.2, 1),
-        transform 0.72s cubic-bezier(0.2, 0.8, 0.2, 1),
-        filter 0.72s cubic-bezier(0.2, 0.8, 0.2, 1);
-    transition-delay: calc(var(--reveal-index, 0) * 55ms);
-}
-
-.portfolio-reveal.is-visible {
-    opacity: 1;
-    transform: translate3d(0, 0, 0) scale(1);
-}
-
-.portfolio-reveal.portfolio-project-card,
-.portfolio-reveal.portfolio-crypto-card,
-.portfolio-reveal.portfolio-blog-post {
-    filter: saturate(0.75);
-}
-
-.portfolio-reveal.portfolio-project-card.is-visible,
-.portfolio-reveal.portfolio-crypto-card.is-visible,
-.portfolio-reveal.portfolio-blog-post.is-visible {
-    filter: saturate(1);
-}
-
 .portfolio-hero {
     align-items: center;
     display: flex;
