@@ -11,8 +11,10 @@ import {
     emptyBlogForm,
     getBlogCategories,
     mapBlogToForm,
+    normalizeRichText,
     normalizeTags,
     slugify,
+    stripHtml,
 } from "../utils/blogAdmin";
 
 const BLOG_COLLECTION = "blogs";
@@ -99,8 +101,8 @@ const Admin = ({ initialMode = "list" }) => {
                 blog.titleVi,
                 blog.slug,
                 getBlogCategories(blog).join(" "),
-                blog.excerpt,
-                blog.excerptVi,
+                stripHtml(blog.excerpt),
+                stripHtml(blog.excerptVi),
                 Array.isArray(blog.tags) ? blog.tags.join(" ") : "",
             ]
                 .join(" ")
@@ -152,10 +154,10 @@ const Admin = ({ initialMode = "list" }) => {
             category: categories[0] || "General",
             categories,
             status: form.status,
-            excerpt: form.excerpt.trim(),
-            excerptVi: form.excerptVi.trim(),
-            content: form.content.trim(),
-            contentVi: form.contentVi.trim(),
+            excerpt: normalizeRichText(form.excerpt),
+            excerptVi: normalizeRichText(form.excerptVi),
+            content: normalizeRichText(form.content),
+            contentVi: normalizeRichText(form.contentVi),
             tags: normalizeTags(form.tags),
             updatedAt: now,
             updatedBy: user?.email || "admin",

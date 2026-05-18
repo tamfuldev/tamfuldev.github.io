@@ -10,13 +10,16 @@ import {
     estimateReadTime,
     formatDate,
     getBlogCategories,
+    hasHtmlContent,
     resolveBlogText,
+    sanitizeRichHtml,
+    stripHtml,
 } from "../../utils/blogAdmin";
 import { pick } from "../../utils/localization";
 import PageFooter from "./PageFooter";
 
 const BLOG_COLLECTION = "blogs";
-const PAGE_SIZE = 4;
+const PAGE_SIZE = 5;
 
 const blogCopy = {
     en: {
@@ -42,25 +45,25 @@ const blogCopy = {
         ],
     },
     vi: {
-        all: "Tat ca",
-        allDates: "Tat ca ngay",
-        allHashtags: "Tat ca hashtag",
-        back: "< Quay lai blog",
-        empty: "Khong co bai viet phu hop voi bo loc.",
-        hashtagLabel: "Loc theo hashtag",
-        loadMore: "Tai them bai viet",
-        loading: "Dang tai bai viet...",
-        notFound: "Khong tim thay bai viet hoac bai viet chua duoc published.",
-        openPost: "Mo bai viet",
-        reads: (views) => `${views} luot doc`,
-        resultCount: (count) => `${count} bai viet phu hop`,
-        searchLabel: "Tim blog",
-        searchPlaceholder: "Tim blog theo tieu de, noi dung, category, hashtag...",
-        sortLabel: "Sap xep blog",
+        all: "Tất cả",
+        allDates: "Tất cả ngay",
+        allHashtags: "Tất cả hashtag",
+        back: "< Quay lại blog",
+        empty: "Không có bài viết phù hợp với bộ lọc.",
+        hashtagLabel: "Lọc theo hashtag",
+        loadMore: "Tải thêm bài viết",
+        loading: "Đang tải bài viết...",
+        notFound: "Không tìm thấy bài viết hoặc bài viết chưa được published.",
+        openPost: "Mở bài viết",
+        reads: (views) => `${views} lướt đọc`,
+        resultCount: (count) => `${count} bài viết phù hợp`,
+        searchLabel: "Tìm blog",
+        searchPlaceholder: "Tìm blog theo tiêu đề, nội dung, category, hashtag...",
+        sortLabel: "Sắp xếp blog",
         sortOptions: [
-            { id: "newest", label: "Moi nhat -> Cu nhat" },
-            { id: "oldest", label: "Cu nhat -> Moi nhat" },
-            { id: "popular", label: "Pho bien / Nhieu luot doc nhat" },
+            { id: "newest", label: "Mới nhất -> Cũ nhất" },
+            { id: "oldest", label: "Cũ nhất -> Mới nhất" },
+            { id: "popular", label: "Phổ biến / Nhiều lướt đọc nhất" },
         ],
     },
 };
@@ -133,10 +136,10 @@ const buildBlogHaystack = (post) =>
         post.title,
         post.titleVi,
         post.slug,
-        post.excerpt,
-        post.excerptVi,
-        post.content,
-        post.contentVi,
+        stripHtml(post.excerpt),
+        stripHtml(post.excerptVi),
+        stripHtml(post.content),
+        stripHtml(post.contentVi),
         getBlogCategories(post).join(" "),
         getPostTags(post).join(" "),
     ]
@@ -287,10 +290,12 @@ const PortfolioBlog = ({ activeTag, detailSlug, language, onTagChange }) => {
 
     const detailTitle = selectedPost ? resolveBlogText(selectedPost, "title", language) : "";
     const detailExcerpt = selectedPost ? resolveBlogText(selectedPost, "excerpt", language) : "";
+    const detailExcerptHasHtml = hasHtmlContent(detailExcerpt);
     const detailContent = selectedPost
         ? resolveBlogText(selectedPost, "content", language) || detailExcerpt
         : "";
     const detailBlocks = splitContentBlocks(detailContent);
+    const detailHasHtml = hasHtmlContent(detailContent);
     const detailCategories = selectedPost ? getBlogCategories(selectedPost) : [];
     const detailTags = selectedPost ? getPostTags(selectedPost) : [];
 
@@ -335,7 +340,16 @@ const PortfolioBlog = ({ activeTag, detailSlug, language, onTagChange }) => {
                                 </div>
 
                                 <h2>{detailTitle}</h2>
-                                {detailExcerpt && <p className="portfolio-blog-detail-excerpt">{detailExcerpt}</p>}
+                                {detailExcerptHasHtml ? (
+                                    <div
+                                        className="portfolio-blog-detail-excerpt"
+                                        dangerouslySetInnerHTML={{ __html: sanitizeRichHtml(detailExcerpt) }}
+                                    />
+                                ) : (
+                                    detailExcerpt && (
+                                        <p className="portfolio-blog-detail-excerpt">{detailExcerpt}</p>
+                                    )
+                                )}
 
                                 <div className="portfolio-blog-detail-tags">
                                     {detailCategories.map((category) => (
@@ -366,11 +380,18 @@ const PortfolioBlog = ({ activeTag, detailSlug, language, onTagChange }) => {
                                     ))}
                                 </div>
 
-                                <div className="portfolio-blog-detail-body">
-                                    {detailBlocks.map((block) => (
-                                        <p key={block} dangerouslySetInnerHTML={{ __html: block }} />
-                                    ))}
-                                </div>
+                                {detailHasHtml ? (
+                                    <div
+                                        className="portfolio-blog-detail-body"
+                                        dangerouslySetInnerHTML={{ __html: sanitizeRichHtml(detailContent) }}
+                                    />
+                                ) : (
+                                    <div className="portfolio-blog-detail-body">
+                                        {detailBlocks.map((block) => (
+                                            <p key={block}>{block}</p>
+                                        ))}
+                                    </div>
+                                )}
                             </article>
                         )}
                     </>
@@ -487,7 +508,7 @@ const PortfolioBlog = ({ activeTag, detailSlug, language, onTagChange }) => {
                                             >
                                                 <div className="portfolio-blog-post-left">
                                                     <h3>{title}</h3>
-                                                    <p>{resolveBlogText(post, "excerpt", language)}</p>
+                                                    <p>{stripHtml(resolveBlogText(post, "excerpt", language))}</p>
                                                     {!!postTags.length && (
                                                         <div className="portfolio-blog-inline-tags">
                                                             {postTags.slice(0, 4).map((tag) => (
@@ -537,7 +558,7 @@ const PortfolioBlog = ({ activeTag, detailSlug, language, onTagChange }) => {
             </section>
 
             <PageFooter>
-                <span>{aboutContent.name}</span> - {pick(blogContent.footer, language)}
+                <span>{pick(aboutContent.name, language)}</span> - {pick(blogContent.footer, language)}
             </PageFooter>
         </div>
     );

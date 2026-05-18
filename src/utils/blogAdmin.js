@@ -62,6 +62,36 @@ export const getBlogCategories = (blog = {}) => {
     return normalizeTags([...categoryList, ...legacyCategory]);
 };
 
+export const stripHtml = (value = "") =>
+    String(value || "")
+        .replace(/<style[\s\S]*?<\/style>/gi, " ")
+        .replace(/<script[\s\S]*?<\/script>/gi, " ")
+        .replace(/<[^>]+>/g, " ")
+        .replace(/&nbsp;/g, " ")
+        .replace(/&amp;/g, "&")
+        .replace(/&lt;/g, "<")
+        .replace(/&gt;/g, ">")
+        .replace(/&quot;/g, "\"")
+        .replace(/&#39;/g, "'")
+        .replace(/\s+/g, " ")
+        .trim();
+
+export const hasHtmlContent = (value = "") => /<\/?[a-z][\s\S]*>/i.test(String(value || ""));
+
+export const sanitizeRichHtml = (value = "") =>
+    String(value || "")
+        .replace(/<script[\s\S]*?>[\s\S]*?<\/script>/gi, "")
+        .replace(/<style[\s\S]*?>[\s\S]*?<\/style>/gi, "")
+        .replace(/\son\w+="[^"]*"/gi, "")
+        .replace(/\son\w+='[^']*'/gi, "")
+        .replace(/\son\w+=\S+/gi, "")
+        .replace(/href=(["'])\s*javascript:[\s\S]*?\1/gi, "href=\"#\"");
+
+export const normalizeRichText = (value = "") => {
+    const content = sanitizeRichHtml(value).trim();
+    return stripHtml(content) ? content : "";
+};
+
 export const mapBlogToForm = (blog) => ({
     title: blog.title || "",
     titleVi: blog.titleVi || "",
@@ -85,8 +115,8 @@ export const resolveBlogText = (blog, field, language) => {
 
 export const estimateReadTime = (blog, language = "en") => {
     const content = resolveBlogText(blog, "content", language) || resolveBlogText(blog, "excerpt", language);
-    const words = content.trim().split(/\s+/).filter(Boolean).length;
+    const words = stripHtml(content).split(/\s+/).filter(Boolean).length;
     const minutes = Math.max(1, Math.ceil(words / 200));
 
-    return language === "vi" ? `${minutes} phut doc` : `${minutes} min read`;
+    return language === "vi" ? `${minutes} phút đọc` : `${minutes} min read`;
 };

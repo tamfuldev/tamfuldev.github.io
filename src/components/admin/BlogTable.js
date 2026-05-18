@@ -1,5 +1,5 @@
 import { FiEdit2, FiExternalLink, FiTrash2 } from "react-icons/fi";
-import { formatDate, getBlogCategories } from "../../utils/blogAdmin";
+import { formatDate, getBlogCategories, stripHtml } from "../../utils/blogAdmin";
 
 const BlogTable = ({ blogs, loading, onDelete, onEdit, onTogglePublish }) => {
     if (loading) {
@@ -30,7 +30,7 @@ const BlogTable = ({ blogs, loading, onDelete, onEdit, onTogglePublish }) => {
                             <tr key={blog.id}>
                                 <td>
                                     <strong>{blog.title || "Untitled post"}</strong>
-                                    <span>{blog.excerpt || blog.slug || "No excerpt yet"}</span>
+                                    <span>{stripHtml(blog.excerpt) || blog.slug || "No excerpt yet"}</span>
                                 </td>
                                 <td>
                                     <div className="admin-category-list">

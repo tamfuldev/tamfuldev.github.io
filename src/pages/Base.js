@@ -4,8 +4,10 @@ import { useLanguage } from "../components/LanguageContext";
 import PortfolioAbout from "../components/portfolio/PortfolioAbout";
 import PortfolioBlog from "../components/portfolio/PortfolioBlog";
 import PortfolioCrypto from "../components/portfolio/PortfolioCrypto";
+import PortfolioFx from "../components/portfolio/PortfolioFx";
 import PortfolioHome from "../components/portfolio/PortfolioHome";
 import PortfolioNav from "../components/portfolio/PortfolioNav";
+import PortfolioProjects from "../components/portfolio/PortfolioProjects";
 import { initialCoins } from "../data/portfolioContent";
 
 const Base = ({ initialPage = "home" }) => {
@@ -15,16 +17,18 @@ const Base = ({ initialPage = "home" }) => {
     const navigate = useNavigate();
     const routedPage = location.pathname.startsWith("/blog")
         ? "blog"
-        : location.state?.activePage || initialPage;
+        : location.pathname.startsWith("/projects")
+            ? "projects"
+            : location.state?.activePage || initialPage;
     const [activePage, setActivePage] = React.useState(routedPage);
     const [activeTag, setActiveTag] = React.useState("all");
-    const [cryptoPrices, setCryptoPrices] = React.useState(initialCoins);
+    const cryptoPrices = initialCoins;
     const avatarSrc = `${process.env.PUBLIC_URL}/assets/img/vendor-logo.jpg`;
 
     React.useEffect(() => {
         document.title =
             language === "vi"
-                ? "Tran Ngoc Tam - Ky su Backend"
+                ? "Trần Ngọc Tâm - Kỹ sư Backend"
                 : "Tran Ngoc Tam - Backend Engineer";
     }, [language]);
 
@@ -32,37 +36,13 @@ const Base = ({ initialPage = "home" }) => {
         setActivePage(routedPage);
     }, [routedPage]);
 
-    React.useEffect(() => {
-        if (activePage !== "crypto") {
-            return undefined;
-        }
-
-        const interval = window.setInterval(() => {
-            setCryptoPrices((previousCoins) =>
-                previousCoins.map((coin) => {
-                    const delta = (Math.random() - 0.48) * 0.003;
-                    const nextPrice = coin.price * (1 + delta);
-                    const nextChange = Number(
-                        (coin.change + (Math.random() - 0.48) * 0.1).toFixed(2)
-                    );
-
-                    return {
-                        ...coin,
-                        price: nextPrice,
-                        change: nextChange,
-                    };
-                })
-            );
-        }, 5000);
-
-        return () => window.clearInterval(interval);
-    }, [activePage]);
-
     const handlePageChange = (page) => {
         setActivePage(page);
 
         if (page === "blog") {
             navigate("/blog");
+        } else if (page === "projects") {
+            navigate("/projects");
         } else {
             navigate("/", { state: { activePage: page } });
         }
@@ -72,6 +52,7 @@ const Base = ({ initialPage = "home" }) => {
 
     return (
         <div className="portfolio-app">
+            <PortfolioFx />
             <PortfolioNav
                 activePage={activePage}
                 language={language}
@@ -90,6 +71,10 @@ const Base = ({ initialPage = "home" }) => {
                 <PortfolioAbout avatarSrc={avatarSrc} language={language} />
             )}
 
+            {activePage === "projects" && (
+                <PortfolioProjects language={language} />
+            )}
+
             {activePage === "blog" && (
                 <PortfolioBlog
                     activeTag={activeTag}
@@ -100,7 +85,7 @@ const Base = ({ initialPage = "home" }) => {
             )}
 
             {activePage === "crypto" && (
-                <PortfolioCrypto coins={cryptoPrices} language={language} />
+                <PortfolioCrypto fallbackCoins={cryptoPrices} language={language} />
             )}
         </div>
     );

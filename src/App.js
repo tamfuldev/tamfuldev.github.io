@@ -68,6 +68,13 @@ function App() {
             </>
           }
           />
+          <Route path="/projects" element={
+            <>
+              <Loader delay={300} />
+              <Base initialPage="projects" />
+            </>
+          }
+          />
           <Route path="/login" element={<Login />} />
           <Route path="/admin"
             element={

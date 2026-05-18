@@ -1,19 +1,8 @@
+import React from "react";
 import { aboutContent, cryptoContent } from "../../data/portfolioContent";
+import { fetchBinanceTickers, formatCryptoPrice, getTradeUrl } from "../../utils/cryptoMarket";
 import { pick } from "../../utils/localization";
 import PageFooter from "./PageFooter";
-
-const getTradeUrl = (symbol) => `https://www.binance.com/vi/trade/${symbol}_USDT?type=spot`;
-
-const formatPrice = (price) => {
-    if (price >= 1) {
-        return price.toLocaleString("en-US", {
-            minimumFractionDigits: 2,
-            maximumFractionDigits: 2,
-        });
-    }
-
-    return price.toFixed(4);
-};
 
 const CryptoChange = ({ change }) => (
     <span className={`portfolio-crypto-change${change >= 0 ? " is-up" : " is-down"}`}>
@@ -22,8 +11,63 @@ const CryptoChange = ({ change }) => (
     </span>
 );
 
-const PortfolioCrypto = ({ coins, language }) => {
+const PortfolioCrypto = ({ fallbackCoins, language }) => {
+    const [coins, setCoins] = React.useState(fallbackCoins);
+    const [error, setError] = React.useState("");
+    const [lastUpdated, setLastUpdated] = React.useState(null);
+    const [loading, setLoading] = React.useState(true);
+
+    React.useEffect(() => {
+        let mounted = true;
+
+        const refreshMarket = async () => {
+            try {
+                const liveCoins = await fetchBinanceTickers();
+
+                if (!mounted) {
+                    return;
+                }
+
+                setCoins(liveCoins);
+                setError("");
+                setLastUpdated(new Date());
+            } catch (marketError) {
+                if (mounted) {
+                    setError(marketError.message);
+                }
+            } finally {
+                if (mounted) {
+                    setLoading(false);
+                }
+            }
+        };
+
+        refreshMarket();
+        const interval = window.setInterval(refreshMarket, 60000);
+
+        return () => {
+            mounted = false;
+            window.clearInterval(interval);
+        };
+    }, []);
+
     const tickerItems = [...coins, ...coins];
+    const liveStatus =
+        language === "vi"
+            ? "Dữ liệu live từ Binance"
+            : "Live Binance market";
+    const loadingStatus =
+        language === "vi"
+            ? "Đang tải giá live..."
+            : "Loading live prices...";
+    const updatedStatus =
+        language === "vi"
+            ? `Cập nhật lúc ${lastUpdated?.toLocaleTimeString("vi-VN")}`
+            : `Updated ${lastUpdated?.toLocaleTimeString("en-US")}`;
+    const fallbackStatus =
+        language === "vi"
+            ? "Không lấy được data API live, đang hiển thị data fallback."
+            : "Live API unavailable, showing fallback data.";
 
     return (
         <div className="portfolio-page">
@@ -31,6 +75,11 @@ const PortfolioCrypto = ({ coins, language }) => {
                 <div className="portfolio-crypto-header">
                     <h1>{pick(cryptoContent.title, language)}</h1>
                     <p>{pick(cryptoContent.description, language)}</p>
+                </div>
+
+                <div className={`portfolio-crypto-live-status${error ? " is-error" : ""}`}>
+                    <span className="portfolio-live-dot"></span>
+                    {error ? fallbackStatus : loading ? loadingStatus : lastUpdated ? updatedStatus : liveStatus}
                 </div>
 
                 <div className="portfolio-ticker-wrap">
@@ -43,8 +92,8 @@ const PortfolioCrypto = ({ coins, language }) => {
                                 target="_blank"
                                 rel="noreferrer"
                             >
-                                <span className="portfolio-ticker-pair">{coin.symbol}/USDT</span>
-                                <span className="portfolio-ticker-value">${formatPrice(coin.price)}</span>
+                                <span className="portfolio-ticker-pair">{coin.pair || `${coin.symbol}/USDT`}</span>
+                                <span className="portfolio-ticker-value">${formatCryptoPrice(coin.price)}</span>
                                 <CryptoChange change={coin.change} />
                             </a>
                         ))}
@@ -61,12 +110,12 @@ const PortfolioCrypto = ({ coins, language }) => {
                                     target="_blank"
                                     rel="noreferrer"
                                 >
-                                    {coin.symbol}/USDT
+                                    {coin.pair || `${coin.symbol}/USDT`}
                                 </a>
                                 <CryptoChange change={coin.change} />
                             </div>
                             <div className="portfolio-crypto-name">{coin.name}</div>
-                            <div className="portfolio-crypto-price">${formatPrice(coin.price)}</div>
+                            <div className="portfolio-crypto-price">${formatCryptoPrice(coin.price)}</div>
                         </article>
                     ))}
                 </div>
@@ -77,7 +126,7 @@ const PortfolioCrypto = ({ coins, language }) => {
             </section>
 
             <PageFooter>
-                <span>{aboutContent.name}</span> - {pick(cryptoContent.footer, language)}
+                <span>{pick(aboutContent.name, language)}</span> - {pick(cryptoContent.footer, language)}
             </PageFooter>
         </div>
     );

@@ -8,9 +8,9 @@ const notFoundCopy = {
         action: "Go to Home Page",
     },
     vi: {
-        title: "O khong! Co ve ban dang truy cap mot trang khong ton tai.",
-        description: "Minh dua ban quay lai trang chu nhe.",
-        action: "Quay lai trang chu",
+        title: "O không! Có vẻ bạn đang truy cập một trang không tộn tại.",
+        description: "Mình đưa bạn quay lại trang chủ nhé.",
+        action: "Quay lại trang chủ",
     },
 };
 

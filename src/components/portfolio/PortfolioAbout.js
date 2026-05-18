@@ -5,16 +5,17 @@ import {
 } from "../../data/portfolioContent";
 import { pick } from "../../utils/localization";
 import PageFooter from "./PageFooter";
+import SocialLinks from "./SocialLinks";
 
 const PortfolioAbout = ({ avatarSrc, language }) => (
     <div className="portfolio-page">
         <section className="portfolio-about-wrap">
             <div className="portfolio-about-hero">
                 <div className="portfolio-about-avatar">
-                    <img src={avatarSrc} alt={aboutContent.name} />
+                    <img src={avatarSrc} alt={pick(aboutContent.name, language)} />
                 </div>
                 <div className="portfolio-about-bio">
-                    <h1>{aboutContent.name}</h1>
+                    <h1>{pick(aboutContent.name, language)}</h1>
                     <div className="portfolio-role">{pick(aboutContent.role, language)}</div>
                     <p>{pick(aboutContent.bioPrimary, language)}</p>
                     <p className="portfolio-about-secondary">
@@ -24,17 +25,14 @@ const PortfolioAbout = ({ avatarSrc, language }) => (
                     </p>
                     <div className="portfolio-contact-row">
                         <a href="mailto:ngoctam2303001@gmail.com" className="portfolio-contact-chip">
-                            {pick(aboutContent.emailLabel, language)}: ngoctam2303001@gmail.com
+                            <span className="chip-icon">✉</span>ngoctam2303001@gmail.com
                         </a>
-                        <a
-                            href="https://tamfuldev.github.io/"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="portfolio-contact-chip"
-                        >
-                            {pick(aboutContent.portfolioLabel, language)}
+                        <a href="tel:+84909762942" className="portfolio-contact-chip">
+                            <span className="chip-icon">☎</span>
+                            +84 90 976 2942
                         </a>
                     </div>
+                    <SocialLinks compact className="portfolio-about-socials" />
                 </div>
             </div>
 
@@ -87,7 +85,7 @@ const PortfolioAbout = ({ avatarSrc, language }) => (
         </section>
 
         <PageFooter>
-            <span>{aboutContent.name}</span> - {pick(aboutContent.footer, language)}
+            <span>{pick(aboutContent.name, language)}</span> - {pick(aboutContent.footer, language)}
         </PageFooter>
     </div>
 );

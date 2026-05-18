@@ -23,14 +23,14 @@ const Loader = ({ delay = 300 }) => {
     return (
         <div id="loader" className={loadingProgress >= 100 ? "hidden" : ""}>
             <div className="loader-logo">
-                <span className="loader-text">Tam Saitama</span>
+                <span className="loader-text">Tam</span>
                 <span className="loader-dot">.</span>
             </div>
             <div className="loader-bar">
                 <div className="progress-fill"></div>
             </div>
             <div className="loader-status">
-                {language === "vi" ? "DANG TAI..." : "LOADING..."}
+                {language === "vi" ? "ĐANG TẢI..." : "LOADING..."}
             </div>
         </div>
     );

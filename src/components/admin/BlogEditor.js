@@ -1,4 +1,30 @@
 import { FiCheck, FiRefreshCw, FiX } from "react-icons/fi";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
+
+const quillModules = {
+    toolbar: [
+        [{ header: [2, 3, false] }],
+        ["bold", "italic", "underline", "strike"],
+        [{ list: "ordered" }, { list: "bullet" }],
+        ["blockquote", "code-block"],
+        ["link"],
+        ["clean"],
+    ],
+};
+
+const quillFormats = [
+    "header",
+    "bold",
+    "italic",
+    "underline",
+    "strike",
+    "list",
+    "bullet",
+    "blockquote",
+    "code-block",
+    "link",
+];
 
 const BlogEditor = ({
     form,
@@ -82,41 +108,53 @@ const BlogEditor = ({
 
             <label>
                 Excerpt EN
-                <textarea
-                    value={form.excerpt}
-                    onChange={(event) => onChange("excerpt", event.target.value)}
+                <ReactQuill
+                    className="admin-quill admin-quill-compact"
+                    formats={quillFormats}
+                    modules={quillModules}
+                    onChange={(value) => onChange("excerpt", value)}
                     placeholder="Short summary shown in blog lists..."
-                    rows={3}
+                    theme="snow"
+                    value={form.excerpt}
                 />
             </label>
 
             <label>
                 Excerpt VI
-                <textarea
-                    value={form.excerptVi}
-                    onChange={(event) => onChange("excerptVi", event.target.value)}
+                <ReactQuill
+                    className="admin-quill admin-quill-compact"
+                    formats={quillFormats}
+                    modules={quillModules}
+                    onChange={(value) => onChange("excerptVi", value)}
                     placeholder="Tom tat ngan hien thi o danh sach blog..."
-                    rows={3}
+                    theme="snow"
+                    value={form.excerptVi}
                 />
             </label>
 
             <label>
                 Content EN
-                <textarea
-                    value={form.content}
-                    onChange={(event) => onChange("content", event.target.value)}
+                <ReactQuill
+                    className="admin-quill"
+                    formats={quillFormats}
+                    modules={quillModules}
+                    onChange={(value) => onChange("content", value)}
                     placeholder="Write the post body here..."
-                    rows={9}
+                    theme="snow"
+                    value={form.content}
                 />
             </label>
 
             <label>
                 Content VI
-                <textarea
-                    value={form.contentVi}
-                    onChange={(event) => onChange("contentVi", event.target.value)}
+                <ReactQuill
+                    className="admin-quill"
+                    formats={quillFormats}
+                    modules={quillModules}
+                    onChange={(value) => onChange("contentVi", value)}
                     placeholder="Nhap noi dung tieng Viet tai day..."
-                    rows={9}
+                    theme="snow"
+                    value={form.contentVi}
                 />
             </label>
 

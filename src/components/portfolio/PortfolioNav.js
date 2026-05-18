@@ -15,7 +15,7 @@ const PortfolioNav = ({ activePage, language, onPageChange }) => (
 
         <div className="portfolio-nav-main">
             <div className="portfolio-nav-links">
-                {["home", "about", "blog", "crypto"].map((page) => (
+                {["home", "about", "projects", "blog", "crypto"].map((page) => (
                     <button
                         key={page}
                         type="button"

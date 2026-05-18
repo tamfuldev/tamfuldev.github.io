@@ -6,6 +6,7 @@ import {
 } from "../../data/portfolioContent";
 import { pick } from "../../utils/localization";
 import PageFooter from "./PageFooter";
+import SocialLinks from "./SocialLinks";
 
 const PortfolioHome = ({ avatarSrc, language, onPageChange }) => (
     <div className="portfolio-page">
@@ -23,17 +24,17 @@ const PortfolioHome = ({ avatarSrc, language, onPageChange }) => (
                     </h1>
                     <p className="portfolio-tagline">
                         {pick(heroContent.taglineLead, language)}
-                        <strong>{heroContent.taglineName}</strong>
+                        <strong>{pick(heroContent.taglineName, language)}</strong>
                         {pick(heroContent.taglineTail, language)}
                     </p>
+                    <SocialLinks />
                     <div className="portfolio-hero-cta">
                         <button
                             type="button"
                             className="portfolio-btn portfolio-btn-primary"
-                            onClick={() => onPageChange("about")}
+                            onClick={() => onPageChange("projects")}
                         >
                             {pick(heroContent.primaryCta, language)}
-                            <span className="portfolio-arrow">-&gt;</span>
                         </button>
                         <a
                             className="portfolio-btn portfolio-btn-secondary"
@@ -56,7 +57,7 @@ const PortfolioHome = ({ avatarSrc, language, onPageChange }) => (
                         <div className="portfolio-orbit-icon portfolio-left-center">Laravel</div>
                     </div>
                     <div className="portfolio-avatar-circle">
-                        <img src={avatarSrc} alt={aboutContent.name} />
+                        <img src={avatarSrc} alt={pick(aboutContent.name, language)} />
                     </div>
                 </div>
             </div>
@@ -97,7 +98,7 @@ const PortfolioHome = ({ avatarSrc, language, onPageChange }) => (
         </section>
 
         <PageFooter>
-            <span>{aboutContent.name}</span> - {pick(heroContent.footer, language)}
+            <span>{pick(aboutContent.name, language)}</span> - {pick(heroContent.footer, language)}
         </PageFooter>
     </div>
 );

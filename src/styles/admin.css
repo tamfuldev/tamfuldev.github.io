@@ -593,6 +593,95 @@ body.light .admin-login-page {
     resize: vertical;
 }
 
+.admin-quill {
+    background: var(--admin-card);
+    border: 1px solid var(--admin-border);
+    border-radius: 8px;
+    color: var(--admin-text);
+    font-weight: 400;
+    letter-spacing: 0;
+    overflow: hidden;
+    text-transform: none;
+}
+
+.admin-quill .ql-toolbar,
+.admin-quill .ql-container {
+    border: 0;
+    font-family: "Inter", "Segoe UI", system-ui, sans-serif;
+}
+
+.admin-quill .ql-toolbar {
+    background: var(--admin-surface-2);
+    border-bottom: 1px solid var(--admin-border);
+}
+
+.admin-quill .ql-container {
+    min-height: 220px;
+}
+
+.admin-quill .ql-editor {
+    color: var(--admin-text);
+    font-size: 0.95rem;
+    line-height: 1.7;
+    min-height: 220px;
+}
+
+.admin-quill.admin-quill-compact .ql-container,
+.admin-quill.admin-quill-compact .ql-editor {
+    min-height: 120px;
+}
+
+.admin-quill .ql-editor.ql-blank::before {
+    color: var(--admin-muted);
+    font-style: normal;
+}
+
+.admin-quill .ql-snow .ql-stroke,
+.admin-quill .ql-stroke {
+    stroke: var(--admin-muted);
+}
+
+.admin-quill .ql-snow .ql-fill,
+.admin-quill .ql-fill {
+    fill: var(--admin-muted);
+}
+
+.admin-quill .ql-picker,
+.admin-quill .ql-picker-label {
+    color: var(--admin-muted);
+}
+
+.admin-quill .ql-picker-options {
+    background: var(--admin-card);
+    border-color: var(--admin-border);
+}
+
+.admin-quill .ql-toolbar button:hover .ql-stroke,
+.admin-quill .ql-toolbar button.ql-active .ql-stroke,
+.admin-quill .ql-picker-label:hover .ql-stroke,
+.admin-quill .ql-picker-label.ql-active .ql-stroke {
+    stroke: var(--admin-accent);
+}
+
+.admin-quill .ql-toolbar button:hover .ql-fill,
+.admin-quill .ql-toolbar button.ql-active .ql-fill {
+    fill: var(--admin-accent);
+}
+
+.admin-quill .ql-toolbar button:hover,
+.admin-quill .ql-toolbar button.ql-active,
+.admin-quill .ql-picker-label:hover,
+.admin-quill .ql-picker-label.ql-active {
+    color: var(--admin-accent);
+}
+
+.admin-quill .ql-tooltip {
+    background: var(--admin-card);
+    border-color: var(--admin-border);
+    box-shadow: 0 18px 48px rgba(0, 0, 0, 0.2);
+    color: var(--admin-text);
+}
+
 .admin-form-grid {
     display: grid;
     gap: 0.75rem;

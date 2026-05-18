@@ -7,17 +7,27 @@
     <meta name="theme-color" content="#000000" />
     <meta name="description" content="Tran Ngoc Tam - Backend Engineer portfolio" />
     <title>Tran Ngoc Tam - Backend Engineer</title>
+    <script>
+        (function () {
+            var redirect = sessionStorage.redirect;
+            delete sessionStorage.redirect;
 
-    <link rel="apple-touch-icon" sizes="180x180" href="assets/img/favicon_io/apple-touch-icon.png">
-    <link rel="icon" href="assets/img/favicon_io/favicon.ico" />
-    <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon_io/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="assets/img/favicon_io/favicon-16x16.png">
-    <link rel="manifest" href="assets/img/favicon_io/site.webmanifest">
+            if (redirect && redirect !== location.href) {
+                history.replaceState(null, null, redirect);
+            }
+        })();
+    </script>
+
+    <link rel="apple-touch-icon" sizes="180x180" href="%PUBLIC_URL%/assets/img/favicon_io/apple-touch-icon.png">
+    <link rel="icon" href="%PUBLIC_URL%/assets/img/favicon_io/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="%PUBLIC_URL%/assets/img/favicon_io/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="%PUBLIC_URL%/assets/img/favicon_io/favicon-16x16.png">
+    <link rel="manifest" href="%PUBLIC_URL%/assets/img/favicon_io/site.webmanifest">
 
     <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="assets/css/style.css">
-    <link rel="stylesheet" href="assets/css/portfolio.css">
+    <link rel="stylesheet" href="%PUBLIC_URL%/assets/css/style.css">
+    <link rel="stylesheet" href="%PUBLIC_URL%/assets/css/portfolio.css">
 </head> 
 
 <body>
