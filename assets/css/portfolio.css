@@ -161,6 +161,53 @@ body.light .portfolio-nav {
     transform: scaleX(1);
 }
 
+.sr-only {
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+}
+
+.portfolio-nav-select {
+    position: relative;
+}
+
+.portfolio-nav-select select {
+    appearance: none;
+    background: var(--portfolio-bg-3);
+    border: 1px solid var(--portfolio-border);
+    border-radius: 999px;
+    color: var(--portfolio-text);
+    cursor: pointer;
+    font: inherit;
+    font-size: 0.82rem;
+    min-height: 38px;
+    outline: 0;
+    padding: 0.45rem 2.2rem 0.45rem 0.9rem;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.portfolio-nav-select::after {
+    color: var(--portfolio-accent);
+    content: "v";
+    pointer-events: none;
+    position: absolute;
+    right: 0.85rem;
+    top: 50%;
+    transform: translateY(-54%);
+}
+
+.portfolio-nav-select:hover select,
+.portfolio-nav-select.is-active select {
+    border-color: rgba(232, 255, 72, 0.38);
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.14);
+    transform: translateY(-1px);
+}
+
 .portfolio-hire-btn {
     background: var(--portfolio-accent);
     border-radius: 999px;
@@ -823,6 +870,16 @@ body.light .portfolio-nav {
     line-height: 1.75;
 }
 
+.portfolio-project-state {
+    background: var(--portfolio-card);
+    border: 1px solid var(--portfolio-border);
+    border-radius: 16px;
+    color: var(--portfolio-muted);
+    font-family: var(--portfolio-mono-font);
+    margin-bottom: 1rem;
+    padding: 1rem;
+}
+
 .portfolio-project-showcase {
     display: grid;
     gap: 1.2rem;
@@ -1326,6 +1383,619 @@ body.light .portfolio-nav {
     content: ">";
     left: 0;
     position: absolute;
+}
+
+.portfolio-roadmap-wrap {
+    margin: 0 auto;
+    max-width: 1100px;
+    padding: 4rem 2rem 2rem;
+}
+
+.portfolio-roadmap-hero {
+    animation: portfolio-fade-up 0.65s ease both;
+    align-items: stretch;
+    display: grid;
+    gap: 1.5rem;
+    grid-template-columns: minmax(0, 1fr) minmax(280px, 360px);
+    margin-bottom: 3rem;
+}
+
+.portfolio-roadmap-hero h1 {
+    font-family: var(--portfolio-head-font);
+    font-size: clamp(2.8rem, 8vw, 6.5rem);
+    letter-spacing: -0.08em;
+    line-height: 0.9;
+    margin: 0.45rem 0 1rem;
+}
+
+.portfolio-roadmap-hero p {
+    color: var(--portfolio-muted);
+    font-family: var(--portfolio-mono-font);
+    line-height: 1.7;
+    max-width: 760px;
+}
+
+.portfolio-roadmap-progress-card {
+    background:
+        radial-gradient(circle at 10% 10%, rgba(232, 255, 72, 0.12), transparent 12rem),
+        var(--portfolio-card);
+    border: 1px solid var(--portfolio-border);
+    border-radius: 22px;
+    box-shadow: 0 22px 80px rgba(0, 0, 0, 0.18);
+    display: grid;
+    gap: 1rem;
+    min-height: 220px;
+    padding: 1.2rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.portfolio-roadmap-progress-card::after {
+    background: linear-gradient(135deg, transparent, rgba(232, 255, 72, 0.08), transparent);
+    content: "";
+    inset: -30%;
+    position: absolute;
+    transform: rotate(12deg);
+}
+
+.portfolio-roadmap-progress-card > * {
+    position: relative;
+    z-index: 1;
+}
+
+.portfolio-roadmap-progress-icon {
+    align-items: center;
+    background: rgba(232, 255, 72, 0.1);
+    border: 1px solid rgba(232, 255, 72, 0.22);
+    border-radius: 16px;
+    color: var(--portfolio-accent);
+    display: inline-flex;
+    font-size: 1.45rem;
+    height: 52px;
+    justify-content: center;
+    width: 52px;
+}
+
+.portfolio-roadmap-progress-card span,
+.portfolio-roadmap-progress-card small {
+    color: var(--portfolio-muted);
+    font-family: var(--portfolio-mono-font);
+}
+
+.portfolio-roadmap-progress-card strong {
+    display: block;
+    font-family: var(--portfolio-head-font);
+    font-size: 3rem;
+    letter-spacing: -0.05em;
+    margin: 0.15rem 0;
+}
+
+.portfolio-roadmap-progress-track {
+    background: var(--portfolio-bg-3);
+    border: 1px solid var(--portfolio-border);
+    border-radius: 999px;
+    height: 12px;
+    overflow: hidden;
+}
+
+.portfolio-roadmap-progress-track span {
+    background: linear-gradient(90deg, var(--portfolio-accent), #7bb8f5);
+    display: block;
+    height: 100%;
+    transition: width 0.35s ease;
+}
+
+.portfolio-roadmap-state {
+    background: var(--portfolio-card);
+    border: 1px solid var(--portfolio-border);
+    border-radius: 16px;
+    color: var(--portfolio-muted);
+    font-family: var(--portfolio-mono-font);
+    line-height: 1.6;
+    padding: 1rem;
+}
+
+.portfolio-roadmap-state.is-error {
+    border-color: rgba(248, 113, 113, 0.35);
+    color: #f87171;
+}
+
+.portfolio-roadmap-state span {
+    display: block;
+    margin-top: 0.35rem;
+}
+
+.portfolio-roadmap-timeline {
+    display: grid;
+    gap: 2rem;
+    padding-left: 3rem;
+    position: relative;
+}
+
+.portfolio-roadmap-timeline::before {
+    background: linear-gradient(to bottom, var(--portfolio-accent), var(--portfolio-border));
+    bottom: 0;
+    content: "";
+    left: 1rem;
+    position: absolute;
+    top: 0;
+    width: 1px;
+}
+
+.portfolio-roadmap-phase {
+    animation: portfolio-fade-up 0.65s ease both;
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: auto minmax(0, 1fr);
+    position: relative;
+}
+
+.portfolio-roadmap-marker {
+    align-items: center;
+    background: var(--portfolio-bg);
+    border: 1px solid rgba(232, 255, 72, 0.35);
+    border-radius: 999px;
+    color: var(--portfolio-accent);
+    display: inline-flex;
+    font-family: var(--portfolio-mono-font);
+    font-size: 0.75rem;
+    height: 42px;
+    justify-content: center;
+    left: -3.3rem;
+    position: absolute;
+    top: 0.9rem;
+    width: 42px;
+    z-index: 1;
+}
+
+.portfolio-roadmap-card {
+    background: var(--portfolio-card);
+    border: 1px solid var(--portfolio-border);
+    border-radius: 22px;
+    grid-column: 1 / -1;
+    padding: 1.25rem;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.portfolio-roadmap-card:hover {
+    border-color: rgba(232, 255, 72, 0.28);
+    box-shadow: 0 22px 70px rgba(0, 0, 0, 0.18);
+    transform: translateY(-3px);
+}
+
+.portfolio-roadmap-card-head {
+    align-items: flex-start;
+    display: flex;
+    gap: 1rem;
+    justify-content: space-between;
+    margin-bottom: 0.75rem;
+}
+
+.portfolio-roadmap-card-head svg {
+    color: var(--portfolio-accent);
+    flex: 0 0 auto;
+}
+
+.portfolio-roadmap-phase-kicker,
+.portfolio-roadmap-badge {
+    font-family: var(--portfolio-mono-font);
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.portfolio-roadmap-phase-kicker {
+    color: var(--portfolio-accent);
+}
+
+.portfolio-roadmap-card h2 {
+    font-family: var(--portfolio-head-font);
+    font-size: clamp(1.35rem, 3vw, 2rem);
+    letter-spacing: -0.04em;
+    margin-top: 0.2rem;
+}
+
+.portfolio-roadmap-card > p {
+    color: var(--portfolio-muted);
+    line-height: 1.7;
+    margin-bottom: 1rem;
+}
+
+.portfolio-roadmap-milestones {
+    display: grid;
+    gap: 0.7rem;
+}
+
+.portfolio-roadmap-milestone {
+    align-items: flex-start;
+    background: var(--portfolio-bg-2);
+    border: 1px solid var(--portfolio-border);
+    border-radius: 16px;
+    display: grid;
+    gap: 0.8rem;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    padding: 0.85rem;
+}
+
+.portfolio-roadmap-milestone.is-done {
+    border-color: rgba(74, 222, 128, 0.28);
+}
+
+.portfolio-roadmap-milestone.is-doing {
+    border-color: rgba(123, 184, 245, 0.3);
+}
+
+.portfolio-roadmap-status-icon {
+    color: var(--portfolio-muted);
+    display: inline-flex;
+    margin-top: 0.12rem;
+}
+
+.portfolio-roadmap-milestone.is-done .portfolio-roadmap-status-icon {
+    color: #4ade80;
+}
+
+.portfolio-roadmap-milestone.is-doing .portfolio-roadmap-status-icon {
+    color: #7bb8f5;
+}
+
+.portfolio-roadmap-milestone strong,
+.portfolio-roadmap-milestone small {
+    display: block;
+}
+
+.portfolio-roadmap-milestone strong {
+    line-height: 1.45;
+}
+
+.portfolio-roadmap-milestone small {
+    color: var(--portfolio-muted);
+    line-height: 1.55;
+    margin-top: 0.2rem;
+}
+
+.portfolio-roadmap-badge {
+    border: 1px solid var(--portfolio-border);
+    border-radius: 999px;
+    color: var(--portfolio-muted);
+    padding: 0.28rem 0.55rem;
+}
+
+.portfolio-roadmap-badge.is-done {
+    background: rgba(74, 222, 128, 0.1);
+    border-color: rgba(74, 222, 128, 0.24);
+    color: #4ade80;
+}
+
+.portfolio-roadmap-badge.is-doing {
+    background: rgba(123, 184, 245, 0.1);
+    border-color: rgba(123, 184, 245, 0.24);
+    color: #7bb8f5;
+}
+
+.portfolio-daily-plan-wrap {
+    margin: 0 auto;
+    max-width: 1180px;
+    padding: 4rem 2rem 2rem;
+}
+
+.portfolio-daily-plan-hero {
+    animation: portfolio-fade-up 0.65s ease both;
+    align-items: stretch;
+    display: grid;
+    gap: 1.5rem;
+    grid-template-columns: minmax(0, 1fr) minmax(240px, 320px);
+    margin-bottom: 2rem;
+}
+
+.portfolio-daily-plan-hero h1 {
+    font-family: var(--portfolio-head-font);
+    font-size: clamp(2.8rem, 8vw, 6.5rem);
+    letter-spacing: -0.08em;
+    line-height: 0.9;
+    margin: 0.45rem 0 1rem;
+}
+
+.portfolio-daily-plan-hero p {
+    color: var(--portfolio-muted);
+    font-family: var(--portfolio-mono-font);
+    line-height: 1.7;
+    max-width: 760px;
+}
+
+.portfolio-daily-plan-summary {
+    background:
+        radial-gradient(circle at 12% 18%, rgba(123, 184, 245, 0.13), transparent 12rem),
+        var(--portfolio-card);
+    border: 1px solid var(--portfolio-border);
+    border-radius: 22px;
+    display: grid;
+    gap: 0.35rem;
+    min-height: 190px;
+    padding: 1.2rem;
+}
+
+.portfolio-daily-plan-summary svg {
+    color: var(--portfolio-accent);
+    font-size: 1.55rem;
+}
+
+.portfolio-daily-plan-summary strong {
+    font-family: var(--portfolio-head-font);
+    font-size: 3rem;
+    letter-spacing: -0.05em;
+}
+
+.portfolio-daily-plan-summary span {
+    color: var(--portfolio-muted);
+    font-family: var(--portfolio-mono-font);
+}
+
+.portfolio-daily-plan-grid {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: minmax(0, 1.1fr) minmax(320px, 0.9fr);
+}
+
+.portfolio-calendar-card,
+.portfolio-day-tasks-card,
+.portfolio-daily-plan-state {
+    background: var(--portfolio-card);
+    border: 1px solid var(--portfolio-border);
+    border-radius: 22px;
+}
+
+.portfolio-calendar-card,
+.portfolio-day-tasks-card {
+    padding: 1rem;
+}
+
+.portfolio-calendar-head {
+    align-items: center;
+    display: flex;
+    gap: 1rem;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
+
+.portfolio-calendar-head button {
+    align-items: center;
+    background: var(--portfolio-bg-3);
+    border: 1px solid var(--portfolio-border);
+    border-radius: 12px;
+    color: var(--portfolio-text);
+    cursor: pointer;
+    display: inline-flex;
+    height: 42px;
+    justify-content: center;
+    transition: border-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+    width: 42px;
+}
+
+.portfolio-calendar-head button:hover {
+    border-color: var(--portfolio-accent);
+    color: var(--portfolio-accent);
+    transform: translateY(-1px);
+}
+
+.portfolio-calendar-head strong {
+    display: block;
+    font-family: var(--portfolio-head-font);
+    font-size: 1.4rem;
+    letter-spacing: -0.04em;
+    text-align: center;
+}
+
+.portfolio-calendar-head span {
+    color: var(--portfolio-muted);
+    display: block;
+    font-family: var(--portfolio-mono-font);
+    font-size: 0.72rem;
+    margin-top: 0.15rem;
+    text-align: center;
+}
+
+.portfolio-calendar-weekdays,
+.portfolio-calendar-days {
+    display: grid;
+    gap: 0.45rem;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+}
+
+.portfolio-calendar-weekdays {
+    color: var(--portfolio-muted);
+    font-family: var(--portfolio-mono-font);
+    font-size: 0.72rem;
+    margin-bottom: 0.5rem;
+    text-align: center;
+}
+
+.portfolio-calendar-day {
+    aspect-ratio: 1;
+    background: var(--portfolio-bg-2);
+    border: 1px solid var(--portfolio-border);
+    border-radius: 16px;
+    color: var(--portfolio-text);
+    cursor: pointer;
+    display: grid;
+    font: inherit;
+    min-height: 60px;
+    place-items: center;
+    position: relative;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+.portfolio-calendar-day:hover {
+    border-color: var(--portfolio-hover-border);
+    transform: translateY(-2px);
+}
+
+.portfolio-calendar-day.is-empty {
+    background: transparent;
+    border-color: transparent;
+    cursor: default;
+}
+
+.portfolio-calendar-day.is-today {
+    color: var(--portfolio-accent);
+}
+
+.portfolio-calendar-day.is-selected {
+    border-color: rgba(232, 255, 72, 0.55);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.18);
+}
+
+.portfolio-calendar-day.has-plan i {
+    background: linear-gradient(90deg, var(--portfolio-accent), #7bb8f5);
+    border-radius: 999px;
+    bottom: 9px;
+    height: 5px;
+    position: absolute;
+    width: 18px;
+}
+
+.portfolio-day-tasks-card {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.portfolio-day-tasks-head {
+    align-items: center;
+    display: flex;
+    gap: 1rem;
+    justify-content: space-between;
+}
+
+.portfolio-day-tasks-head span,
+.portfolio-day-task-count span,
+.portfolio-day-note {
+    color: var(--portfolio-muted);
+    font-family: var(--portfolio-mono-font);
+}
+
+.portfolio-day-tasks-head h2 {
+    font-family: var(--portfolio-head-font);
+    font-size: 1.55rem;
+    letter-spacing: -0.04em;
+    margin-top: 0.15rem;
+}
+
+.portfolio-day-task-count {
+    background: var(--portfolio-bg-3);
+    border: 1px solid var(--portfolio-border);
+    border-radius: 16px;
+    display: grid;
+    min-width: 96px;
+    padding: 0.75rem;
+    text-align: center;
+}
+
+.portfolio-day-task-count strong {
+    font-family: var(--portfolio-mono-font);
+}
+
+.portfolio-day-note {
+    line-height: 1.6;
+}
+
+.portfolio-daily-plan-state {
+    color: var(--portfolio-muted);
+    font-family: var(--portfolio-mono-font);
+    line-height: 1.6;
+    padding: 1rem;
+}
+
+.portfolio-daily-plan-state.is-error {
+    border-color: rgba(248, 113, 113, 0.35);
+    color: #f87171;
+    margin-bottom: 1rem;
+}
+
+.portfolio-day-task-list {
+    display: grid;
+    gap: 0.75rem;
+}
+
+.portfolio-day-task {
+    align-items: flex-start;
+    background: var(--portfolio-bg-2);
+    border: 1px solid var(--portfolio-border);
+    border-radius: 18px;
+    display: grid;
+    gap: 0.8rem;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    padding: 0.9rem;
+}
+
+.portfolio-day-task.is-done {
+    border-color: rgba(74, 222, 128, 0.28);
+}
+
+.portfolio-day-task.is-done strong {
+    text-decoration: line-through;
+}
+
+.portfolio-day-task-status {
+    color: var(--portfolio-muted);
+    display: inline-flex;
+    margin-top: 0.2rem;
+}
+
+.portfolio-day-task.is-done .portfolio-day-task-status {
+    color: #4ade80;
+}
+
+.portfolio-day-task strong,
+.portfolio-day-task p {
+    display: block;
+}
+
+.portfolio-day-task p {
+    color: var(--portfolio-muted);
+    line-height: 1.55;
+    margin-top: 0.25rem;
+}
+
+.portfolio-day-task-badges {
+    align-items: flex-end;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+}
+
+.portfolio-priority-badge,
+.portfolio-status-badge {
+    border: 1px solid var(--portfolio-border);
+    border-radius: 999px;
+    font-family: var(--portfolio-mono-font);
+    font-size: 0.68rem;
+    padding: 0.26rem 0.55rem;
+    text-transform: uppercase;
+}
+
+.portfolio-priority-badge.is-high {
+    background: rgba(248, 113, 113, 0.1);
+    border-color: rgba(248, 113, 113, 0.24);
+    color: #f87171;
+}
+
+.portfolio-priority-badge.is-medium {
+    background: rgba(232, 255, 72, 0.1);
+    border-color: rgba(232, 255, 72, 0.22);
+    color: var(--portfolio-accent);
+}
+
+.portfolio-priority-badge.is-low {
+    background: rgba(123, 184, 245, 0.1);
+    border-color: rgba(123, 184, 245, 0.24);
+    color: #7bb8f5;
+}
+
+.portfolio-status-badge.is-done {
+    background: rgba(74, 222, 128, 0.1);
+    border-color: rgba(74, 222, 128, 0.24);
+    color: #4ade80;
 }
 
 .portfolio-blog-header {
@@ -2005,7 +2675,10 @@ body.light .portfolio-nav {
 @media (max-width: 900px) {
     .portfolio-hero-content,
     .portfolio-about-hero,
-    .portfolio-projects-hero {
+    .portfolio-projects-hero,
+    .portfolio-roadmap-hero,
+    .portfolio-daily-plan-hero,
+    .portfolio-daily-plan-grid {
         grid-template-columns: 1fr;
     }
 
@@ -2044,6 +2717,11 @@ body.light .portfolio-nav {
         width: 100%;
     }
 
+    .portfolio-nav-select,
+    .portfolio-nav-select select {
+        width: 100%;
+    }
+
     .portfolio-nav-main {
         align-items: stretch;
         flex-direction: column;
@@ -2061,6 +2739,8 @@ body.light .portfolio-nav {
     .portfolio-hero,
     .portfolio-featured,
     .portfolio-projects-wrap,
+    .portfolio-roadmap-wrap,
+    .portfolio-daily-plan-wrap,
     .portfolio-about-wrap,
     .portfolio-blog-wrap,
     .portfolio-crypto-wrap {
@@ -2095,6 +2775,34 @@ body.light .portfolio-nav {
         justify-content: flex-start;
         max-width: 100%;
     }
+
+    .portfolio-roadmap-timeline {
+        gap: 1.25rem;
+        padding-left: 2rem;
+    }
+
+    .portfolio-roadmap-marker {
+        left: -2.35rem;
+    }
+
+    .portfolio-roadmap-milestone {
+        grid-template-columns: auto minmax(0, 1fr);
+    }
+
+    .portfolio-roadmap-badge {
+        grid-column: 2;
+        justify-self: flex-start;
+    }
+
+    .portfolio-day-task {
+        grid-template-columns: auto minmax(0, 1fr);
+    }
+
+    .portfolio-day-task-badges {
+        align-items: flex-start;
+        flex-direction: row;
+        grid-column: 2;
+    }
 }
 
 @media (max-width: 560px) {
@@ -2105,8 +2813,30 @@ body.light .portfolio-nav {
     .portfolio-hero-text h1,
     .portfolio-about-bio h1,
     .portfolio-blog-header h1,
-    .portfolio-crypto-header h1 {
+    .portfolio-crypto-header h1,
+    .portfolio-roadmap-hero h1,
+    .portfolio-daily-plan-hero h1 {
         font-size: 2rem;
+    }
+
+    .portfolio-calendar-card,
+    .portfolio-day-tasks-card {
+        padding: 0.75rem;
+    }
+
+    .portfolio-calendar-weekdays,
+    .portfolio-calendar-days {
+        gap: 0.3rem;
+    }
+
+    .portfolio-calendar-day {
+        border-radius: 12px;
+        min-height: 44px;
+    }
+
+    .portfolio-day-tasks-head {
+        align-items: flex-start;
+        flex-direction: column;
     }
 
     .portfolio-btn {
