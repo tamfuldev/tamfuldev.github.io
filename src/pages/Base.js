@@ -2,6 +2,7 @@ import React from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useLanguage } from "../components/LanguageContext";
 import DailyPlanCalendar from "../components/portfolio/DailyPlanCalendar";
+import MarketAnalysisWidget from "../components/portfolio/MarketAnalysisWidget";
 import PortfolioAbout from "../components/portfolio/PortfolioAbout";
 import PortfolioBlog from "../components/portfolio/PortfolioBlog";
 import PortfolioCrypto from "../components/portfolio/PortfolioCrypto";
@@ -25,7 +26,9 @@ const Base = ({ canAccessPrivatePages = false, initialPage = "home" }) => {
                 ? "roadmap"
                 : location.pathname.startsWith("/daily-plan")
                     ? "dailyPlan"
-                    : location.state?.activePage || initialPage;
+                    : location.pathname.startsWith("/market-analysis")
+                        ? "marketAnalysis"
+                        : location.state?.activePage || initialPage;
     const [activePage, setActivePage] = React.useState(routedPage);
     const [activeTag, setActiveTag] = React.useState("all");
     const cryptoPrices = initialCoins;
@@ -53,6 +56,8 @@ const Base = ({ canAccessPrivatePages = false, initialPage = "home" }) => {
             navigate("/roadmap");
         } else if (page === "dailyPlan") {
             navigate("/daily-plan");
+        } else if (page === "marketAnalysis") {
+            navigate("/market-analysis");
         } else {
             navigate("/", { state: { activePage: page } });
         }
@@ -92,6 +97,10 @@ const Base = ({ canAccessPrivatePages = false, initialPage = "home" }) => {
 
             {activePage === "dailyPlan" && (
                 <DailyPlanCalendar language={language} />
+            )}
+
+            {activePage === "marketAnalysis" && (
+                <MarketAnalysisWidget language={language} />
             )}
 
             {activePage === "blog" && (

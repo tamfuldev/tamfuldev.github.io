@@ -52,7 +52,7 @@ const PortfolioHome = ({ avatarSrc, language, onPageChange }) => (
                     </div>
                     <div className="portfolio-orbit-ring portfolio-orbit-ring-2">
                         <div className="portfolio-orbit-icon portfolio-top-center">Redis</div>
-                        <div className="portfolio-orbit-icon portfolio-right-center">API</div>
+                        <div className="portfolio-orbit-icon portfolio-right-center">API</div>  
                         <div className="portfolio-orbit-icon portfolio-bottom-center">Docker</div>
                         <div className="portfolio-orbit-icon portfolio-left-center">Laravel</div>
                     </div>

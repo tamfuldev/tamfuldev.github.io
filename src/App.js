@@ -96,6 +96,13 @@ function App() {
             </ProtectedRoute>
           }
           />
+          <Route path="/market-analysis" element={
+            <>
+              <Loader delay={300} />
+              <Base canAccessPrivatePages={Boolean(user)} initialPage="marketAnalysis" />
+            </>
+          }
+          />
           <Route path="/login" element={<Login />} />
           <Route path="/admin"
             element={

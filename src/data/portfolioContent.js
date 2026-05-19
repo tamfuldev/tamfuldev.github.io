@@ -7,6 +7,7 @@ export const navigationLabels = {
     blog: localized("Blog", "Bài viết"),
     roadmap: localized("Roadmap", "Roadmap"),
     dailyPlan: localized("Plan", "Plan"),
+    marketAnalysis: localized("Market", "Market"),
     crypto: localized("Crypto", "Crypto"),
     more: localized("More", "Thêm"),
     hire: localized("Hire Me", "Liên hệ"),
@@ -52,7 +53,7 @@ export const heroContent = {
         " - hơn 4 năm xây dựng hệ thống có khả năng mở rộng với Laravel, Redis va Docker. Tôi biến bài toán server phức tạp thành giải pháp gọn, nhanh và đáng tin cậy."
     ),
     primaryCta: localized("View My Work", "Xem kinh nghiệm"),
-    secondaryCta: localized("Get In Touch", "Liên hệ"),
+    secondaryCta: localized("Download CV", "Tải CV xuống"),
     featuredLabel: localized("// Featured Work", "// Dự án nổi bật"),
     featuredTitle: localized("What I have built", "Những gì tôi đã xây dựng"),
     footer: localized(
