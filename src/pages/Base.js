@@ -1,6 +1,7 @@
 import React from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useLanguage } from "../components/LanguageContext";
+import DailyPlanCalendar from "../components/portfolio/DailyPlanCalendar";
 import PortfolioAbout from "../components/portfolio/PortfolioAbout";
 import PortfolioBlog from "../components/portfolio/PortfolioBlog";
 import PortfolioCrypto from "../components/portfolio/PortfolioCrypto";
@@ -8,9 +9,10 @@ import PortfolioFx from "../components/portfolio/PortfolioFx";
 import PortfolioHome from "../components/portfolio/PortfolioHome";
 import PortfolioNav from "../components/portfolio/PortfolioNav";
 import PortfolioProjects from "../components/portfolio/PortfolioProjects";
+import RoadmapView from "../components/portfolio/RoadmapView";
 import { initialCoins } from "../data/portfolioContent";
 
-const Base = ({ initialPage = "home" }) => {
+const Base = ({ canAccessPrivatePages = false, initialPage = "home" }) => {
     const { language } = useLanguage();
     const { slug } = useParams();
     const location = useLocation();
@@ -19,7 +21,11 @@ const Base = ({ initialPage = "home" }) => {
         ? "blog"
         : location.pathname.startsWith("/projects")
             ? "projects"
-            : location.state?.activePage || initialPage;
+            : location.pathname.startsWith("/roadmap")
+                ? "roadmap"
+                : location.pathname.startsWith("/daily-plan")
+                    ? "dailyPlan"
+                    : location.state?.activePage || initialPage;
     const [activePage, setActivePage] = React.useState(routedPage);
     const [activeTag, setActiveTag] = React.useState("all");
     const cryptoPrices = initialCoins;
@@ -43,6 +49,10 @@ const Base = ({ initialPage = "home" }) => {
             navigate("/blog");
         } else if (page === "projects") {
             navigate("/projects");
+        } else if (page === "roadmap") {
+            navigate("/roadmap");
+        } else if (page === "dailyPlan") {
+            navigate("/daily-plan");
         } else {
             navigate("/", { state: { activePage: page } });
         }
@@ -55,6 +65,7 @@ const Base = ({ initialPage = "home" }) => {
             <PortfolioFx />
             <PortfolioNav
                 activePage={activePage}
+                canAccessPrivatePages={canAccessPrivatePages}
                 language={language}
                 onPageChange={handlePageChange}
             />
@@ -73,6 +84,14 @@ const Base = ({ initialPage = "home" }) => {
 
             {activePage === "projects" && (
                 <PortfolioProjects language={language} />
+            )}
+
+            {activePage === "roadmap" && (
+                <RoadmapView language={language} />
+            )}
+
+            {activePage === "dailyPlan" && (
+                <DailyPlanCalendar language={language} />
             )}
 
             {activePage === "blog" && (

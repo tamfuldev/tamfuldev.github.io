@@ -344,6 +344,11 @@ body.light .admin-login-page {
     color: var(--admin-accent);
 }
 
+.admin-icon-btn.small {
+    height: 32px;
+    width: 32px;
+}
+
 .admin-icon-btn.danger:hover {
     border-color: var(--admin-danger);
     color: var(--admin-danger);
@@ -363,6 +368,11 @@ body.light .admin-login-page {
     background: var(--admin-card);
     border-color: var(--admin-border);
     color: var(--admin-muted);
+}
+
+.admin-empty.compact {
+    margin: 0;
+    padding: 0.75rem;
 }
 
 .admin-stats {
@@ -712,12 +722,412 @@ body.light .admin-login-page {
     width: 32px;
 }
 
+.admin-manager-hero,
+.admin-panel,
+.admin-roadmap-phase,
+.admin-milestone-card,
+.admin-task-card {
+    background: var(--admin-surface);
+    border: 1px solid var(--admin-border);
+    border-radius: 14px;
+}
+
+.admin-manager-hero {
+    align-items: center;
+    display: flex;
+    gap: 1rem;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    overflow: hidden;
+    padding: 1.2rem;
+    position: relative;
+}
+
+.admin-manager-hero::before {
+    background:
+        radial-gradient(circle at 20% 20%, rgba(232, 255, 72, 0.16), transparent 18rem),
+        radial-gradient(circle at 90% 20%, rgba(123, 184, 245, 0.14), transparent 16rem);
+    content: "";
+    inset: 0;
+    pointer-events: none;
+    position: absolute;
+}
+
+.admin-manager-hero > * {
+    position: relative;
+    z-index: 1;
+}
+
+.admin-manager-hero h2,
+.admin-panel h2,
+.admin-roadmap-phase h2 {
+    font-family: "Syne", sans-serif;
+}
+
+.admin-manager-hero h2 {
+    font-size: clamp(1.45rem, 3vw, 2.45rem);
+    margin-bottom: 0.45rem;
+}
+
+.admin-manager-hero p {
+    color: var(--admin-muted);
+    line-height: 1.6;
+}
+
+.admin-manager-hero code {
+    color: var(--admin-accent);
+    font-family: "JetBrains Mono", monospace;
+}
+
+.admin-hero-icon {
+    align-items: center;
+    background: rgba(232, 255, 72, 0.12);
+    border: 1px solid rgba(232, 255, 72, 0.22);
+    border-radius: 20px;
+    color: var(--admin-accent);
+    display: inline-flex;
+    flex: 0 0 auto;
+    font-size: 2rem;
+    height: 76px;
+    justify-content: center;
+    width: 76px;
+}
+
+.admin-panel {
+    margin-bottom: 1rem;
+    padding: 1rem;
+}
+
+.admin-panel-head,
+.admin-roadmap-phase-head,
+.admin-task-title-row,
+.admin-task-meta {
+    align-items: center;
+    display: flex;
+    gap: 0.75rem;
+    justify-content: space-between;
+}
+
+.admin-phase-form,
+.admin-task-form {
+    margin-top: 0.9rem;
+}
+
+.admin-roadmap-board {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+}
+
+.admin-roadmap-phase {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+    padding: 1rem;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.admin-roadmap-phase:hover {
+    border-color: rgba(232, 255, 72, 0.3);
+    box-shadow: 0 18px 42px rgba(0, 0, 0, 0.18);
+    transform: translateY(-2px);
+}
+
+.admin-roadmap-phase.is-dragging {
+    opacity: 0.55;
+}
+
+.admin-roadmap-phase-title {
+    align-items: center;
+    display: flex;
+    gap: 0.55rem;
+    min-width: 0;
+}
+
+.admin-roadmap-phase-title h2 {
+    font-size: 1.2rem;
+}
+
+.admin-drag-handle {
+    color: var(--admin-muted);
+    cursor: grab;
+    display: inline-flex;
+}
+
+.admin-roadmap-description {
+    color: var(--admin-muted);
+    line-height: 1.55;
+}
+
+.admin-roadmap-progress {
+    display: grid;
+    gap: 0.45rem;
+}
+
+.admin-roadmap-progress span {
+    color: var(--admin-muted);
+    font-size: 0.82rem;
+}
+
+.admin-roadmap-progress > div {
+    background: var(--admin-surface-2);
+    border-radius: 999px;
+    height: 7px;
+    overflow: hidden;
+}
+
+.admin-roadmap-progress > div span {
+    background: linear-gradient(90deg, var(--admin-accent), var(--admin-blue));
+    display: block;
+    height: 100%;
+    transition: width 0.25s ease;
+}
+
+.admin-milestone-list,
+.admin-task-list {
+    display: grid;
+    gap: 0.65rem;
+}
+
+.admin-milestone-card,
+.admin-task-card {
+    align-items: flex-start;
+    display: grid;
+    gap: 0.7rem;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    padding: 0.75rem;
+}
+
+.admin-milestone-card {
+    cursor: grab;
+}
+
+.admin-milestone-card.is-done,
+.admin-task-card.is-done {
+    border-color: rgba(74, 222, 128, 0.35);
+    opacity: 0.82;
+}
+
+.admin-milestone-card.is-done strong,
+.admin-task-card.is-done strong {
+    text-decoration: line-through;
+}
+
+.admin-milestone-card strong,
+.admin-task-card strong {
+    display: block;
+    line-height: 1.45;
+}
+
+.admin-milestone-card span,
+.admin-task-card p,
+.admin-task-meta {
+    color: var(--admin-muted);
+    font-size: 0.82rem;
+    line-height: 1.55;
+}
+
+.admin-milestone-toggle,
+.admin-task-toggle {
+    align-items: center;
+    background: var(--admin-surface-2);
+    border: 1px solid var(--admin-border);
+    border-radius: 999px;
+    color: var(--admin-muted);
+    cursor: pointer;
+    display: inline-flex;
+    height: 34px;
+    justify-content: center;
+    transition: border-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+    width: 34px;
+}
+
+.admin-milestone-toggle:hover,
+.admin-task-toggle:hover,
+.admin-milestone-card.is-done .admin-milestone-toggle,
+.admin-task-card.is-done .admin-task-toggle {
+    border-color: rgba(74, 222, 128, 0.45);
+    color: #4ade80;
+    transform: scale(1.03);
+}
+
+.admin-inline-form {
+    display: grid;
+    gap: 0.6rem;
+}
+
+.admin-inline-form input {
+    background: var(--admin-card);
+    border: 1px solid var(--admin-border);
+    border-radius: 8px;
+    color: var(--admin-text);
+    font: inherit;
+    min-height: 40px;
+    outline: 0;
+    padding: 0.65rem 0.75rem;
+}
+
+.admin-daily-layout {
+    align-items: start;
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: minmax(300px, 380px) minmax(0, 1fr);
+}
+
+.admin-project-layout {
+    align-items: start;
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: minmax(360px, 520px) minmax(0, 1fr);
+}
+
+.admin-project-editor {
+    position: sticky;
+    top: 1rem;
+}
+
+.admin-project-list {
+    display: grid;
+    gap: 0.85rem;
+}
+
+.admin-project-card {
+    background: var(--admin-card);
+    border: 1px solid var(--admin-border);
+    border-radius: 12px;
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: minmax(0, 1fr) auto;
+    padding: 1rem;
+}
+
+.admin-project-card h3 {
+    font-family: "Syne", sans-serif;
+    font-size: 1.15rem;
+    margin: 0.55rem 0 0.35rem;
+}
+
+.admin-project-card p {
+    color: var(--admin-muted);
+    line-height: 1.55;
+    margin-bottom: 0.7rem;
+}
+
+.admin-project-card-top {
+    align-items: center;
+    display: flex;
+    gap: 0.55rem;
+}
+
+.admin-project-order {
+    color: var(--admin-muted);
+    font-family: "JetBrains Mono", monospace;
+    font-size: 0.75rem;
+}
+
+.admin-date-picker {
+    color: var(--admin-muted);
+    display: grid;
+    font-size: 0.78rem;
+    font-weight: 700;
+    gap: 0.35rem;
+    letter-spacing: 0.04em;
+    margin: 0.9rem 0;
+    text-transform: uppercase;
+}
+
+.admin-date-picker input {
+    background: var(--admin-card);
+    border: 1px solid var(--admin-border);
+    border-radius: 8px;
+    color: var(--admin-text);
+    font: inherit;
+    min-height: 42px;
+    padding: 0.7rem 0.75rem;
+}
+
+.admin-daily-stats {
+    display: grid;
+    gap: 0.6rem;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    margin-bottom: 1rem;
+}
+
+.admin-daily-stats div {
+    background: var(--admin-card);
+    border: 1px solid var(--admin-border);
+    border-radius: 10px;
+    display: grid;
+    gap: 0.15rem;
+    padding: 0.7rem;
+}
+
+.admin-daily-stats strong {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 1.2rem;
+}
+
+.admin-daily-stats span {
+    color: var(--admin-muted);
+    font-size: 0.74rem;
+}
+
+.admin-task-body {
+    display: grid;
+    gap: 0.4rem;
+    min-width: 0;
+}
+
+.admin-task-priority {
+    border-radius: 999px;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 0.68rem;
+    padding: 0.25rem 0.5rem;
+    text-transform: uppercase;
+}
+
+.admin-task-priority.high {
+    background: rgba(248, 113, 113, 0.12);
+    color: var(--admin-danger);
+}
+
+.admin-task-priority.medium {
+    background: rgba(232, 255, 72, 0.12);
+    color: var(--admin-accent);
+}
+
+.admin-task-priority.low {
+    background: rgba(123, 184, 245, 0.12);
+    color: var(--admin-blue);
+}
+
+.admin-task-meta select {
+    background: var(--admin-card);
+    border: 1px solid var(--admin-border);
+    border-radius: 999px;
+    color: var(--admin-text);
+    font: inherit;
+    padding: 0.35rem 0.55rem;
+}
+
 @media (max-width: 1100px) {
     .admin-workspace.has-editor {
         grid-template-columns: 1fr;
     }
 
     .admin-editor {
+        position: static;
+    }
+
+    .admin-daily-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .admin-project-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .admin-project-editor {
         position: static;
     }
 }
@@ -733,7 +1143,7 @@ body.light .admin-login-page {
     }
 
     .admin-menu {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
     }
 
     .admin-access-card {
@@ -761,8 +1171,18 @@ body.light .admin-login-page {
     }
 
     .admin-stats,
-    .admin-form-grid {
+    .admin-form-grid,
+    .admin-daily-stats {
         grid-template-columns: 1fr;
+    }
+
+    .admin-manager-hero,
+    .admin-panel-head,
+    .admin-roadmap-phase-head,
+    .admin-task-title-row,
+    .admin-task-meta {
+        align-items: flex-start;
+        flex-direction: column;
     }
 
     .admin-table-wrap {
@@ -771,5 +1191,11 @@ body.light .admin-login-page {
 
     .admin-table {
         min-width: 720px;
+    }
+
+    .admin-milestone-card,
+    .admin-task-card,
+    .admin-project-card {
+        grid-template-columns: 1fr;
     }
 }

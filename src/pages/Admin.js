@@ -224,7 +224,13 @@ const Admin = ({ initialMode = "list" }) => {
     };
 
     return (
-        <AdminShell user={user} onCreate={handleCreate} onLogout={handleLogout}>
+        <AdminShell
+            kicker="// portfolio_blog_admin"
+            title="Blog Manager"
+            user={user}
+            onCreate={handleCreate}
+            onLogout={handleLogout}
+        >
             {error && <div className="admin-alert">{error}</div>}
 
             <BlogStats blogs={blogs} />

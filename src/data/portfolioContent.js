@@ -5,7 +5,10 @@ export const navigationLabels = {
     home: localized("Home", "Trang chủ"),
     about: localized("About", "Giới thiệu"),
     blog: localized("Blog", "Bài viết"),
+    roadmap: localized("Roadmap", "Roadmap"),
+    dailyPlan: localized("Plan", "Plan"),
     crypto: localized("Crypto", "Crypto"),
+    more: localized("More", "Thêm"),
     hire: localized("Hire Me", "Liên hệ"),
 };
 

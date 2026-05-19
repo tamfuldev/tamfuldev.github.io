@@ -27,7 +27,7 @@ const Login = () => {
                 <p className="admin-kicker">{"// firebase_admin"}</p>
                 <h2>Admin Login</h2>
                 <p className="admin-login-copy">
-                    Login de vao Blog Manager. Tu day ban co the tao, edit va publish blog len trang public.
+                    Login de vao admin panel. Tu day ban co the quan ly blog, roadmap va daily plan tren Firebase.
                 </p>
 
                 <form onSubmit={handleSubmit} className="admin-login-form">
@@ -61,6 +61,7 @@ const Login = () => {
                 </form>
 
                 <div className="admin-login-links">
+                    <Link to="/admin/roadmap">Roadmap admin</Link>
                     <Link to="/blog">View public blog</Link>
                     <Link to="/">Back to portfolio</Link>
                 </div>

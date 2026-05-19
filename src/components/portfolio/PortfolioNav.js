@@ -3,39 +3,70 @@ import ThemeToggle from "../ThemeToggle";
 import { navigationLabels } from "../../data/portfolioContent";
 import { pick } from "../../utils/localization";
 
-const PortfolioNav = ({ activePage, language, onPageChange }) => (
-    <nav className="portfolio-nav">
-        <button
-            type="button"
-            className="portfolio-logo"
-            onClick={() => onPageChange("home")}
-        >
-            Tam<span>.</span>
-        </button>
+const primaryPages = ["home", "about", "projects"];
+const privateGroupedPages = ["roadmap", "dailyPlan"];
+const publicGroupedPages = ["blog", "crypto"];
 
-        <div className="portfolio-nav-main">
-            <div className="portfolio-nav-links">
-                {["home", "about", "projects", "blog", "crypto"].map((page) => (
-                    <button
-                        key={page}
-                        type="button"
-                        className={`portfolio-nav-link${activePage === page ? " is-active" : ""}`}
-                        onClick={() => onPageChange(page)}
-                    >
-                        {pick(navigationLabels[page], language)}
-                    </button>
-                ))}
-            </div>
+const PortfolioNav = ({ activePage, canAccessPrivatePages = false, language, onPageChange }) => {
+    const groupedPages = canAccessPrivatePages
+        ? [...privateGroupedPages, ...publicGroupedPages]
+        : publicGroupedPages;
+    const activeGroupedPage = groupedPages.includes(activePage) ? activePage : "";
 
-            <div className="portfolio-controls">
-                <LanguageButton />
-                <ThemeToggle />
-                <a className="portfolio-nav-link portfolio-hire-btn" href="mailto:ngoctam2303001@gmail.com">
-                    {pick(navigationLabels.hire, language)}
-                </a>
+    return (
+        <nav className="portfolio-nav">
+            <button
+                type="button"
+                className="portfolio-logo"
+                onClick={() => onPageChange("home")}
+            >
+                Tam<span>.</span>
+            </button>
+
+            <div className="portfolio-nav-main">
+                <div className="portfolio-nav-links">
+                    {primaryPages.map((page) => (
+                        <button
+                            key={page}
+                            type="button"
+                            className={`portfolio-nav-link${activePage === page ? " is-active" : ""}`}
+                            onClick={() => onPageChange(page)}
+                        >
+                            {pick(navigationLabels[page], language)}
+                        </button>
+                    ))}
+
+                    <label className={`portfolio-nav-select${activeGroupedPage ? " is-active" : ""}`}>
+                        <span className="sr-only">{pick(navigationLabels.more, language)}</span>
+                        <select
+                            aria-label={pick(navigationLabels.more, language)}
+                            value={activeGroupedPage}
+                            onChange={(event) => {
+                                if (event.target.value) {
+                                    onPageChange(event.target.value);
+                                }
+                            }}
+                        >
+                            <option value="">{pick(navigationLabels.more, language)}</option>
+                            {groupedPages.map((page) => (
+                                <option key={page} value={page}>
+                                    {pick(navigationLabels[page], language)}
+                                </option>
+                            ))}
+                        </select>
+                    </label>
+                </div>
+
+                <div className="portfolio-controls">
+                    <LanguageButton />
+                    <ThemeToggle />
+                    <a className="portfolio-nav-link portfolio-hire-btn" href="mailto:ngoctam2303001@gmail.com">
+                        {pick(navigationLabels.hire, language)}
+                    </a>
+                </div>
             </div>
-        </div>
-    </nav>
-);
+        </nav>
+    );
+};
 
 export default PortfolioNav;

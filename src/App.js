@@ -1,6 +1,9 @@
 import * as React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Admin from './pages/Admin';
+import AdminDailyPlan from './pages/AdminDailyPlan';
+import AdminProjects from './pages/AdminProjects';
+import AdminRoadmap from './pages/AdminRoadmap';
 import Login from './pages/Login';
 import Base from './pages/Base';
 
@@ -50,29 +53,47 @@ function App() {
           <Route path="/" element={
             <>
               <Loader delay={400}/>
-              <Base />
+              <Base canAccessPrivatePages={Boolean(user)} />
             </>
           }
           />
           <Route path="/blog" element={
             <>
               <Loader delay={300} />
-              <Base initialPage="blog" />
+              <Base canAccessPrivatePages={Boolean(user)} initialPage="blog" />
             </>
           }
           />
           <Route path="/blog/:slug" element={
             <>
               <Loader delay={300} />
-              <Base initialPage="blog" />
+              <Base canAccessPrivatePages={Boolean(user)} initialPage="blog" />
             </>
           }
           />
           <Route path="/projects" element={
             <>
               <Loader delay={300} />
-              <Base initialPage="projects" />
+              <Base canAccessPrivatePages={Boolean(user)} initialPage="projects" />
             </>
+          }
+          />
+          <Route path="/roadmap" element={
+            <ProtectedRoute>
+              <>
+                <Loader delay={300} />
+                <Base canAccessPrivatePages={Boolean(user)} initialPage="roadmap" />
+              </>
+            </ProtectedRoute>
+          }
+          />
+          <Route path="/daily-plan" element={
+            <ProtectedRoute>
+              <>
+                <Loader delay={300} />
+                <Base canAccessPrivatePages={Boolean(user)} initialPage="dailyPlan" />
+              </>
+            </ProtectedRoute>
           }
           />
           <Route path="/login" element={<Login />} />
@@ -101,6 +122,27 @@ function App() {
             element={
               <ProtectedRoute>
                 <Admin initialMode="create" />
+              </ProtectedRoute>
+            }
+          />
+          <Route path="admin/roadmap"
+            element={
+              <ProtectedRoute>
+                <AdminRoadmap />
+              </ProtectedRoute>
+            }
+          />
+          <Route path="admin/daily-plan"
+            element={
+              <ProtectedRoute>
+                <AdminDailyPlan />
+              </ProtectedRoute>
+            }
+          />
+          <Route path="admin/projects"
+            element={
+              <ProtectedRoute>
+                <AdminProjects />
               </ProtectedRoute>
             }
           />

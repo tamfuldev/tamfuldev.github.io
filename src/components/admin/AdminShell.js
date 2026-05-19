@@ -1,22 +1,42 @@
 import {
+    FiBriefcase,
+    FiCalendar,
     FiEdit3,
     FiExternalLink,
     FiFileText,
     FiHome,
     FiLogOut,
+    FiMap,
     FiPlus,
     FiShield,
 } from "react-icons/fi";
 import { Link, NavLink } from "react-router-dom";
 
-const AdminShell = ({ children, onCreate, onLogout, user }) => (
+const AdminShell = ({
+    children,
+    kicker = "// portfolio_admin",
+    onCreate,
+    onLogout,
+    primaryAction,
+    title = "Admin Manager",
+    user,
+}) => {
+    const action = primaryAction || (onCreate
+        ? {
+            icon: <FiPlus />,
+            label: "New Blog",
+            onClick: onCreate,
+        }
+        : null);
+
+    return (
     <div className="admin-app">
         <aside className="admin-sidebar">
             <div className="admin-brand">
                 <span className="admin-brand-mark">T</span>
                 <div>
                     <strong>Tam CMS</strong>
-                    <span>Blog control</span>
+                    <span>Control center</span>
                 </div>
             </div>
 
@@ -36,10 +56,33 @@ const AdminShell = ({ children, onCreate, onLogout, user }) => (
                     <FiFileText />
                     Blogs
                 </NavLink>
-                <button type="button" className="admin-menu-item" onClick={onCreate}>
-                    <FiEdit3 />
-                    Write
-                </button>
+                <NavLink
+                    className={({ isActive }) => `admin-menu-item${isActive ? " is-active" : ""}`}
+                    to="/admin/projects"
+                >
+                    <FiBriefcase />
+                    Projects
+                </NavLink>
+                <NavLink
+                    className={({ isActive }) => `admin-menu-item${isActive ? " is-active" : ""}`}
+                    to="/admin/roadmap"
+                >
+                    <FiMap />
+                    Roadmap
+                </NavLink>
+                <NavLink
+                    className={({ isActive }) => `admin-menu-item${isActive ? " is-active" : ""}`}
+                    to="/admin/daily-plan"
+                >
+                    <FiCalendar />
+                    Daily Plan
+                </NavLink>
+                {onCreate && (
+                    <button type="button" className="admin-menu-item" onClick={onCreate}>
+                        <FiEdit3 />
+                        Write
+                    </button>
+                )}
                 <Link className="admin-menu-item" to="/blog">
                     <FiExternalLink />
                     Public Blog
@@ -58,14 +101,16 @@ const AdminShell = ({ children, onCreate, onLogout, user }) => (
         <main className="admin-main">
             <header className="admin-topbar">
                 <div>
-                    <p className="admin-kicker">{"// portfolio_blog_admin"}</p>
-                    <h1>Blog Manager</h1>
+                    <p className="admin-kicker">{kicker}</p>
+                    <h1>{title}</h1>
                 </div>
                 <div className="admin-topbar-actions">
-                    <button type="button" className="admin-btn admin-btn-primary" onClick={onCreate}>
-                        <FiPlus />
-                        New Blog
-                    </button>
+                    {action && (
+                        <button type="button" className="admin-btn admin-btn-primary" onClick={action.onClick}>
+                            {action.icon}
+                            {action.label}
+                        </button>
+                    )}
                     <button type="button" className="admin-icon-btn" onClick={onLogout} title="Sign out">
                         <FiLogOut />
                     </button>
@@ -75,6 +120,7 @@ const AdminShell = ({ children, onCreate, onLogout, user }) => (
             {children}
         </main>
     </div>
-);
+    );
+};
 
 export default AdminShell;
