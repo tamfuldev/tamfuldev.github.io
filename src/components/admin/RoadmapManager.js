@@ -1,6 +1,10 @@
 import React from "react";
 import { FiLayers, FiPlus, FiSave, FiX } from "react-icons/fi";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 import { firestore } from "../../configs/firebase";
+import { normalizeRichText } from "../../utils/blogAdmin";
+import { quillFormats, quillModules } from "./quillConfig";
 import RoadmapPhaseCard from "./RoadmapPhaseCard";
 
 const emptyPhaseForm = {
@@ -80,7 +84,7 @@ const RoadmapManager = () => {
         setError("");
 
         const payload = {
-            description: form.description.trim(),
+            description: normalizeRichText(form.description),
             title: form.title.trim(),
             updatedAt: new Date(),
         };
@@ -194,11 +198,14 @@ const RoadmapManager = () => {
                     </label>
                     <label>
                         Description
-                        <textarea
-                            rows="3"
+                        <ReactQuill
+                            className="admin-quill admin-quill-compact"
+                            formats={quillFormats}
+                            modules={quillModules}
+                            onChange={(value) => setForm((current) => ({ ...current, description: value }))}
                             value={form.description}
-                            onChange={(event) => setForm((current) => ({ ...current, description: event.target.value }))}
                             placeholder="What this phase is about..."
+                            theme="snow"
                         />
                     </label>
                     <div className="admin-form-actions">

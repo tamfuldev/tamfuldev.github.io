@@ -692,6 +692,24 @@ body.light .admin-login-page {
     color: var(--admin-text);
 }
 
+.admin-rich-preview {
+    color: var(--admin-muted);
+    font-size: 0.85rem;
+    line-height: 1.6;
+    text-transform: none;
+}
+
+.admin-rich-preview p,
+.admin-rich-preview ul,
+.admin-rich-preview ol,
+.admin-rich-preview blockquote {
+    margin: 0.25rem 0;
+}
+
+.admin-rich-preview a {
+    color: var(--admin-accent);
+}
+
 .admin-form-grid {
     display: grid;
     gap: 0.75rem;

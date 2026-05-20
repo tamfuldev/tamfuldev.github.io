@@ -8,7 +8,11 @@ import {
     FiTrash2,
     FiX,
 } from "react-icons/fi";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 import { firestore } from "../../configs/firebase";
+import { normalizeRichText, sanitizeRichHtml } from "../../utils/blogAdmin";
+import { quillFormats, quillModules } from "./quillConfig";
 
 const emptyMilestoneForm = {
     description: "",
@@ -93,7 +97,7 @@ const RoadmapPhaseCard = ({
         setSaving(true);
 
         const payload = {
-            description: form.description.trim(),
+            description: normalizeRichText(form.description),
             title: form.title.trim(),
             updatedAt: new Date(),
         };
@@ -195,7 +199,12 @@ const RoadmapPhaseCard = ({
                 </div>
             </header>
 
-            {phase.description && <p className="admin-roadmap-description">{phase.description}</p>}
+            {phase.description && (
+                <div
+                    className="admin-roadmap-description admin-rich-preview"
+                    dangerouslySetInnerHTML={{ __html: sanitizeRichHtml(phase.description) }}
+                />
+            )}
 
             <div className="admin-roadmap-progress">
                 <span>{milestones.length ? `${doneCount}/${milestones.length} done` : "No milestones yet"}</span>
@@ -235,7 +244,14 @@ const RoadmapPhaseCard = ({
                         </button>
                         <div>
                             <strong>{milestone.title}</strong>
-                            {milestone.description && <span>{milestone.description}</span>}
+                            {milestone.description && (
+                                <div
+                                    className="admin-rich-preview"
+                                    dangerouslySetInnerHTML={{
+                                        __html: sanitizeRichHtml(milestone.description),
+                                    }}
+                                />
+                            )}
                         </div>
                         <div className="admin-row-actions">
                             <button type="button" className="admin-icon-btn small" onClick={() => handleEditMilestone(milestone)} title="Edit milestone">
@@ -255,10 +271,14 @@ const RoadmapPhaseCard = ({
                     onChange={(event) => setForm((current) => ({ ...current, title: event.target.value }))}
                     placeholder="Milestone title"
                 />
-                <input
-                    value={form.description}
-                    onChange={(event) => setForm((current) => ({ ...current, description: event.target.value }))}
+                <ReactQuill
+                    className="admin-quill admin-quill-compact"
+                    formats={quillFormats}
+                    modules={quillModules}
+                    onChange={(value) => setForm((current) => ({ ...current, description: value }))}
                     placeholder="Short note"
+                    theme="snow"
+                    value={form.description}
                 />
                 <div className="admin-form-actions">
                     {editingMilestoneId && (

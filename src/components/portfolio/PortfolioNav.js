@@ -5,7 +5,7 @@ import { pick } from "../../utils/localization";
 
 const primaryPages = ["home", "about", "projects"];
 const privateGroupedPages = ["roadmap", "dailyPlan"];
-const publicGroupedPages = ["blog", "marketAnalysis", "crypto"];
+const publicGroupedPages = ["blog", "crypto", "marketAnalysis"];
 
 const PortfolioNav = ({ activePage, canAccessPrivatePages = false, language, onPageChange }) => {
     const groupedPages = canAccessPrivatePages

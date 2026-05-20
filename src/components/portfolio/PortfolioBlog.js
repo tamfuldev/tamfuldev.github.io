@@ -17,6 +17,7 @@ import {
 } from "../../utils/blogAdmin";
 import { pick } from "../../utils/localization";
 import PageFooter from "./PageFooter";
+import BlogEngagement from "./BlogEngagement";
 
 const BLOG_COLLECTION = "blogs";
 const PAGE_SIZE = 5;
@@ -166,11 +167,10 @@ const PortfolioBlog = ({ activeTag, detailSlug, language, onTagChange }) => {
     const [visibleCount, setVisibleCount] = React.useState(PAGE_SIZE);
 
     React.useEffect(() => {
-        const unsubscribe = firestore.collection(BLOG_COLLECTION).onSnapshot(
+        const unsubscribe = firestore.collection(BLOG_COLLECTION).where("status", "==", "published").onSnapshot(
             (snapshot) => {
                 const publishedBlogs = snapshot.docs
-                    .map((doc) => ({ id: doc.id, ...doc.data() }))
-                    .filter((blog) => blog.status === "published");
+                    .map((doc) => ({ id: doc.id, ...doc.data() }));
 
                 setBlogs(publishedBlogs);
                 setError("");
@@ -392,6 +392,8 @@ const PortfolioBlog = ({ activeTag, detailSlug, language, onTagChange }) => {
                                         ))}
                                     </div>
                                 )}
+
+                                <BlogEngagement blogId={selectedPost.id} language={language} />
                             </article>
                         )}
                     </>

@@ -7,7 +7,7 @@ export const navigationLabels = {
     blog: localized("Blog", "Bài viết"),
     roadmap: localized("Roadmap", "Roadmap"),
     dailyPlan: localized("Plan", "Plan"),
-    marketAnalysis: localized("Market", "Market"),
+    marketAnalysis: localized("Market Analysis", "Market Analysis"),
     crypto: localized("Crypto", "Crypto"),
     more: localized("More", "Thêm"),
     hire: localized("Hire Me", "Liên hệ"),
@@ -289,7 +289,7 @@ export const blogContent = {
     title: localized("Writing and Thoughts", "Bài viết và chia sẽ"),
     description: localized(
         "Deep dives on Laravel, backend architecture, performance tuning, and lessons from production systems.",
-        "Nhưng bài viết chuyên sâu về Laravel, kiến trúc backend, tối ưu hiệu năng và bài học từ hệ thống production."
+        "Những bài viết chuyên sâu về Laravel, kiến trúc backend, tối ưu hiệu năng và bài học từ hệ thống production."
     ),
     filters: [
         { id: "all", label: localized("All", "Tất cả") },
@@ -303,7 +303,7 @@ export const blogContent = {
 
 
 export const cryptoContent = {
-    title: localized("Crypto Dashboard", "Bang gia Crypto"),
+    title: localized("Crypto Dashboard", "Bảng giá Crypto"),
     description: localized(
         "// live_binance_prices - refresh_interval=60s - not_financial_advice",
         "// gia_live_binance - cap_nhat=60s - khong_phai_loi_khuyen_tai_chinh"

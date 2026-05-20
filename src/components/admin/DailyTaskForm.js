@@ -1,4 +1,7 @@
 import { FiPlus, FiSave, FiX } from "react-icons/fi";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
+import { quillFormats, quillModules } from "./quillConfig";
 
 const DailyTaskForm = ({
     editingTaskId,
@@ -21,11 +24,14 @@ const DailyTaskForm = ({
 
         <label>
             Notes
-            <textarea
-                rows="3"
+            <ReactQuill
+                className="admin-quill admin-quill-compact"
+                formats={quillFormats}
+                modules={quillModules}
+                onChange={(value) => onChange("notes", value)}
                 value={form.notes}
-                onChange={(event) => onChange("notes", event.target.value)}
                 placeholder="Context, blockers, or links..."
+                theme="snow"
             />
         </label>
 

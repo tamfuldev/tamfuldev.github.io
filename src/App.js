@@ -12,6 +12,7 @@ import { onAuthStateChanged } from 'firebase/auth';
 import NotFound from './components/NotFound';
 import Loader from './components/Loader';
 import { LanguageProvider } from './components/LanguageContext';
+import { isAdminUser } from './utils/adminAccess';
 
 function App() {
   const [user, setUser] = React.useState(null);
@@ -36,12 +37,17 @@ function App() {
     }
   }, []);
 
-  const ProtectedRoute = ({ children }) => {
+  const isAdmin = isAdminUser(user);
+
+  const ProtectedRoute = ({ adminOnly = true, children }) => {
     if (loading) {
       return <div>Loading...</div>;
     }
     if (!user) {
       return <Navigate to="/login" />;
+    }
+    if (adminOnly && !isAdmin) {
+      return <Navigate to="/" />;
     }
     return children;
   };
@@ -53,28 +59,28 @@ function App() {
           <Route path="/" element={
             <>
               <Loader delay={400}/>
-              <Base canAccessPrivatePages={Boolean(user)} />
+              <Base canAccessPrivatePages={isAdmin} />
             </>
           }
           />
           <Route path="/blog" element={
             <>
               <Loader delay={300} />
-              <Base canAccessPrivatePages={Boolean(user)} initialPage="blog" />
+              <Base canAccessPrivatePages={isAdmin} initialPage="blog" />
             </>
           }
           />
           <Route path="/blog/:slug" element={
             <>
               <Loader delay={300} />
-              <Base canAccessPrivatePages={Boolean(user)} initialPage="blog" />
+              <Base canAccessPrivatePages={isAdmin} initialPage="blog" />
             </>
           }
           />
           <Route path="/projects" element={
             <>
               <Loader delay={300} />
-              <Base canAccessPrivatePages={Boolean(user)} initialPage="projects" />
+              <Base canAccessPrivatePages={isAdmin} initialPage="projects" />
             </>
           }
           />
@@ -82,7 +88,7 @@ function App() {
             <ProtectedRoute>
               <>
                 <Loader delay={300} />
-                <Base canAccessPrivatePages={Boolean(user)} initialPage="roadmap" />
+                <Base canAccessPrivatePages={isAdmin} initialPage="roadmap" />
               </>
             </ProtectedRoute>
           }
@@ -91,7 +97,7 @@ function App() {
             <ProtectedRoute>
               <>
                 <Loader delay={300} />
-                <Base canAccessPrivatePages={Boolean(user)} initialPage="dailyPlan" />
+                <Base canAccessPrivatePages={isAdmin} initialPage="dailyPlan" />
               </>
             </ProtectedRoute>
           }
@@ -99,7 +105,7 @@ function App() {
           <Route path="/market-analysis" element={
             <>
               <Loader delay={300} />
-              <Base canAccessPrivatePages={Boolean(user)} initialPage="marketAnalysis" />
+              <Base canAccessPrivatePages={isAdmin} initialPage="marketAnalysis" />
             </>
           }
           />

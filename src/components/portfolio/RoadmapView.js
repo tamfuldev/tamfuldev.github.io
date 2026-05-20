@@ -1,6 +1,7 @@
 import React from "react";
 import { FiCheckCircle, FiCircle, FiClock, FiFlag, FiTrendingUp } from "react-icons/fi";
 import { firestore } from "../../configs/firebase";
+import { sanitizeRichHtml } from "../../utils/blogAdmin";
 import { pick } from "../../utils/localization";
 import PageFooter from "./PageFooter";
 
@@ -240,7 +241,12 @@ const RoadmapView = ({ language = "en" }) => {
                                         <FiFlag />
                                     </div>
 
-                                    {phase.description && <p>{phase.description}</p>}
+                                    {phase.description && (
+                                        <div
+                                            className="portfolio-roadmap-rich"
+                                            dangerouslySetInnerHTML={{ __html: sanitizeRichHtml(phase.description) }}
+                                        />
+                                    )}
 
                                     <div className="portfolio-roadmap-milestones">
                                         {(phase.milestones || []).map((milestone) => {
@@ -256,7 +262,14 @@ const RoadmapView = ({ language = "en" }) => {
                                                     </span>
                                                     <div>
                                                         <strong>{milestone.title}</strong>
-                                                        {milestone.description && <small>{milestone.description}</small>}
+                                                        {milestone.description && (
+                                                            <div
+                                                                className="portfolio-roadmap-milestone-description"
+                                                                dangerouslySetInnerHTML={{
+                                                                    __html: sanitizeRichHtml(milestone.description),
+                                                                }}
+                                                            />
+                                                        )}
                                                     </div>
                                                     <span className={`portfolio-roadmap-badge is-${milestone.status}`}>
                                                         {meta.label}

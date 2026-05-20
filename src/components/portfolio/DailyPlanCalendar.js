@@ -1,6 +1,7 @@
 import React from "react";
 import { FiCalendar, FiChevronLeft, FiChevronRight, FiCheckCircle, FiCircle } from "react-icons/fi";
 import { firestore } from "../../configs/firebase";
+import { sanitizeRichHtml } from "../../utils/blogAdmin";
 import { pick } from "../../utils/localization";
 import PageFooter from "./PageFooter";
 
@@ -337,7 +338,12 @@ const DailyPlanCalendar = ({ language = "en" }) => {
                                     </span>
                                     <div>
                                         <strong>{task.title}</strong>
-                                        {task.notes && <p>{task.notes}</p>}
+                                        {task.notes && (
+                                            <div
+                                                className="portfolio-day-task-notes"
+                                                dangerouslySetInnerHTML={{ __html: sanitizeRichHtml(task.notes) }}
+                                            />
+                                        )}
                                     </div>
                                     <div className="portfolio-day-task-badges">
                                         <span className={`portfolio-priority-badge is-${task.priority}`}>

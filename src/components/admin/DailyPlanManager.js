@@ -1,6 +1,7 @@
 import React from "react";
 import { FiCalendar, FiCheckCircle, FiEdit2, FiTrash2 } from "react-icons/fi";
 import { firestore } from "../../configs/firebase";
+import { normalizeRichText, sanitizeRichHtml } from "../../utils/blogAdmin";
 import DailyTaskForm from "./DailyTaskForm";
 
 const emptyTaskForm = {
@@ -114,7 +115,7 @@ const DailyPlanManager = () => {
         setError("");
 
         const payload = {
-            notes: form.notes.trim(),
+            notes: normalizeRichText(form.notes),
             priority: form.priority,
             status: form.status,
             title: form.title.trim(),
@@ -277,7 +278,12 @@ const DailyPlanManager = () => {
                                             {task.priority || "medium"}
                                         </span>
                                     </div>
-                                    {task.notes && <p>{task.notes}</p>}
+                                    {task.notes && (
+                                        <div
+                                            className="admin-rich-preview"
+                                            dangerouslySetInnerHTML={{ __html: sanitizeRichHtml(task.notes) }}
+                                        />
+                                    )}
                                     <div className="admin-task-meta">
                                         <span>{taskStatusLabel[task.status] || "Todo"}</span>
                                         <select
