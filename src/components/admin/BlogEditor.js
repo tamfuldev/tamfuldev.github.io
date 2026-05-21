@@ -1,30 +1,7 @@
 import { FiCheck, FiRefreshCw, FiX } from "react-icons/fi";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-
-const quillModules = {
-    toolbar: [
-        [{ header: [2, 3, false] }],
-        ["bold", "italic", "underline", "strike"],
-        [{ list: "ordered" }, { list: "bullet" }],
-        ["blockquote", "code-block"],
-        ["link"],
-        ["clean"],
-    ],
-};
-
-const quillFormats = [
-    "header",
-    "bold",
-    "italic",
-    "underline",
-    "strike",
-    "list",
-    "bullet",
-    "blockquote",
-    "code-block",
-    "link",
-];
+import { quillFormats, quillModules } from "./quillConfig";
 
 const BlogEditor = ({
     form,
@@ -62,7 +39,7 @@ const BlogEditor = ({
                 <input
                     value={form.titleVi}
                     onChange={(event) => onChange("titleVi", event.target.value)}
-                    placeholder="Chien luoc cache Redis..."
+                    placeholder="Chiến lược Cache Redis..."
                 />
             </label>
 
@@ -126,7 +103,7 @@ const BlogEditor = ({
                     formats={quillFormats}
                     modules={quillModules}
                     onChange={(value) => onChange("excerptVi", value)}
-                    placeholder="Tom tat ngan hien thi o danh sach blog..."
+                    placeholder="Tóm tắt ngắn blog..."
                     theme="snow"
                     value={form.excerptVi}
                 />
@@ -152,7 +129,7 @@ const BlogEditor = ({
                     formats={quillFormats}
                     modules={quillModules}
                     onChange={(value) => onChange("contentVi", value)}
-                    placeholder="Nhap noi dung tieng Viet tai day..."
+                    placeholder="Nhập nội dung tiếng việt tại đây..."
                     theme="snow"
                     value={form.contentVi}
                 />

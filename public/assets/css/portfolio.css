@@ -17,6 +17,7 @@
     --portfolio-head-font: "Syne", sans-serif;
     --portfolio-body-font: "Inter", sans-serif;
     --portfolio-mono-font: "JetBrains Mono", monospace;
+    --portfolio-nav-height: 58px;
     --cursor-x: 50vw;
     --cursor-y: 50vh;
     background: var(--portfolio-bg);
@@ -74,7 +75,7 @@ body.light .portfolio-app {
     justify-content: space-between;
     gap: 1.5rem;
     padding: 0 2rem;
-    height: 58px;
+    height: var(--portfolio-nav-height);
 }
 
 body.light .portfolio-nav {
@@ -255,7 +256,7 @@ body.light .portfolio-nav {
 
 .portfolio-page {
     min-height: 100vh;
-    padding-top: 58px;
+    padding-top: var(--portfolio-nav-height);
     position: relative;
     z-index: 1;
 }
@@ -264,7 +265,7 @@ body.light .portfolio-nav {
     align-items: center;
     display: flex;
     justify-content: center;
-    min-height: calc(100vh - 58px);
+    min-height: calc(100vh - var(--portfolio-nav-height));
     overflow: hidden;
     padding: 4rem 2rem;
     position: relative;
@@ -1621,6 +1622,17 @@ body.light .portfolio-nav {
     color: var(--portfolio-accent);
 }
 
+.portfolio-roadmap-rich img,
+.portfolio-roadmap-milestone-description img,
+.portfolio-day-task-notes img {
+    border: 1px solid var(--portfolio-border);
+    border-radius: 14px;
+    display: block;
+    height: auto;
+    margin: 0.75rem 0;
+    max-width: 100%;
+}
+
 .portfolio-roadmap-milestones {
     display: grid;
     gap: 0.7rem;
@@ -2178,11 +2190,6 @@ body.light .portfolio-nav {
     color: var(--portfolio-accent);
 }
 
-.portfolio-market-badge.is-stock {
-    background: rgba(123, 184, 245, 0.12);
-    color: #7bb8f5;
-}
-
 .portfolio-market-submit,
 .portfolio-market-refresh,
 .portfolio-market-copy {
@@ -2422,6 +2429,601 @@ body.light .portfolio-nav {
     color: var(--portfolio-muted);
     line-height: 1.6;
     margin-top: 0.4rem;
+}
+
+.portfolio-expense-wrap {
+    --expense-primary: #a855f7;
+    --expense-secondary: #ec4899;
+    --expense-income: #22c55e;
+    --expense-danger: #fb7185;
+    margin: 0 auto;
+    max-width: 1120px;
+    padding: 4rem 2rem 2rem;
+}
+
+.portfolio-expense-hero {
+    animation: portfolio-fade-up 0.65s ease both;
+    align-items: stretch;
+    display: grid;
+    gap: 1.5rem;
+    grid-template-columns: minmax(0, 1fr) minmax(240px, 320px);
+    margin-bottom: 2rem;
+}
+
+.portfolio-expense-hero h1 {
+    font-family: var(--portfolio-head-font);
+    font-size: clamp(2.7rem, 7vw, 6rem);
+    letter-spacing: -0.08em;
+    line-height: 0.9;
+    margin: 0.45rem 0 1rem;
+}
+
+.portfolio-expense-hero p {
+    color: var(--portfolio-muted);
+    font-family: var(--portfolio-mono-font);
+    line-height: 1.7;
+    max-width: 780px;
+}
+
+.portfolio-expense-live-note {
+    align-self: end;
+    background:
+        linear-gradient(135deg, rgba(168, 85, 247, 0.16), rgba(236, 72, 153, 0.1)),
+        var(--portfolio-card);
+    border: 1px solid rgba(236, 72, 153, 0.24);
+    border-radius: 22px;
+    box-shadow: 0 24px 70px rgba(168, 85, 247, 0.13);
+    display: grid;
+    gap: 0.4rem;
+    padding: 1.1rem;
+}
+
+.portfolio-expense-live-note span,
+.portfolio-expense-dashboard-top span,
+.portfolio-expense-stat span,
+.portfolio-expense-chart-copy span,
+.portfolio-expense-history-head span,
+.portfolio-expense-day-group > span,
+.portfolio-expense-modal-head span,
+.portfolio-expense-field,
+.portfolio-expense-field small {
+    color: var(--portfolio-muted);
+    font-family: var(--portfolio-mono-font);
+}
+
+.portfolio-expense-live-note span {
+    color: var(--expense-secondary);
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+.portfolio-expense-live-note strong {
+    font-family: var(--portfolio-head-font);
+    font-size: 1.25rem;
+    letter-spacing: -0.04em;
+}
+
+.portfolio-expense-shell {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: minmax(320px, 430px) minmax(0, 1fr);
+}
+
+.portfolio-expense-dashboard,
+.portfolio-expense-history,
+.portfolio-expense-modal {
+    background:
+        linear-gradient(145deg, rgba(255, 255, 255, 0.035), transparent),
+        var(--portfolio-card);
+    border: 1px solid var(--portfolio-border);
+    border-radius: 28px;
+}
+
+.portfolio-expense-dashboard {
+    animation: portfolio-fade-up 0.65s 0.08s ease both;
+    overflow: hidden;
+    padding: 1.15rem;
+    position: relative;
+}
+
+.portfolio-expense-card-glow {
+    animation: portfolio-expense-glow 7s ease-in-out infinite;
+    background:
+        radial-gradient(circle at 20% 20%, rgba(168, 85, 247, 0.4), transparent 13rem),
+        radial-gradient(circle at 80% 0%, rgba(236, 72, 153, 0.35), transparent 12rem);
+    inset: -30% -20% auto;
+    height: 260px;
+    opacity: 0.55;
+    pointer-events: none;
+    position: absolute;
+}
+
+.portfolio-expense-dashboard > *:not(.portfolio-expense-card-glow) {
+    position: relative;
+    z-index: 1;
+}
+
+.portfolio-expense-dashboard-top,
+.portfolio-expense-history-head,
+.portfolio-expense-modal-head {
+    align-items: center;
+    display: flex;
+    gap: 1rem;
+    justify-content: space-between;
+}
+
+.portfolio-expense-dashboard-top strong {
+    display: block;
+    font-family: var(--portfolio-head-font);
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    letter-spacing: -0.07em;
+    line-height: 1;
+    margin-top: 0.3rem;
+}
+
+.portfolio-expense-dashboard-top strong.is-income {
+    color: var(--expense-income);
+}
+
+.portfolio-expense-dashboard-top strong.is-expense {
+    color: var(--expense-danger);
+}
+
+.portfolio-expense-add-btn,
+.portfolio-expense-history-head button,
+.portfolio-expense-empty-state button,
+.portfolio-expense-submit,
+.portfolio-expense-modal-head button,
+.portfolio-expense-transaction button {
+    align-items: center;
+    border: 0;
+    cursor: pointer;
+    display: inline-flex;
+    font: inherit;
+    font-weight: 800;
+    gap: 0.45rem;
+    justify-content: center;
+    transition: opacity 0.2s ease, transform 0.2s ease, border-color 0.2s ease;
+}
+
+.portfolio-expense-add-btn,
+.portfolio-expense-submit,
+.portfolio-expense-empty-state button {
+    background: linear-gradient(135deg, var(--expense-primary), var(--expense-secondary));
+    border-radius: 999px;
+    box-shadow: 0 16px 36px rgba(236, 72, 153, 0.24);
+    color: #fff;
+    min-height: 44px;
+    padding: 0 1rem;
+}
+
+.portfolio-expense-add-btn:hover,
+.portfolio-expense-history-head button:hover,
+.portfolio-expense-empty-state button:hover,
+.portfolio-expense-submit:hover,
+.portfolio-expense-modal-head button:hover,
+.portfolio-expense-transaction button:hover {
+    transform: translateY(-1px);
+}
+
+.portfolio-expense-stats {
+    display: grid;
+    gap: 0.75rem;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    margin-top: 1rem;
+}
+
+.portfolio-expense-stat {
+    background: rgba(255, 255, 255, 0.045);
+    border: 1px solid var(--portfolio-border);
+    border-radius: 20px;
+    display: grid;
+    gap: 0.35rem;
+    padding: 0.85rem;
+}
+
+.portfolio-expense-stat svg {
+    font-size: 1.25rem;
+}
+
+.portfolio-expense-stat.is-income svg,
+.portfolio-expense-stat.is-income strong {
+    color: var(--expense-income);
+}
+
+.portfolio-expense-stat.is-expense svg,
+.portfolio-expense-stat.is-expense strong {
+    color: var(--expense-danger);
+}
+
+.portfolio-expense-stat strong {
+    font-family: var(--portfolio-mono-font);
+    font-size: 0.92rem;
+}
+
+.portfolio-expense-chart-card {
+    background: rgba(8, 8, 10, 0.35);
+    border: 1px solid var(--portfolio-border);
+    border-radius: 24px;
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: minmax(180px, 0.9fr) minmax(0, 1fr);
+    margin-top: 0.85rem;
+    padding: 0.9rem;
+}
+
+body.light .portfolio-expense-chart-card,
+body.light .portfolio-expense-stat {
+    background: rgba(255, 255, 255, 0.62);
+}
+
+.portfolio-expense-chart {
+    min-height: 190px;
+    position: relative;
+}
+
+.portfolio-expense-chart-center,
+.portfolio-expense-empty-chart {
+    align-items: center;
+    display: grid;
+    inset: 0;
+    place-items: center;
+    pointer-events: none;
+    position: absolute;
+    text-align: center;
+}
+
+.portfolio-expense-chart-center {
+    margin: auto;
+}
+
+.portfolio-expense-chart-center span {
+    color: var(--portfolio-muted);
+    display: block;
+    font-family: var(--portfolio-mono-font);
+    font-size: 0.68rem;
+}
+
+.portfolio-expense-chart-center strong,
+.portfolio-expense-empty-chart span {
+    color: var(--expense-secondary);
+    display: block;
+    font-family: var(--portfolio-head-font);
+    font-size: 1.45rem;
+    letter-spacing: -0.06em;
+}
+
+.portfolio-expense-empty-chart {
+    background: conic-gradient(rgba(168, 85, 247, 0.16), rgba(236, 72, 153, 0.18), rgba(168, 85, 247, 0.16));
+    border-radius: 999px;
+    height: 156px;
+    inset: 17px auto auto 50%;
+    transform: translateX(-50%);
+    width: 156px;
+}
+
+.portfolio-expense-empty-chart::after {
+    background: var(--portfolio-card);
+    border-radius: 999px;
+    content: "";
+    height: 108px;
+    position: absolute;
+    width: 108px;
+}
+
+.portfolio-expense-empty-chart span {
+    position: relative;
+    z-index: 1;
+}
+
+.portfolio-expense-chart-copy {
+    align-self: center;
+    display: grid;
+    gap: 0.4rem;
+}
+
+.portfolio-expense-chart-copy strong {
+    font-family: var(--portfolio-head-font);
+    font-size: 1.4rem;
+    letter-spacing: -0.05em;
+}
+
+.portfolio-expense-chart-copy p {
+    color: var(--portfolio-muted);
+    line-height: 1.6;
+    margin: 0;
+}
+
+.portfolio-expense-history {
+    animation: portfolio-fade-up 0.65s 0.16s ease both;
+    padding: 1rem;
+}
+
+.portfolio-expense-history-head {
+    margin-bottom: 1rem;
+}
+
+.portfolio-expense-history-head h2 {
+    font-family: var(--portfolio-head-font);
+    font-size: 1.55rem;
+    letter-spacing: -0.04em;
+    margin-top: 0.1rem;
+}
+
+.portfolio-expense-history-head button {
+    background: var(--portfolio-bg-3);
+    border: 1px solid var(--portfolio-border);
+    border-radius: 999px;
+    color: var(--portfolio-text);
+    min-height: 38px;
+    padding: 0 0.8rem;
+}
+
+.portfolio-expense-day-group {
+    display: grid;
+    gap: 0.55rem;
+    margin-top: 1rem;
+}
+
+.portfolio-expense-day-group > span {
+    font-size: 0.76rem;
+}
+
+.portfolio-expense-list {
+    display: grid;
+    gap: 0.6rem;
+}
+
+.portfolio-expense-transaction {
+    align-items: center;
+    background: var(--portfolio-bg-2);
+    border: 1px solid var(--portfolio-border);
+    border-radius: 18px;
+    display: grid;
+    gap: 0.75rem;
+    grid-template-columns: auto minmax(0, 1fr) auto auto;
+    padding: 0.72rem;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.portfolio-expense-transaction:hover {
+    border-color: rgba(236, 72, 153, 0.28);
+    box-shadow: 0 16px 34px rgba(0, 0, 0, 0.16);
+    transform: translateX(-2px);
+}
+
+.portfolio-expense-transaction.is-new {
+    animation: portfolio-expense-pop 0.72s ease both;
+}
+
+.portfolio-expense-transaction-icon {
+    background:
+        linear-gradient(135deg, rgba(168, 85, 247, 0.16), rgba(236, 72, 153, 0.13)),
+        var(--portfolio-card);
+    border: 1px solid rgba(236, 72, 153, 0.2);
+    border-radius: 16px;
+    display: grid;
+    font-size: 1.25rem;
+    height: 44px;
+    place-items: center;
+    width: 44px;
+}
+
+.portfolio-expense-transaction-body {
+    min-width: 0;
+}
+
+.portfolio-expense-transaction-body strong,
+.portfolio-expense-transaction-body span {
+    display: block;
+}
+
+.portfolio-expense-transaction-body strong {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.portfolio-expense-transaction-body span {
+    color: var(--portfolio-muted);
+    font-family: var(--portfolio-mono-font);
+    font-size: 0.72rem;
+    margin-top: 0.18rem;
+}
+
+.portfolio-expense-transaction-amount {
+    color: var(--expense-danger);
+    font-family: var(--portfolio-mono-font);
+    font-size: 0.9rem;
+    white-space: nowrap;
+}
+
+.portfolio-expense-transaction.is-income .portfolio-expense-transaction-amount {
+    color: var(--expense-income);
+}
+
+.portfolio-expense-transaction button,
+.portfolio-expense-modal-head button {
+    background: transparent;
+    border: 1px solid var(--portfolio-border);
+    border-radius: 12px;
+    color: var(--portfolio-muted);
+    height: 36px;
+    width: 36px;
+}
+
+.portfolio-expense-transaction button:hover,
+.portfolio-expense-modal-head button:hover {
+    border-color: rgba(248, 113, 113, 0.35);
+    color: var(--expense-danger);
+}
+
+.portfolio-expense-empty-state {
+    align-items: center;
+    background: var(--portfolio-bg-2);
+    border: 1px dashed rgba(236, 72, 153, 0.35);
+    border-radius: 22px;
+    color: var(--portfolio-muted);
+    display: grid;
+    gap: 0.55rem;
+    min-height: 300px;
+    padding: 1.5rem;
+    place-items: center;
+    text-align: center;
+}
+
+.portfolio-expense-empty-state div {
+    font-size: 2.4rem;
+}
+
+.portfolio-expense-empty-state strong {
+    color: var(--portfolio-text);
+    font-family: var(--portfolio-head-font);
+    font-size: 1.4rem;
+    letter-spacing: -0.04em;
+}
+
+.portfolio-expense-empty-state p {
+    line-height: 1.65;
+    margin: 0;
+    max-width: 420px;
+}
+
+.portfolio-expense-modal-backdrop {
+    align-items: center;
+    background: rgba(0, 0, 0, 0.72);
+    backdrop-filter: blur(12px);
+    display: flex;
+    inset: 0;
+    justify-content: center;
+    padding: 1rem;
+    position: fixed;
+    z-index: 2000;
+}
+
+.portfolio-expense-modal {
+    animation: portfolio-expense-modal-in 0.28s ease both;
+    box-shadow: 0 30px 90px rgba(0, 0, 0, 0.36);
+    display: grid;
+    gap: 1rem;
+    max-height: min(92vh, 760px);
+    max-width: 560px;
+    overflow-y: auto;
+    padding: 1.1rem;
+    width: min(100%, 560px);
+}
+
+.portfolio-expense-modal-head h2 {
+    font-family: var(--portfolio-head-font);
+    font-size: 1.55rem;
+    letter-spacing: -0.04em;
+    margin-top: 0.12rem;
+}
+
+.portfolio-expense-type-toggle {
+    background: var(--portfolio-bg-2);
+    border: 1px solid var(--portfolio-border);
+    border-radius: 999px;
+    display: grid;
+    gap: 0.35rem;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    padding: 0.3rem;
+}
+
+.portfolio-expense-type-toggle button {
+    background: transparent;
+    border: 0;
+    border-radius: 999px;
+    color: var(--portfolio-muted);
+    cursor: pointer;
+    font: inherit;
+    font-weight: 800;
+    min-height: 42px;
+    transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+.portfolio-expense-type-toggle button.is-active {
+    background: linear-gradient(135deg, var(--expense-primary), var(--expense-secondary));
+    color: #fff;
+    transform: translateY(-1px);
+}
+
+.portfolio-expense-field {
+    display: grid;
+    font-size: 0.78rem;
+    font-weight: 800;
+    gap: 0.45rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.portfolio-expense-field input {
+    background: var(--portfolio-bg-2);
+    border: 1px solid var(--portfolio-border);
+    border-radius: 16px;
+    color: var(--portfolio-text);
+    font: inherit;
+    min-height: 48px;
+    outline: 0;
+    padding: 0 0.9rem;
+    text-transform: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.portfolio-expense-field input:focus {
+    border-color: rgba(236, 72, 153, 0.42);
+    box-shadow: 0 0 0 3px rgba(236, 72, 153, 0.1);
+}
+
+.portfolio-expense-field small {
+    font-size: 0.72rem;
+    text-transform: none;
+}
+
+.portfolio-expense-category-grid {
+    display: grid;
+    gap: 0.55rem;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.portfolio-expense-category-grid button {
+    background: var(--portfolio-bg-2);
+    border: 1px solid var(--portfolio-border);
+    border-radius: 18px;
+    color: var(--portfolio-text);
+    cursor: pointer;
+    display: grid;
+    font: inherit;
+    font-size: 0.8rem;
+    gap: 0.35rem;
+    min-height: 86px;
+    padding: 0.7rem 0.5rem;
+    place-items: center;
+    text-align: center;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.portfolio-expense-category-grid button span {
+    font-size: 1.4rem;
+}
+
+.portfolio-expense-category-grid button:hover,
+.portfolio-expense-category-grid button.is-active {
+    border-color: var(--category-color);
+    box-shadow: 0 14px 32px rgba(168, 85, 247, 0.13);
+    transform: translateY(-2px);
+}
+
+.portfolio-expense-submit {
+    min-height: 48px;
+}
+
+.portfolio-expense-submit:disabled {
+    cursor: not-allowed;
+    opacity: 0.52;
+    transform: none;
 }
 
 .portfolio-blog-header {
@@ -2741,6 +3343,16 @@ body.light .portfolio-nav {
 
 .portfolio-blog-detail-body a:hover {
     text-decoration: underline;
+}
+
+.portfolio-blog-detail-excerpt img,
+.portfolio-blog-detail-body img {
+    border: 1px solid var(--portfolio-border);
+    border-radius: 16px;
+    display: block;
+    height: auto;
+    margin: 1.1rem 0;
+    max-width: 100%;
 }
 
 .portfolio-blog-engagement {
@@ -3289,6 +3901,45 @@ body.light .portfolio-nav {
     }
 }
 
+@keyframes portfolio-expense-glow {
+    0%,
+    100% {
+        transform: translate3d(0, 0, 0) scale(1);
+    }
+
+    50% {
+        transform: translate3d(2rem, 0.8rem, 0) scale(1.08);
+    }
+}
+
+@keyframes portfolio-expense-pop {
+    0% {
+        opacity: 0;
+        transform: translateX(24px) scale(0.96);
+    }
+
+    65% {
+        transform: translateX(-4px) scale(1.01);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateX(0) scale(1);
+    }
+}
+
+@keyframes portfolio-expense-modal-in {
+    from {
+        opacity: 0;
+        transform: translateY(18px) scale(0.98);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
 @keyframes portfolio-spin {
     to {
         transform: translate(-50%, -50%) rotate(360deg);
@@ -3312,6 +3963,8 @@ body.light .portfolio-nav {
     .portfolio-roadmap-hero,
     .portfolio-daily-plan-hero,
     .portfolio-daily-plan-grid,
+    .portfolio-expense-hero,
+    .portfolio-expense-shell,
     .portfolio-market-hero,
     .portfolio-market-grid {
         grid-template-columns: 1fr;
@@ -3340,35 +3993,112 @@ body.light .portfolio-nav {
 }
 
 @media (max-width: 768px) {
+    .portfolio-app {
+        --portfolio-nav-height: 108px;
+    }
+
     .portfolio-nav {
-        align-items: flex-start;
-        flex-direction: column;
-        height: auto;
-        padding: 1rem;
+        align-items: center;
+        display: grid;
+        gap: 0.65rem;
+        grid-template-columns: minmax(0, 1fr) auto;
+        grid-template-rows: auto auto;
+        height: var(--portfolio-nav-height);
+        overflow: hidden;
+        padding: 0.7rem 0.85rem 0.75rem;
     }
 
-    .portfolio-nav-main,
-    .portfolio-nav-links {
-        width: 100%;
-    }
-
-    .portfolio-nav-select,
-    .portfolio-nav-select select {
-        width: 100%;
+    .portfolio-logo {
+        grid-column: 1;
+        grid-row: 1;
+        justify-self: flex-start;
+        line-height: 1;
     }
 
     .portfolio-nav-main {
-        align-items: stretch;
-        flex-direction: column;
+        display: contents;
     }
 
-    .portfolio-controls {
-        justify-content: flex-start;
+    .portfolio-nav-links {
+        align-items: center;
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.018));
+        border: 1px solid var(--portfolio-border);
+        border-radius: 18px;
+        display: grid;
+        gap: 0.35rem;
+        grid-column: 1 / -1;
+        grid-row: 2;
+        grid-template-columns: max-content max-content max-content minmax(112px, 1fr);
+        min-width: 0;
+        overflow: hidden;
+        padding: 0.28rem;
         width: 100%;
     }
 
+    .portfolio-nav-link {
+        align-items: center;
+        display: inline-flex;
+        font-size: 0.74rem;
+        justify-content: center;
+        min-height: 34px;
+        padding: 0.42rem 0.62rem;
+        white-space: nowrap;
+    }
+
+    .portfolio-nav-link::after {
+        bottom: 5px;
+        left: 10px;
+        right: 10px;
+    }
+
+    .portfolio-nav-select {
+        min-width: 0;
+        width: 100%;
+    }
+
+    .portfolio-nav-select select {
+        background:
+            linear-gradient(135deg, rgba(232, 255, 72, 0.12), rgba(123, 184, 245, 0.08)),
+            var(--portfolio-bg-3);
+        border-color: rgba(232, 255, 72, 0.22);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+        font-size: 0.74rem;
+        min-height: 34px;
+        padding: 0.4rem 1.9rem 0.4rem 0.72rem;
+        text-overflow: ellipsis;
+        width: 100%;
+    }
+
+    .portfolio-nav-select::after {
+        right: 0.72rem;
+    }
+
+    .portfolio-controls {
+        grid-column: 2;
+        grid-row: 1;
+        flex: 0 0 auto;
+        flex-wrap: nowrap;
+        gap: 0.35rem;
+        justify-content: flex-end;
+        min-width: max-content;
+        width: auto;
+    }
+
+    .portfolio-controls .control-btn {
+        height: 34px;
+        min-width: 36px;
+        padding: 0 0.55rem;
+    }
+
+    .portfolio-controls .portfolio-hire-btn {
+        align-items: center;
+        display: inline-flex;
+        min-height: 34px;
+        padding: 0.42rem 0.7rem;
+    }
+
     .portfolio-page {
-        padding-top: 148px;
+        padding-top: var(--portfolio-nav-height);
     }
 
     .portfolio-hero,
@@ -3376,6 +4106,7 @@ body.light .portfolio-nav {
     .portfolio-projects-wrap,
     .portfolio-roadmap-wrap,
     .portfolio-daily-plan-wrap,
+    .portfolio-expense-wrap,
     .portfolio-market-wrap,
     .portfolio-about-wrap,
     .portfolio-blog-wrap,
@@ -3442,6 +4173,15 @@ body.light .portfolio-nav {
 }
 
 @media (max-width: 560px) {
+    .portfolio-app {
+        --portfolio-nav-height: 104px;
+    }
+
+    .portfolio-nav {
+        padding-left: 0.7rem;
+        padding-right: 0.7rem;
+    }
+
     .portfolio-hero {
         padding-top: 2.5rem;
     }
@@ -3452,8 +4192,60 @@ body.light .portfolio-nav {
     .portfolio-crypto-header h1,
     .portfolio-roadmap-hero h1,
     .portfolio-daily-plan-hero h1,
+    .portfolio-expense-hero h1,
     .portfolio-market-hero h1 {
         font-size: 2rem;
+    }
+
+    .portfolio-expense-live-note {
+        align-self: stretch;
+    }
+
+    .portfolio-expense-dashboard-top,
+    .portfolio-expense-history-head,
+    .portfolio-expense-modal-head {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .portfolio-expense-add-btn,
+    .portfolio-expense-history-head button,
+    .portfolio-expense-submit {
+        width: 100%;
+    }
+
+    .portfolio-expense-chart-card,
+    .portfolio-expense-stats {
+        grid-template-columns: 1fr;
+    }
+
+    .portfolio-expense-transaction {
+        grid-template-columns: auto minmax(0, 1fr) auto;
+    }
+
+    .portfolio-expense-transaction-icon {
+        grid-row: 1 / 3;
+    }
+
+    .portfolio-expense-transaction-body {
+        grid-column: 2;
+    }
+
+    .portfolio-expense-transaction button {
+        grid-column: 3;
+        grid-row: 1 / 3;
+        align-self: center;
+        justify-self: end;
+    }
+
+    .portfolio-expense-transaction-amount {
+        grid-column: 2;
+        grid-row: 2;
+        justify-self: start;
+    }
+
+    .portfolio-expense-category-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
     .portfolio-market-card-head,
@@ -3519,12 +4311,59 @@ body.light .portfolio-nav {
     }
 
     .portfolio-controls {
-        flex-wrap: wrap;
+        flex-wrap: nowrap;
     }
 
     .portfolio-controls .portfolio-hire-btn {
-        flex: 1 0 auto;
+        flex: 0 0 auto;
         text-align: center;
+    }
+    .portfolio-social-links {
+        justify-content: center;
+    }
+    .portfolio-kicker {
+        letter-spacing: normal;
+    }
+}
+
+@media (max-width: 380px) {
+    .portfolio-app {
+        --portfolio-nav-height: 102px;
+    }
+
+    .portfolio-nav {
+        padding-left: 0.55rem;
+        padding-right: 0.55rem;
+    }
+
+    .portfolio-nav-links {
+        gap: 0.24rem;
+        grid-template-columns: max-content max-content max-content minmax(96px, 1fr);
+        padding: 0.24rem;
+    }
+
+    .portfolio-nav-link {
+        font-size: 0.68rem;
+        min-height: 32px;
+        padding: 0.36rem 0.46rem;
+    }
+
+    .portfolio-nav-select select {
+        font-size: 0.68rem;
+        min-height: 32px;
+        padding-left: 0.58rem;
+        padding-right: 1.65rem;
+    }
+
+    .portfolio-controls .control-btn {
+        height: 32px;
+        min-width: 34px;
+        padding: 0 0.48rem;
+    }
+
+    .portfolio-controls .portfolio-hire-btn {
+        min-height: 32px;
+        padding: 0.36rem 0.58rem;
     }
 }
 

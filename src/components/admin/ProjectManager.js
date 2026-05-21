@@ -209,7 +209,6 @@ const ProjectManager = () => {
 
             <section className="admin-manager-hero">
                 <div>
-                    <p className="admin-kicker">{"// projects_firestore"}</p>
                     <h2>Manage portfolio projects from Firebase.</h2>
                     <p>
                         Firestore path: <code>projects/{`{projectId}`}</code>. Public page only shows published projects.

@@ -15,7 +15,6 @@ const AdminDailyPlan = () => {
 
     return (
         <AdminShell
-            kicker="// daily_plan_admin"
             title="Daily Plan Manager"
             user={user}
             onLogout={handleLogout}

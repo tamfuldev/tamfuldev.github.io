@@ -78,6 +78,8 @@ export const stripHtml = (value = "") =>
 
 export const hasHtmlContent = (value = "") => /<\/?[a-z][\s\S]*>/i.test(String(value || ""));
 
+const hasImageContent = (value = "") => /<img\b[^>]*\bsrc=(["'])[^"']+\1[^>]*>/i.test(String(value || ""));
+
 export const sanitizeRichHtml = (value = "") =>
     String(value || "")
         .replace(/<script[\s\S]*?>[\s\S]*?<\/script>/gi, "")
@@ -85,11 +87,12 @@ export const sanitizeRichHtml = (value = "") =>
         .replace(/\son\w+="[^"]*"/gi, "")
         .replace(/\son\w+='[^']*'/gi, "")
         .replace(/\son\w+=\S+/gi, "")
-        .replace(/href=(["'])\s*javascript:[\s\S]*?\1/gi, "href=\"#\"");
+        .replace(/href=(["'])\s*javascript:[\s\S]*?\1/gi, "href=\"#\"")
+        .replace(/\ssrc=(["'])\s*(?!https?:\/\/|data:image\/(?:png|jpe?g|gif|webp);base64,)[^"']*\1/gi, "");
 
 export const normalizeRichText = (value = "") => {
     const content = sanitizeRichHtml(value).trim();
-    return stripHtml(content) ? content : "";
+    return stripHtml(content) || hasImageContent(content) ? content : "";
 };
 
 export const mapBlogToForm = (blog) => ({

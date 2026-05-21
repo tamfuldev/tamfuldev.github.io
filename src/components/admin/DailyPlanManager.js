@@ -191,7 +191,6 @@ const DailyPlanManager = () => {
 
             <section className="admin-manager-hero">
                 <div>
-                    <p className="admin-kicker">{"// daily_plan_firestore"}</p>
                     <h2>Plan one focused day at a time.</h2>
                     <p>
                         Firestore path: <code>dailyPlan/{`{yyyy-mm-dd}`}/tasks/{`{taskId}`}</code>

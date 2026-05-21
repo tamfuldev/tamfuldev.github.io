@@ -15,7 +15,6 @@ const AdminProjects = () => {
 
     return (
         <AdminShell
-            kicker="// projects_admin"
             title="Projects Manager"
             user={user}
             onLogout={handleLogout}

@@ -1,5 +1,6 @@
 import React from 'react';
-import { signInWithEmailAndPassword } from 'firebase/auth';
+import firebase from "firebase/compat/app";
+import "firebase/compat/auth";
 import { auth } from '../configs/firebase';
 import { Link, useNavigate } from 'react-router-dom';
 import "../styles/admin.css";
@@ -14,8 +15,21 @@ const Login = () => {
         e.preventDefault();
         setError(null);
         try {
-            await signInWithEmailAndPassword(auth, email, password);
+            await auth.signInWithEmailAndPassword(email, password);
             navigate('/admin');
+        } catch (err) {
+            setError(err.message);
+        }
+    };
+
+    const handleGoogleLogin = async () => {
+        setError(null);
+
+        try {
+            const provider = new firebase.auth.GoogleAuthProvider();
+
+            await auth.signInWithPopup(provider);
+            navigate('/admin/expense');
         } catch (err) {
             setError(err.message);
         }
@@ -60,7 +74,14 @@ const Login = () => {
                     </button>
                 </form>
 
+                <div className="admin-login-divider">or</div>
+
+                <button type="button" className="admin-btn admin-btn-ghost admin-login-google" onClick={handleGoogleLogin}>
+                    Login with Google for Expense
+                </button>
+
                 <div className="admin-login-links">
+                    <Link to="/admin/expense">Expense admin</Link>
                     <Link to="/admin/roadmap">Roadmap admin</Link>
                     <Link to="/blog">View public blog</Link>
                     <Link to="/">Back to portfolio</Link>

@@ -1,6 +1,7 @@
 import {
     FiBriefcase,
     FiCalendar,
+    FiDollarSign,
     FiEdit3,
     FiExternalLink,
     FiFileText,
@@ -14,7 +15,6 @@ import { Link, NavLink } from "react-router-dom";
 
 const AdminShell = ({
     children,
-    kicker = "// portfolio_admin",
     onCreate,
     onLogout,
     primaryAction,
@@ -77,6 +77,13 @@ const AdminShell = ({
                     <FiCalendar />
                     Daily Plan
                 </NavLink>
+                <NavLink
+                    className={({ isActive }) => `admin-menu-item${isActive ? " is-active" : ""}`}
+                    to="/admin/expense"
+                >
+                    <FiDollarSign />
+                    Expense
+                </NavLink>
                 {onCreate && (
                     <button type="button" className="admin-menu-item" onClick={onCreate}>
                         <FiEdit3 />
@@ -101,7 +108,6 @@ const AdminShell = ({
         <main className="admin-main">
             <header className="admin-topbar">
                 <div>
-                    <p className="admin-kicker">{kicker}</p>
                     <h1>{title}</h1>
                 </div>
                 <div className="admin-topbar-actions">

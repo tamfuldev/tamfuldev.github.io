@@ -162,7 +162,6 @@ const RoadmapManager = () => {
 
             <section className="admin-manager-hero">
                 <div>
-                    <p className="admin-kicker">{"// roadmap_firestore"}</p>
                     <h2>Build phases, milestones, and reorder them visually.</h2>
                     <p>
                         Firestore path: <code>roadmap/{`{phaseId}`}/milestones/{`{milestoneId}`}</code>
@@ -176,7 +175,6 @@ const RoadmapManager = () => {
             <section className="admin-panel">
                 <div className="admin-panel-head">
                     <div>
-                        <p className="admin-kicker">{editingPhaseId ? "// edit_phase" : "// new_phase"}</p>
                         <h2>{editingPhaseId ? "Update Phase" : "Create Phase"}</h2>
                     </div>
                     {editingPhaseId && (

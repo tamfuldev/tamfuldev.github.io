@@ -187,7 +187,7 @@ export const aboutContent = {
     role: localized("Backend Engineer", "Kỹ sư Backend"),
     bioPrimary: localized(
         "Backend-focused developer with 4+ years building robust, scalable web systems. I specialize in the Laravel ecosystem and love solving performance problems, whether it is a clean API architecture or squeezing milliseconds out of slow queries with Redis caching strategies.",
-        "Lập trình viên tập trung vào backend với hơn 4 năm xây dựng hệ thống web bền vững, có khả năng mở rộngKỹ sư Backend. Tôi chuyên sâu hệ sinh thái Laravel và thích giải quyết bài toán hiệu năng, từ kiến trúc API gọn và tôi ưu từng mili giây trong truy vấn chậm bằng cache Redis."
+        "Lập trình viên tập trung vào backend với hơn 4 năm xây dựng hệ thống web bền vững, có khả năng mở rộng. Tôi chuyên sâu hệ sinh thái Laravel và thích giải quyết bài toán hiệu năng, từ kiến trúc API gọn và tối ưu từng mili giây trong truy vấn chậm bằng Cache/Redis."
     ),
     bioLead: localized("Currently at ", "Hiện đang làm việc tại "),
     bioHighlight: "Wacontre Co., Ltd",
@@ -206,7 +206,7 @@ export const skillGroups = [
     {
         label: localized("Core Stack", "Công nghệ chính"),
         level: "primary",
-        items: ["Laravel", "PHP", "RESTful APIs", "Redis", "MySQL"],
+        items: ["Laravel", "PHP", "RESTful API", "Redis", "MySQL"],
     },
     {
         label: localized("Infrastructure", "Hạ tầng"),
@@ -238,7 +238,7 @@ export const experiences = [
                 "Phát triển và bảo trì các hệ thống backend Laravel có khả năng mở rộng, đảm bảo độ sẵn sàng và hiệu năng cao."
             ),
             localized(
-                "Designed RESTful APIs and integrated third-party services to enhance product functionality.",
+                "Designed RESTful API and integrated third-party services to enhance product functionality.",
                 "Thiết kế RESTful API và tích hợp dịch vụ bên thứ ba để mở dụng tính năng sản phẩm."
             ),
             localized(

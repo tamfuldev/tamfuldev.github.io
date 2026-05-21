@@ -2,6 +2,7 @@ import * as React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Admin from './pages/Admin';
 import AdminDailyPlan from './pages/AdminDailyPlan';
+import AdminExpense from './pages/AdminExpense';
 import AdminProjects from './pages/AdminProjects';
 import AdminRoadmap from './pages/AdminRoadmap';
 import Login from './pages/Login';
@@ -156,6 +157,13 @@ function App() {
             element={
               <ProtectedRoute>
                 <AdminProjects />
+              </ProtectedRoute>
+            }
+          />
+          <Route path="admin/expense"
+            element={
+              <ProtectedRoute adminOnly={false}>
+                <AdminExpense />
               </ProtectedRoute>
             }
           />

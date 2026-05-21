@@ -15,7 +15,6 @@ const AdminRoadmap = () => {
 
     return (
         <AdminShell
-            kicker="// roadmap_admin"
             title="Roadmap Manager"
             user={user}
             onLogout={handleLogout}

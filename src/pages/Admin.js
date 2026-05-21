@@ -225,7 +225,6 @@ const Admin = ({ initialMode = "list" }) => {
 
     return (
         <AdminShell
-            kicker="// portfolio_blog_admin"
             title="Blog Manager"
             user={user}
             onCreate={handleCreate}
