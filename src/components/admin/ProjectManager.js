@@ -1,6 +1,9 @@
 import React from "react";
 import { FiEdit2, FiExternalLink, FiSave, FiTrash2, FiX } from "react-icons/fi";
 import { auth, firestore } from "../../configs/firebase";
+import { quillFormats, quillModules } from "./quillConfig";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 
 const PROJECT_COLLECTION = "projects";
 
@@ -207,23 +210,10 @@ const ProjectManager = () => {
         <>
             {error && <div className="admin-alert">{error}</div>}
 
-            <section className="admin-manager-hero">
-                <div>
-                    <h2>Manage portfolio projects from Firebase.</h2>
-                    <p>
-                        Firestore path: <code>projects/{`{projectId}`}</code>. Public page only shows published projects.
-                    </p>
-                </div>
-                <div className="admin-hero-icon">
-                    <FiExternalLink />
-                </div>
-            </section>
-
             <section className="admin-project-layout">
                 <aside className="admin-panel admin-project-editor">
                     <div className="admin-panel-head">
                         <div>
-                            <p className="admin-kicker">{editingProject ? "// edit_project" : "// new_project"}</p>
                             <h2>{editingProject ? "Edit Project" : "Create Project"}</h2>
                         </div>
                         {editingProject && (
@@ -275,21 +265,27 @@ const ProjectManager = () => {
 
                         <label>
                             Description EN
-                            <textarea
-                                rows="3"
+                            <ReactQuill
+                                className="admin-quill admin-quill-compact"
+                                formats={quillFormats}
+                                modules={quillModules}
+                                onChange={(value) => setForm((current) => ({ ...current, description: value }))}
                                 value={form.description}
-                                onChange={(event) => handleChange("description", event.target.value)}
                                 placeholder="What was built and why it matters..."
+                                theme="snow"
                             />
                         </label>
 
                         <label>
                             Description VI
-                            <textarea
-                                rows="3"
+                            <ReactQuill
+                                className="admin-quill admin-quill-compact"
+                                formats={quillFormats}
+                                modules={quillModules}
+                                onChange={(value) => setForm((current) => ({ ...current, descriptionVi: value }))}
                                 value={form.descriptionVi}
-                                onChange={(event) => handleChange("descriptionVi", event.target.value)}
-                                placeholder="Mo ta du an bang tieng Viet..."
+                                placeholder="Mô tả dự án bằng tiếng Việt..."
+                                theme="snow"
                             />
                         </label>
 
@@ -345,21 +341,27 @@ const ProjectManager = () => {
 
                         <label>
                             Impact EN
-                            <textarea
-                                rows="4"
+                            <ReactQuill
+                                className="admin-quill admin-quill-compact"
+                                formats={quillFormats}
+                                modules={quillModules}
+                                onChange={(value) => setForm((current) => ({ ...current, impact: value }))}
                                 value={form.impact}
-                                onChange={(event) => handleChange("impact", event.target.value)}
-                                placeholder={"One impact per line\nReduced response time by 60%"}
+                                placeholder="One impact per line&#10;Reduced response time by 60%"
+                                theme="snow"
                             />
                         </label>
 
                         <label>
                             Impact VI
-                            <textarea
-                                rows="4"
+                            <ReactQuill
+                                className="admin-quill admin-quill-compact"
+                                formats={quillFormats}
+                                modules={quillModules}
+                                onChange={(value) => setForm((current) => ({ ...current, impactVi: value }))}
                                 value={form.impactVi}
-                                onChange={(event) => handleChange("impactVi", event.target.value)}
-                                placeholder={"Moi tac dong tren mot dong\nGiam response time 60%"}
+                                placeholder="Mỗi tác động trên một dòng&#10;Giảm response time 60%"
+                                theme="snow"
                             />
                         </label>
 
@@ -387,7 +389,6 @@ const ProjectManager = () => {
                 <section className="admin-panel">
                     <div className="admin-panel-head">
                         <div>
-                            <p className="admin-kicker">{"// project_list"}</p>
                             <h2>Projects</h2>
                         </div>
                     </div>

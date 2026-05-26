@@ -445,11 +445,8 @@ body.light .admin-login-page {
     min-width: 150px;
 }
 
-.admin-workspace {
-    align-items: start;
-    display: grid;
-    gap: 1rem;
-    grid-template-columns: minmax(0, 1fr);
+.admin-editor {
+    margin-top  : 20px;
 }
 
 .admin-workspace.has-editor {
@@ -824,6 +821,7 @@ body.light .admin-login-page {
 .admin-panel {
     margin-bottom: 1rem;
     padding: 1rem;
+    margin-top: 20px;
 }
 
 .admin-panel-head,
@@ -1000,18 +998,6 @@ body.light .admin-login-page {
     display: grid;
     gap: 1rem;
     grid-template-columns: minmax(300px, 380px) minmax(0, 1fr);
-}
-
-.admin-project-layout {
-    align-items: start;
-    display: grid;
-    gap: 1rem;
-    grid-template-columns: minmax(360px, 520px) minmax(0, 1fr);
-}
-
-.admin-project-editor {
-    position: sticky;
-    top: 1rem;
 }
 
 .admin-project-list {

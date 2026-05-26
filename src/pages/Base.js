@@ -39,7 +39,7 @@ const Base = ({ canAccessPrivatePages = false, initialPage = "home" }) => {
             language === "vi"
                 ? "Trần Ngọc Tâm - Kỹ sư Backend"
                 : "Tran Ngoc Tam - Backend Engineer";
-    }, [language]);
+    }, [language]); 
 
     React.useEffect(() => {
         setActivePage(routedPage);
@@ -87,7 +87,7 @@ const Base = ({ canAccessPrivatePages = false, initialPage = "home" }) => {
                 <PortfolioAbout avatarSrc={avatarSrc} language={language} />
             )}
 
-            {activePage === "projects" && (
+            {activePage === "projects" && ( 
                 <PortfolioProjects language={language} />
             )}
 

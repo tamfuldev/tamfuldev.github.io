@@ -15,7 +15,6 @@ const BlogEditor = ({
     <aside className="admin-editor">
         <div className="admin-editor-head">
             <div>
-                <p className="admin-kicker">{isEditing ? "// edit_post" : "// new_post"}</p>
                 <h2>{isEditing ? "Edit Blog" : "Create Blog"}</h2>
             </div>
             <button type="button" className="admin-icon-btn" onClick={onCancel} title="Close editor">

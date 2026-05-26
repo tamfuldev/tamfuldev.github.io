@@ -237,9 +237,8 @@ const DailyPlanCalendar = ({ language = "en" }) => {
             <section className="portfolio-daily-plan-wrap">
                 <header className="portfolio-daily-plan-hero">
                     <div>
-                        <div className="portfolio-section-label">{"// daily_plan_public"}</div>
                         <h1>{pick(copy.title, language)}</h1>
-                        <p>{pick(copy.subtitle, language)}</p>
+                        {/* <p>{pick(copy.subtitle, language)}</p> */}
                     </div>
                     <div className="portfolio-daily-plan-summary">
                         <FiCalendar />

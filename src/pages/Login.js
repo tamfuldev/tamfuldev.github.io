@@ -38,11 +38,7 @@ const Login = () => {
     return (
         <div className="admin-login-page">
             <section className="admin-login-card">
-                <p className="admin-kicker">{"// firebase_admin"}</p>
                 <h2>Admin Login</h2>
-                <p className="admin-login-copy">
-                    Login de vao admin panel. Tu day ban co the quan ly blog, roadmap va daily plan tren Firebase.
-                </p>
 
                 <form onSubmit={handleSubmit} className="admin-login-form">
                     <label>
@@ -74,18 +70,18 @@ const Login = () => {
                     </button>
                 </form>
 
-                <div className="admin-login-divider">or</div>
-
+                {/* <div className="admin-login-divider">or</div> */}
+{/* 
                 <button type="button" className="admin-btn admin-btn-ghost admin-login-google" onClick={handleGoogleLogin}>
                     Login with Google for Expense
-                </button>
+                </button> */}
 
-                <div className="admin-login-links">
+                {/* <div className="admin-login-links">
                     <Link to="/admin/expense">Expense admin</Link>
                     <Link to="/admin/roadmap">Roadmap admin</Link>
                     <Link to="/blog">View public blog</Link>
                     <Link to="/">Back to portfolio</Link>
-                </div>
+                </div> */}
             </section>
         </div>
     );

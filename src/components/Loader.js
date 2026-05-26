@@ -6,6 +6,7 @@ const Loader = ({ delay = 300 }) => {
     const [loadingProgress, setLoadingProgress] = React.useState(0);
 
     React.useEffect(() => {
+        const stepDelay = Math.min(delay, 90);
         const interval = setInterval(() => {
             setLoadingProgress((prev) => {
                 if (prev >= 100) {
@@ -15,7 +16,7 @@ const Loader = ({ delay = 300 }) => {
 
                 return prev + 10;
             });
-        }, delay);
+        }, stepDelay);
 
         return () => clearInterval(interval);
     }, [delay]);
@@ -27,10 +28,13 @@ const Loader = ({ delay = 300 }) => {
                 <span className="loader-dot">.</span>
             </div>
             <div className="loader-bar">
-                <div className="progress-fill"></div>
+                <div
+                    className="progress-fill"
+                    style={{ width: `${loadingProgress}%` }}
+                ></div>
             </div>
             <div className="loader-status">
-                {language === "vi" ? "ĐANG TẢI..." : "LOADING..."}
+                {language === "vi" ? "ĐANG TẢI" : "LOADING"} {loadingProgress}%
             </div>
         </div>
     );

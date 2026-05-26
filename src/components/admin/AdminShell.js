@@ -35,8 +35,7 @@ const AdminShell = ({
             <div className="admin-brand">
                 <span className="admin-brand-mark">T</span>
                 <div>
-                    <strong>Tam CMS</strong>
-                    <span>Control center</span>
+                    <strong>Tam Dashbroad</strong>
                 </div>
             </div>
 
@@ -96,13 +95,13 @@ const AdminShell = ({
                 </Link>
             </nav>
 
-            <div className="admin-access-card">
+            {/* <div className="admin-access-card">
                 <FiShield />
                 <div>
                     <strong>Firebase protected</strong>
                     <span>{user?.email || "Signed in admin"}</span>
                 </div>
-            </div>
+            </div> */}
         </aside>
 
         <main className="admin-main">

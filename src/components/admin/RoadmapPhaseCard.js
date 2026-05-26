@@ -184,7 +184,6 @@ const RoadmapPhaseCard = ({
                         <FiMove />
                     </span>
                     <div>
-                        <p className="admin-kicker">{`// phase_${(phase.order ?? 0) + 1}`}</p>
                         <h2>{phase.title || "Untitled phase"}</h2>
                     </div>
                 </div>

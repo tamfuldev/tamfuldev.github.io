@@ -160,18 +160,6 @@ const RoadmapManager = () => {
         <>
             {error && <div className="admin-alert">{error}</div>}
 
-            <section className="admin-manager-hero">
-                <div>
-                    <h2>Build phases, milestones, and reorder them visually.</h2>
-                    <p>
-                        Firestore path: <code>roadmap/{`{phaseId}`}/milestones/{`{milestoneId}`}</code>
-                    </p>
-                </div>
-                <div className="admin-hero-icon">
-                    <FiLayers />
-                </div>
-            </section>
-
             <section className="admin-panel">
                 <div className="admin-panel-head">
                     <div>

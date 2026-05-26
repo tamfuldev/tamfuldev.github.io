@@ -189,23 +189,10 @@ const DailyPlanManager = () => {
         <>
             {error && <div className="admin-alert">{error}</div>}
 
-            <section className="admin-manager-hero">
-                <div>
-                    <h2>Plan one focused day at a time.</h2>
-                    <p>
-                        Firestore path: <code>dailyPlan/{`{yyyy-mm-dd}`}/tasks/{`{taskId}`}</code>
-                    </p>
-                </div>
-                <div className="admin-hero-icon">
-                    <FiCalendar />
-                </div>
-            </section>
-
             <section className="admin-daily-layout">
                 <aside className="admin-panel">
                     <div className="admin-panel-head">
                         <div>
-                            <p className="admin-kicker">{"// selected_date"}</p>
                             <h2>Daily Plan</h2>
                         </div>
                     </div>

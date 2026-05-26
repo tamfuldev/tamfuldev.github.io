@@ -15,6 +15,7 @@ import {
 } from "../../data/portfolioContent";
 import { localized, pick } from "../../utils/localization";
 import PageFooter from "./PageFooter";
+import { hasHtmlContent, normalizeRichText, sanitizeRichHtml } from "../../utils/blogAdmin";
 
 const projectIcons = {
     backend: FiServer,
@@ -86,16 +87,13 @@ const PortfolioProjects = ({ language }) => {
         return () => unsubscribe();
     }, []);
 
-    const projects = firebaseProjects.length
-        ? firebaseProjects
-        : portfolioProjects.map(normalizeProject).sort(sortProjects);
+    const projects = firebaseProjects.length ? firebaseProjects : portfolioProjects.map(normalizeProject).sort(sortProjects);
 
     return (
         <div className="portfolio-page">
             <section className="portfolio-projects-wrap">
                 <div className="portfolio-projects-hero">
                     <div>
-                        <div className="portfolio-section-label">{pick(projectsContent.eyebrow, language)}</div>
                         <h1>{pick(projectsContent.title, language)}</h1>
                     </div>
                     <p>{pick(projectsContent.description, language)}</p>

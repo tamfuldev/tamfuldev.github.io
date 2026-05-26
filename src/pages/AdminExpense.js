@@ -865,9 +865,6 @@ const AdminExpense = () => {
             <section className="admin-manager-hero expense-admin-hero">
                 <div>
                     <h2>{sidebarItems.find((item) => item.id === activeSection)?.label || "Dashboard"}</h2>
-                    <p>
-                        Firestore path: <code>users/{uid}/expenses/{selectedYear}</code>. Summary is stored separately for cheaper dashboard reads.
-                    </p>
                 </div>
                 {overBudgetCount > 0 && (
                     <div className="expense-admin-alert-pill">
@@ -944,7 +941,7 @@ const AdminExpense = () => {
                         </div>
 
                         <label>
-                            So tien
+                            Số tiền
                             <input
                                 inputMode="numeric"
                                 value={formatMoneyInput(transactionForm.amount)}

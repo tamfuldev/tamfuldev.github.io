@@ -189,9 +189,8 @@ const RoadmapView = ({ language = "en" }) => {
             <section className="portfolio-roadmap-wrap">
                 <header className="portfolio-roadmap-hero">
                     <div>
-                        <div className="portfolio-section-label">{"// firestore_public_view"}</div>
                         <h1>{pick(roadmapCopy.title, language)}</h1>
-                        <p>{pick(roadmapCopy.subtitle, language)}</p>
+                        {/* <p>{pick(roadmapCopy.subtitle, language)}</p> */}
                     </div>
 
                     <div className="portfolio-roadmap-progress-card">

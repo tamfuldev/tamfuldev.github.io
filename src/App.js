@@ -1,31 +1,49 @@
 import * as React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import Admin from './pages/Admin';
-import AdminDailyPlan from './pages/AdminDailyPlan';
-import AdminExpense from './pages/AdminExpense';
-import AdminProjects from './pages/AdminProjects';
-import AdminRoadmap from './pages/AdminRoadmap';
-import Login from './pages/Login';
 import Base from './pages/Base';
 
-import { auth } from './configs/firebase';
-import { onAuthStateChanged } from 'firebase/auth';
-import NotFound from './components/NotFound';
 import Loader from './components/Loader';
 import { LanguageProvider } from './components/LanguageContext';
 import { isAdminUser } from './utils/adminAccess';
+
+const Admin = React.lazy(() => import('./pages/Admin'));
+const AdminDailyPlan = React.lazy(() => import('./pages/AdminDailyPlan'));
+const AdminExpense = React.lazy(() => import('./pages/AdminExpense'));
+const AdminProjects = React.lazy(() => import('./pages/AdminProjects'));
+const AdminRoadmap = React.lazy(() => import('./pages/AdminRoadmap'));
+const Login = React.lazy(() => import('./pages/Login'));
+const NotFound = React.lazy(() => import('./components/NotFound'));
 
 function App() {
   const [user, setUser] = React.useState(null);
   const [loading, setLoading] = React.useState(true);
 
   React.useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser);
-      setLoading(false);
+    let unsubscribe = () => {};
+    let mounted = true;
+
+    Promise.all([
+      import('./configs/firebase'),
+      import('firebase/auth'),
+    ]).then(([{ auth }, { onAuthStateChanged }]) => {
+      if (!mounted) {
+        return;
+      }
+
+      unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+        setUser(currentUser);
+        setLoading(false);
+      });
+    }).catch(() => {
+      if (mounted) {
+        setLoading(false);
+      }
     });
 
-    return () => unsubscribe();
+    return () => {
+      mounted = false;
+      unsubscribe();
+    };
   }, []);
 
 
@@ -56,125 +74,127 @@ function App() {
   return (
     <LanguageProvider>
       <Router>
-        <Routes>
-          <Route path="/" element={
-            <>
-              <Loader delay={400}/>
-              <Base canAccessPrivatePages={isAdmin} />
-            </>
-          }
-          />
-          <Route path="/blog" element={
-            <>
-              <Loader delay={300} />
-              <Base canAccessPrivatePages={isAdmin} initialPage="blog" />
-            </>
-          }
-          />
-          <Route path="/blog/:slug" element={
-            <>
-              <Loader delay={300} />
-              <Base canAccessPrivatePages={isAdmin} initialPage="blog" />
-            </>
-          }
-          />
-          <Route path="/projects" element={
-            <>
-              <Loader delay={300} />
-              <Base canAccessPrivatePages={isAdmin} initialPage="projects" />
-            </>
-          }
-          />
-          <Route path="/roadmap" element={
-            <ProtectedRoute>
+        <React.Suspense fallback={<Loader delay={80} />}>
+          <Routes>
+            <Route path="/" element={
+              <>
+                <Loader delay={400}/>
+                <Base canAccessPrivatePages={isAdmin} />
+              </>
+            }
+            />
+            <Route path="/blog" element={
               <>
                 <Loader delay={300} />
-                <Base canAccessPrivatePages={isAdmin} initialPage="roadmap" />
+                <Base canAccessPrivatePages={isAdmin} initialPage="blog" />
               </>
-            </ProtectedRoute>
-          }
-          />
-          <Route path="/daily-plan" element={
-            <ProtectedRoute>
+            }
+            />
+            <Route path="/blog/:slug" element={
               <>
                 <Loader delay={300} />
-                <Base canAccessPrivatePages={isAdmin} initialPage="dailyPlan" />
+                <Base canAccessPrivatePages={isAdmin} initialPage="blog" />
               </>
-            </ProtectedRoute>
-          }
-          />
-          <Route path="/market-analysis" element={
-            <>
-              <Loader delay={300} />
-              <Base canAccessPrivatePages={isAdmin} initialPage="marketAnalysis" />
-            </>
-          }
-          />
-          <Route path="/login" element={<Login />} />
-          <Route path="/admin"
-            element={
+            }
+            />
+            <Route path="/projects" element={
+              <>
+                <Loader delay={300} />
+                <Base canAccessPrivatePages={isAdmin} initialPage="projects" />
+              </>
+            }
+            />
+            <Route path="/roadmap" element={
               <ProtectedRoute>
-                <Admin />
+                <>
+                  <Loader delay={300} />
+                  <Base canAccessPrivatePages={isAdmin} initialPage="roadmap" />
+                </>
               </ProtectedRoute>
             }
-          />
-          <Route path="admin/blog"
-            element={
+            />
+            <Route path="/daily-plan" element={
               <ProtectedRoute>
-                <Admin />
+                <>
+                  <Loader delay={300} />
+                  <Base canAccessPrivatePages={isAdmin} initialPage="dailyPlan" />
+                </>
               </ProtectedRoute>
             }
-          />
-          <Route path="admin/blog/edit/:blogId"
-            element={
-              <ProtectedRoute>
-                <Admin initialMode="edit" />
-              </ProtectedRoute>
+            />
+            <Route path="/market-analysis" element={
+              <>
+                <Loader delay={300} />
+                <Base canAccessPrivatePages={isAdmin} initialPage="marketAnalysis" />
+              </>
             }
-          />
-          <Route path="admin/blog/create"
-            element={
-              <ProtectedRoute>
-                <Admin initialMode="create" />
-              </ProtectedRoute>
+            />
+            <Route path="/login" element={<Login />} />
+            <Route path="/admin"
+              element={
+                <ProtectedRoute>
+                  <Admin />
+                </ProtectedRoute>
+              }
+            />
+            <Route path="admin/blog"
+              element={
+                <ProtectedRoute>
+                  <Admin />
+                </ProtectedRoute>
+              }
+            />
+            <Route path="admin/blog/edit/:blogId"
+              element={
+                <ProtectedRoute>
+                  <Admin initialMode="edit" />
+                </ProtectedRoute>
+              }
+            />
+            <Route path="admin/blog/create"
+              element={
+                <ProtectedRoute>
+                  <Admin initialMode="create" />
+                </ProtectedRoute>
+              }
+            />
+            <Route path="admin/roadmap"
+              element={
+                <ProtectedRoute>
+                  <AdminRoadmap />
+                </ProtectedRoute>
+              }
+            />
+            <Route path="admin/daily-plan"
+              element={
+                <ProtectedRoute>
+                  <AdminDailyPlan />
+                </ProtectedRoute>
+              }
+            />
+            <Route path="admin/projects"
+              element={
+                <ProtectedRoute>
+                  <AdminProjects />
+                </ProtectedRoute>
+              }
+            />
+            <Route path="admin/expense"
+              element={
+                <ProtectedRoute adminOnly={false}>
+                  <AdminExpense />
+                </ProtectedRoute>
+              }
+            />
+            <Route path="*" element={
+              <>
+                <Loader delay={300} />
+                <NotFound />
+              </>
             }
-          />
-          <Route path="admin/roadmap"
-            element={
-              <ProtectedRoute>
-                <AdminRoadmap />
-              </ProtectedRoute>
-            }
-          />
-          <Route path="admin/daily-plan"
-            element={
-              <ProtectedRoute>
-                <AdminDailyPlan />
-              </ProtectedRoute>
-            }
-          />
-          <Route path="admin/projects"
-            element={
-              <ProtectedRoute>
-                <AdminProjects />
-              </ProtectedRoute>
-            }
-          />
-          <Route path="admin/expense"
-            element={
-              <ProtectedRoute adminOnly={false}>
-                <AdminExpense />
-              </ProtectedRoute>
-            }
-          />
-          <Route path="*" element={
-            <>
-              <Loader delay={300} />
-              <NotFound />
-            </>
-          }
-          />
-        </Routes>
+            />
+          </Routes>
+        </React.Suspense>
       </Router>
     </LanguageProvider>
   );
