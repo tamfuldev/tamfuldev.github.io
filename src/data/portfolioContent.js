@@ -46,11 +46,11 @@ export const heroContent = {
     titleLine1: localized("I build backends", "Tôi xây backend"),
     titleLine2: localized("that do not break", "vận hành bền vững"),
     titleLine3: localized("under pressure.", "dưới áp lực."),
-    taglineLead: localized("Hi, I am ", "Xin chào, tôi là "),
-    taglineName: localized("Tran Ngoc Tam", "Trần Ngọc Tâm"),
+    taglineLead: localized("Hi, I'm ", "Xin chào, tôi là "),
+    taglineName: localized("Tran Ngoc Tam.", "Trần Ngọc Tâm."),
     taglineTail: localized(
-        " - 4+ years crafting scalable systems with Laravel, Redis, and Docker. I turn complex server problems into clean, fast, reliable solutions.",
-        " - hơn 4 năm xây dựng hệ thống có khả năng mở rộng với Laravel, Redis va Docker. Tôi biến bài toán server phức tạp thành giải pháp gọn, nhanh và đáng tin cậy."
+        " 4+ years in, I still get the most satisfaction from fixing the thing nobody else wants to touch — the slow query, the leaky cache, the API that works on staging but breaks in prod. Laravel, Redis, and Docker are my daily tools. Reliability is the goal. ",
+        " 4+ năm trong nghề, điều tôi vẫn thấy thỏa mãn nhất là xử lý những thứ không ai muốn đụng vào — câu truy vấn chạy chậm, cache bị rò rỉ, hay cái API hoạt động tốt trên staging nhưng lại vỡ ngay khi lên production. Laravel, Redis và Docker là những công cụ tôi dùng hằng ngày. Và mục tiêu cuối cùng vẫn luôn là: hệ thống phải đáng tin cậy."
     ),
     primaryCta: localized("View My Work", "Xem kinh nghiệm"),
     secondaryCta: localized("Download CV", "Tải CV xuống"),
@@ -186,8 +186,12 @@ export const aboutContent = {
     name: localized("Tran Ngoc Tam", "Trần Ngọc Tâm"),
     role: localized("Backend Engineer", "Kỹ sư Backend"),
     bioPrimary: localized(
-        "Backend-focused developer with 4+ years building robust, scalable web systems. I specialize in the Laravel ecosystem and love solving performance problems, whether it is a clean API architecture or squeezing milliseconds out of slow queries with Redis caching strategies.",
-        "Lập trình viên tập trung vào backend với hơn 4 năm xây dựng hệ thống web bền vững, có khả năng mở rộng. Tôi chuyên sâu hệ sinh thái Laravel và thích giải quyết bài toán hiệu năng, từ kiến trúc API gọn và tối ưu từng mili giây trong truy vấn chậm bằng Cache/Redis."
+        "I build backends that don't wake people up at 3am.",
+        "Tôi xây dựng những backend không khiến ai phải thức dậy lúc 3 giờ sáng."
+    ),
+    bioDescription: localized(
+        "With 4+ years in web development and a focus on the Laravel ecosystem, I've learned that good architecture is only half the job — the other half is obsessing over the details that make systems reliable at scale: query optimization, caching strategies, and APIs that actually make sense to the team consuming them.",
+        "Với hơn 4 năm kinh nghiệm phát triển web và tập trung vào hệ sinh thái Laravel, tôi đã nhận ra rằng kiến trúc tốt mới chỉ là một nửa công việc — nửa còn lại là sự tỉ mỉ trong từng chi tiết giúp hệ thống hoạt động ổn định ở quy mô lớn: tối ưu hóa truy vấn, chiến lược caching, và các API thực sự có ý nghĩa với đội ngũ sử dụng chúng."
     ),
     bioLead: localized("Currently at ", "Hiện đang làm việc tại "),
     bioHighlight: "Wacontre Co., Ltd",
@@ -204,24 +208,70 @@ export const aboutContent = {
 
 export const skillGroups = [
     {
-        label: localized("Core Stack", "Công nghệ chính"),
+        label: localized("AI & Developer Tools", "AI & công cụ lập trình"),
+        level: "secondary",
+        items: ["Claude Code", "OpenAI Codex"],
+    },
+    {
+        label: localized("Languages & Frameworks", "Ngôn ngữ & Framework"),
         level: "primary",
-        items: ["Laravel", "PHP", "RESTful API", "Redis", "MySQL"],
+        items: [
+            "PHP",
+            "Laravel",
+            "JavaScript",
+            "TailwindCSS",
+            "GraphQL",
+            "Socket/Realtime",
+            "Twig",
+        ],
     },
     {
-        label: localized("Infrastructure", "Hạ tầng"),
-        level: "tertiary",
-        items: ["Docker", "Nginx", "Linux", "Queue Workers"],
+        label: localized("Database & Search", "Cơ sở dữ liệu & Tìm kiếm"),
+        level: "primary",
+        items: ["MySQL", "Redis/Cache", "SQL", "Firebase", "Elasticsearch"],
     },
     {
-        label: localized("Practices", "Thực hành"),
+        label: localized("Architecture & Software Design", "Kiến trúc & Thiết kế phần mềm"),
+        level: "secondary",
+        items: [
+            "Design Pattern",
+            "RESTful API",
+            "Swagger/OpenAPI",
+            "Security",
+        ],
+    },
+    {
+        label: localized("Performance & Engineering Practices", "Hiệu năng & Thực hành kỹ thuật"),
         level: "secondary",
         items: [
             localized("Performance Optimization", "Tối ưu hiệu năng"),
             localized("Query Tuning", "Tinh chỉnh truy vấn"),
-            localized("Code Review", "Code review"),
-            localized("API Design", "Thiết kế API"),
             localized("Caching Strategy", "Chiến lược cache"),
+            localized("Code Review", "Code review"),
+        ],
+    },
+    {
+        label: localized("DevOps & Infrastructure", "DevOps & Hạ tầng"),
+        level: "tertiary",
+        items: ["Docker", "Linux", "Queue/Job", "AWS"],
+    },
+    {
+        label: localized("Tools & Project Management", "Công cụ & Quản lý dự án"),
+        level: "tertiary",
+        items: [
+            "Git/GitHub",
+            "Bitbucket",
+            "SourceTree",
+            "Backlog",
+            "Postman"
+        ],
+    },
+    {
+        label: localized("Languages", "Ngôn ngữ"),
+        level: "tertiary",
+        items: [
+            localized("English - Technical Reading", "Tiếng Anh - Đọc kỹ thuật"),
+            // localized("Japanese - N3", "Tiếng Nhật - N3"),
         ],
     },
 ];

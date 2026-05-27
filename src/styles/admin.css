@@ -1015,6 +1015,19 @@ body.light .admin-login-page {
     padding: 1rem;
 }
 
+.admin-project-card.has-image {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+}
+
+.admin-project-thumb {
+    aspect-ratio: 16 / 10;
+    border: 1px solid var(--admin-border);
+    border-radius: 10px;
+    height: 86px;
+    object-fit: cover;
+    width: 138px;
+}
+
 .admin-project-card h3 {
     font-family: "Syne", sans-serif;
     font-size: 1.15rem;

@@ -25,7 +25,7 @@ const PortfolioHome = ({ avatarSrc, language, onPageChange }) => (
                     <p className="portfolio-tagline">
                         {pick(heroContent.taglineLead, language)}
                         <strong>{pick(heroContent.taglineName, language)}</strong>
-                        {pick(heroContent.taglineTail, language)}
+                        <p>{pick(heroContent.taglineTail, language)}</p>
                     </p>
                     <SocialLinks />
                     <div className="portfolio-hero-cta">

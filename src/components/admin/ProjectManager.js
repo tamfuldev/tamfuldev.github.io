@@ -1,6 +1,7 @@
 import React from "react";
 import { FiEdit2, FiExternalLink, FiSave, FiTrash2, FiX } from "react-icons/fi";
 import { auth, firestore } from "../../configs/firebase";
+import { hasHtmlContent, normalizeRichText, sanitizeRichHtml, stripHtml } from "../../utils/blogAdmin";
 import { quillFormats, quillModules } from "./quillConfig";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
@@ -15,6 +16,8 @@ const emptyProjectForm = {
     descriptionVi: "",
     impact: "",
     impactVi: "",
+    imageAlt: "",
+    imageUrl: "",
     order: "0",
     period: "",
     status: "published",
@@ -26,20 +29,39 @@ const emptyProjectForm = {
 
 const accentOptions = ["backend", "performance", "devops", "product"];
 
-const splitLines = (value) =>
-    String(value || "")
-        .split(/\r?\n/)
-        .map((item) => item.trim())
-        .filter(Boolean);
-
 const splitTags = (value) =>
     String(value || "")
         .split(",")
         .map((item) => item.trim())
         .filter(Boolean);
 
-const joinLines = (value) => (Array.isArray(value) ? value.join("\n") : "");
 const joinTags = (value) => (Array.isArray(value) ? value.join(", ") : "");
+
+const escapeHtml = (value) =>
+    String(value || "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+
+const legacyListToRichText = (value) => {
+    if (!Array.isArray(value)) {
+        return value || "";
+    }
+
+    const items = value
+        .map((item) => String(item || "").trim())
+        .filter(Boolean);
+
+    if (!items.length) {
+        return "";
+    }
+
+    return `<ul>${items
+        .map((item) => `<li>${hasHtmlContent(item) ? sanitizeRichHtml(item) : escapeHtml(item)}</li>`)
+        .join("")}</ul>`;
+};
 
 const toMillis = (value) => {
     if (!value) {
@@ -68,8 +90,10 @@ const mapProjectToForm = (project) => ({
     categoryVi: project.categoryVi || "",
     description: project.description || "",
     descriptionVi: project.descriptionVi || "",
-    impact: joinLines(project.impact),
-    impactVi: joinLines(project.impactVi),
+    impact: legacyListToRichText(project.impact),
+    impactVi: legacyListToRichText(project.impactVi),
+    imageAlt: project.imageAlt || "",
+    imageUrl: project.imageUrl || project.image || project.coverImage || project.thumbnailUrl || "",
     order: String(project.order ?? 0),
     period: project.period || "",
     status: project.status || "published",
@@ -144,10 +168,12 @@ const ProjectManager = () => {
             accent: form.accent,
             category: form.category.trim(),
             categoryVi: form.categoryVi.trim(),
-            description: form.description.trim(),
-            descriptionVi: form.descriptionVi.trim(),
-            impact: splitLines(form.impact),
-            impactVi: splitLines(form.impactVi),
+            description: normalizeRichText(form.description),
+            descriptionVi: normalizeRichText(form.descriptionVi),
+            impact: normalizeRichText(form.impact),
+            impactVi: normalizeRichText(form.impactVi),
+            imageAlt: form.imageAlt.trim(),
+            imageUrl: form.imageUrl.trim(),
             order: Number(form.order) || 0,
             period: form.period.trim(),
             status: form.status,
@@ -347,7 +373,7 @@ const ProjectManager = () => {
                                 modules={quillModules}
                                 onChange={(value) => setForm((current) => ({ ...current, impact: value }))}
                                 value={form.impact}
-                                placeholder="One impact per line&#10;Reduced response time by 60%"
+                                placeholder="Impact summary, bullets, metrics..."
                                 theme="snow"
                             />
                         </label>
@@ -360,7 +386,7 @@ const ProjectManager = () => {
                                 modules={quillModules}
                                 onChange={(value) => setForm((current) => ({ ...current, impactVi: value }))}
                                 value={form.impactVi}
-                                placeholder="Mỗi tác động trên một dòng&#10;Giảm response time 60%"
+                                placeholder="Tóm tắt tác động, bullet, số liệu..."
                                 theme="snow"
                             />
                         </label>
@@ -373,6 +399,26 @@ const ProjectManager = () => {
                                 placeholder="https://github.com/..."
                             />
                         </label>
+
+                        <div className="admin-form-grid">
+                            <label>
+                                Preview image URL
+                                <input
+                                    value={form.imageUrl}
+                                    onChange={(event) => handleChange("imageUrl", event.target.value)}
+                                    placeholder="https://.../project-screenshot.jpg"
+                                />
+                                <small className="admin-field-help">Used as the project card image.</small>
+                            </label>
+                            <label>
+                                Image alt text
+                                <input
+                                    value={form.imageAlt}
+                                    onChange={(event) => handleChange("imageAlt", event.target.value)}
+                                    placeholder="Dashboard preview"
+                                />
+                            </label>
+                        </div>
 
                         <div className="admin-form-actions">
                             <button type="button" className="admin-btn admin-btn-ghost" onClick={resetForm}>
@@ -401,7 +447,21 @@ const ProjectManager = () => {
 
                     <div className="admin-project-list">
                         {projects.map((project) => (
-                            <article className="admin-project-card" key={project.id}>
+                            <article
+                                className={`admin-project-card${project.imageUrl ? " has-image" : ""}`}
+                                key={project.id}
+                            >
+                                {project.imageUrl && (
+                                    <img
+                                        alt={project.imageAlt || project.title || "Project preview"}
+                                        className="admin-project-thumb"
+                                        loading="lazy"
+                                        onError={(event) => {
+                                            event.currentTarget.hidden = true;
+                                        }}
+                                        src={project.imageUrl}
+                                    />
+                                )}
                                 <div>
                                     <div className="admin-project-card-top">
                                         <span className={`admin-status ${project.status || "draft"}`}>
@@ -410,7 +470,7 @@ const ProjectManager = () => {
                                         <span className="admin-project-order">#{project.order ?? 0}</span>
                                     </div>
                                     <h3>{project.title || "Untitled project"}</h3>
-                                    <p>{project.description || "No description yet."}</p>
+                                    <p>{stripHtml(project.description) || "No description yet."}</p>
                                     <div className="admin-category-list">
                                         {(project.tech || []).map((tech) => (
                                             <span className="admin-category-chip" key={tech}>

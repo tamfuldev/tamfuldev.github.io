@@ -356,7 +356,6 @@ const MarketAnalysisWidget = ({ defaultSymbol = "BTC", language = "en" }) => {
             <section className="portfolio-market-wrap">
                 <div className="portfolio-market-hero">
                     <div>
-                        <div className="portfolio-section-label">{"// coingecko_crypto_analysis"}</div>
                         <h1>Market Analysis</h1>
                         <p>
                             {

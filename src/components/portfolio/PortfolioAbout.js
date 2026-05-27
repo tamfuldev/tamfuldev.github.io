@@ -18,11 +18,12 @@ const PortfolioAbout = ({ avatarSrc, language }) => (
                     <h1>{pick(aboutContent.name, language)}</h1>
                     <div className="portfolio-role">{pick(aboutContent.role, language)}</div>
                     <p>{pick(aboutContent.bioPrimary, language)}</p>
-                    <p className="portfolio-about-secondary">
+                    <p className="portfolio-about-secondary">{pick(aboutContent.bioDescription, language)}</p>
+                    {/* <p className="portfolio-about-secondary">
                         {pick(aboutContent.bioLead, language)}
                         <strong>{aboutContent.bioHighlight}</strong>
                         {pick(aboutContent.bioTail, language)}
-                    </p>
+                    </p> */}
                     <div className="portfolio-contact-row">
                         <a href="mailto:ngoctam2303001@gmail.com" className="portfolio-contact-chip">
                             <span className="chip-icon">✉</span>ngoctam2303001@gmail.com

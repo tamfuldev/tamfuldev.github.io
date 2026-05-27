@@ -60,9 +60,6 @@ const PortfolioNav = ({ activePage, canAccessPrivatePages = false, language, onP
                 <div className="portfolio-controls">
                     <LanguageButton />
                     <ThemeToggle />
-                    <a className="portfolio-nav-link portfolio-hire-btn" href="mailto:ngoctam2303001@gmail.com">
-                        {pick(navigationLabels.hire, language)}
-                    </a>
                 </div>
             </div>
         </nav>
