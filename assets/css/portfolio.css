@@ -118,7 +118,7 @@ body.light .portfolio-nav {
     flex: 1;
     flex-wrap: wrap;
     gap: 0.85rem;
-    justify-content: flex-end;
+    justify-content: space-between;
 }
 
 .portfolio-nav-link {
@@ -252,6 +252,46 @@ body.light .portfolio-nav {
 
 .portfolio-controls .control-btn i {
     pointer-events: none;
+}
+
+.portfolio-controls .theme-toggle {
+    background: var(--portfolio-bg-3);
+    border-color: var(--portfolio-border);
+    color: var(--portfolio-text);
+    font-family: var(--portfolio-body-font);
+    font-size: 0.76rem;
+    height: 38px;
+}
+
+.portfolio-controls .theme-toggle:hover {
+    background: var(--portfolio-card);
+    border-color: var(--portfolio-hover-border);
+    color: var(--portfolio-text);
+    transform: translateY(-1px);
+}
+
+.portfolio-controls .theme-toggle:focus-within {
+    outline-color: var(--portfolio-accent);
+}
+
+.portfolio-controls .theme-toggle-track {
+    background: var(--portfolio-bg-2);
+    border-color: var(--portfolio-border);
+    color: var(--portfolio-muted);
+}
+
+.portfolio-controls .theme-toggle-thumb {
+    background: var(--portfolio-text);
+}
+
+.portfolio-controls .theme-toggle.is-dark .theme-toggle-track {
+    background: var(--portfolio-accent);
+    border-color: var(--portfolio-accent);
+    color: var(--portfolio-button-ink);
+}
+
+.portfolio-controls .theme-toggle.is-dark .theme-toggle-thumb {
+    background: var(--portfolio-button-ink);
 }
 
 .portfolio-page {
@@ -579,6 +619,9 @@ body.light .portfolio-nav {
     position: absolute;
     top: 50%;
     transform: translate(-50%, -50%);
+}
+.light .portfolio-orbit-ring {
+    border: 1px solid rgba(45, 46, 41, 0.12) !important;
 }
 
 .portfolio-orbit-ring-1 {
@@ -926,6 +969,40 @@ body.light .portfolio-nav {
     transform: translateX(30%);
 }
 
+.portfolio-project-preview {
+    aspect-ratio: 16 / 9;
+    background:
+        linear-gradient(135deg, rgba(232, 255, 72, 0.1), rgba(123, 184, 245, 0.08)),
+        var(--portfolio-bg-2);
+    border: 1px solid var(--portfolio-border);
+    border-radius: 14px;
+    margin-bottom: 1.2rem;
+    overflow: hidden;
+    position: relative;
+    z-index: 1;
+}
+
+.portfolio-project-preview::after {
+    background: linear-gradient(180deg, transparent 45%, rgba(0, 0, 0, 0.28));
+    content: "";
+    inset: 0;
+    pointer-events: none;
+    position: absolute;
+}
+
+.portfolio-project-preview img {
+    display: block;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.45s ease, filter 0.45s ease;
+    width: 100%;
+}
+
+.portfolio-project-showcase-card:hover .portfolio-project-preview img {
+    filter: saturate(1.08);
+    transform: scale(1.04);
+}
+
 .portfolio-project-card-orb {
     background: radial-gradient(circle, rgba(232, 255, 72, 0.13), transparent 64%);
     filter: blur(2px);
@@ -1013,12 +1090,68 @@ body.light .portfolio-nav {
     z-index: 1;
 }
 
-.portfolio-project-showcase-card > p {
+.portfolio-project-description {
     color: var(--portfolio-muted);
     line-height: 1.7;
     margin-bottom: 1.2rem;
     position: relative;
     z-index: 1;
+}
+
+.portfolio-project-description p,
+.portfolio-project-impact-item p,
+.portfolio-project-impact-rich p {
+    margin: 0 0 0.55rem;
+}
+
+.portfolio-project-description p:last-child,
+.portfolio-project-impact-item p:last-child,
+.portfolio-project-impact-rich p:last-child {
+    margin-bottom: 0;
+}
+
+.portfolio-project-description h2,
+.portfolio-project-description h3,
+.portfolio-project-impact-rich h2,
+.portfolio-project-impact-rich h3 {
+    color: var(--portfolio-text);
+    font-family: var(--portfolio-head-font);
+    font-size: 1.05rem;
+    line-height: 1.35;
+    margin: 0.65rem 0 0.35rem;
+}
+
+.portfolio-project-description blockquote,
+.portfolio-project-impact-rich blockquote {
+    border-left: 2px solid var(--portfolio-accent);
+    margin: 0.7rem 0;
+    padding-left: 0.85rem;
+}
+
+.portfolio-project-description pre,
+.portfolio-project-impact-rich pre {
+    background: var(--portfolio-bg-2);
+    border: 1px solid var(--portfolio-border);
+    border-radius: 8px;
+    color: var(--portfolio-text);
+    margin: 0.7rem 0;
+    overflow-x: auto;
+    padding: 0.8rem;
+}
+
+.portfolio-project-description a,
+.portfolio-project-impact-rich a {
+    color: var(--portfolio-accent);
+}
+
+.portfolio-project-description img,
+.portfolio-project-impact-rich img {
+    border: 1px solid var(--portfolio-border);
+    border-radius: 10px;
+    display: block;
+    height: auto;
+    margin: 0.75rem 0;
+    max-width: 100%;
 }
 
 .portfolio-project-impact {
@@ -1041,25 +1174,54 @@ body.light .portfolio-nav {
     text-transform: uppercase;
 }
 
-.portfolio-project-impact ul {
+.portfolio-project-impact ul,
+.portfolio-project-impact-rich ul,
+.portfolio-project-impact-rich ol,
+.portfolio-project-description ul,
+.portfolio-project-description ol {
     display: grid;
     gap: 0.45rem;
+    margin: 0.45rem 0 0;
+    padding-left: 0;
+}
+
+.portfolio-project-impact ul,
+.portfolio-project-impact-rich ul,
+.portfolio-project-impact-rich ol {
     list-style: none;
 }
 
-.portfolio-project-impact li {
+.portfolio-project-description ul,
+.portfolio-project-description ol {
+    padding-left: 1.15rem;
+}
+
+.portfolio-project-impact li,
+.portfolio-project-impact-rich li,
+.portfolio-project-description li {
     color: var(--portfolio-muted);
     font-size: 0.88rem;
     line-height: 1.55;
+}
+
+.portfolio-project-impact li,
+.portfolio-project-impact-rich li {
     padding-left: 1rem;
     position: relative;
 }
 
-.portfolio-project-impact li::before {
+.portfolio-project-impact li::before,
+.portfolio-project-impact-rich li::before {
     color: var(--portfolio-accent);
     content: ">";
     left: 0;
     position: absolute;
+}
+
+.portfolio-project-impact-item,
+.portfolio-project-impact-rich {
+    color: var(--portfolio-muted);
+    line-height: 1.55;
 }
 
 .portfolio-project-showcase-card .portfolio-project-tech {
@@ -1096,7 +1258,7 @@ body.light .portfolio-nav {
 .portfolio-about-wrap,
 .portfolio-blog-wrap {
     margin: 0 auto;
-    max-width: 900px;
+    max-width: 1100px;
     padding: 3rem 2rem;
 }
 
@@ -4090,6 +4252,11 @@ body.light .portfolio-expense-stat {
         padding: 0 0.55rem;
     }
 
+    .portfolio-controls .theme-toggle {
+        height: 34px;
+        padding: 4px 7px 4px 4px;
+    }
+
     .portfolio-controls .portfolio-hire-btn {
         align-items: center;
         display: inline-flex;
@@ -4359,6 +4526,11 @@ body.light .portfolio-expense-stat {
         height: 32px;
         min-width: 34px;
         padding: 0 0.48rem;
+    }
+
+    .portfolio-controls .theme-toggle {
+        height: 32px;
+        padding-right: 6px;
     }
 
     .portfolio-controls .portfolio-hire-btn {
