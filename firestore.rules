@@ -7,7 +7,11 @@ service cloud.firestore {
     }
 
     function isAdmin() {
-      return isSignedIn() && request.auth.token.admin == true;
+      return isSignedIn()
+        && (
+          request.auth.token.admin == true
+          || exists(/databases/$(database)/documents/admins/$(request.auth.uid))
+        );
     }
 
     function isOwner(userId) {
@@ -96,6 +100,10 @@ service cloud.firestore {
     match /icons/{iconId} {
       allow read: if true;
       allow write: if isAdmin();
+    }
+
+    match /admins/{adminId} {
+      allow read, write: if isAdmin();
     }
 
     match /roadmap/{document=**} {

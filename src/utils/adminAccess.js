@@ -1,13 +1,23 @@
 const defaultDevelopmentAdminEmails = ["admin@gmail.com"];
 
-const getDevelopmentAdminEmails = () => {
+const getConfiguredAdminEmails = () => {
     const envEmails = process.env.REACT_APP_ADMIN_EMAILS || "";
-    const configuredEmails = envEmails
-        .split(",")
-        .map((email) => email.trim().toLowerCase())
-        .filter(Boolean);
 
-    return new Set([...defaultDevelopmentAdminEmails, ...configuredEmails]);
+    return new Set(
+        envEmails
+            .split(",")
+            .map((email) => email.trim().toLowerCase())
+            .filter(Boolean)
+    );
+};
+
+const getDevelopmentAdminEmails = () =>
+    new Set([...defaultDevelopmentAdminEmails, ...getConfiguredAdminEmails()]);
+
+const hasConfiguredAdminEmail = (user) => {
+    const email = user?.email?.toLowerCase();
+
+    return Boolean(email && getConfiguredAdminEmails().has(email));
 };
 
 const hasDevelopmentAdminEmail = (user) => {
@@ -20,12 +30,31 @@ const hasDevelopmentAdminEmail = (user) => {
     return Boolean(email && getDevelopmentAdminEmails().has(email));
 };
 
+const hasFirestoreAdminProfile = async (user) => {
+    if (!user?.uid) {
+        return false;
+    }
+
+    try {
+        const { firestore } = await import("../configs/firebase");
+        const snapshot = await firestore.collection("admins").doc(user.uid).get();
+
+        return snapshot.exists;
+    } catch {
+        return false;
+    }
+};
+
 export const hasAdminClaim = async (user) => {
     if (!user || typeof user.getIdTokenResult !== "function") {
         return false;
     }
 
-    if (hasDevelopmentAdminEmail(user)) {
+    if (hasDevelopmentAdminEmail(user) || hasConfiguredAdminEmail(user)) {
+        return true;
+    }
+
+    if (await hasFirestoreAdminProfile(user)) {
         return true;
     }
 
