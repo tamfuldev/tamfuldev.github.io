@@ -213,7 +213,7 @@ const PortfolioProjects = ({ language }) => {
 
                                 {hasImpact && (
                                     <div className="portfolio-project-impact">
-                                        <strong>{pick(projectsContent.impactLabel, language)}</strong>
+                                        <strong className="label-impact">{pick(projectsContent.impactLabel, language)}</strong>
                                         {Array.isArray(project.impact) ? (
                                             <ul>
                                                 {project.impact.map((item) => {
