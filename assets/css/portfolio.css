@@ -1164,7 +1164,7 @@ body.light .portfolio-nav {
     z-index: 1;
 }
 
-.portfolio-project-impact strong {
+.portfolio-project-impact .label-impact {
     color: var(--portfolio-accent);
     display: block;
     font-family: var(--portfolio-mono-font);
