@@ -15,51 +15,53 @@ const PortfolioNav = ({ activePage, canAccessPrivatePages = false, language, onP
 
     return (
         <nav className="portfolio-nav">
-            <button
-                type="button"
-                className="portfolio-logo"
-                onClick={() => onPageChange("home")}
-            >
-                Tam<span>.</span>
-            </button>
+            <div className="portfolio-nav-inner">
+                <button
+                    type="button"
+                    className="portfolio-logo"
+                    onClick={() => onPageChange("home")}
+                >
+                    Tam<span>.</span>
+                </button>
 
-            <div className="portfolio-nav-main">
-                <div className="portfolio-nav-links">
-                    {primaryPages.map((page) => (
-                        <button
-                            key={page}
-                            type="button"
-                            className={`portfolio-nav-link${activePage === page ? " is-active" : ""}`}
-                            onClick={() => onPageChange(page)}
-                        >
-                            {pick(navigationLabels[page], language)}
-                        </button>
-                    ))}
+                <div className="portfolio-nav-main">
+                    <div className="portfolio-nav-links">
+                        {primaryPages.map((page) => (
+                            <button
+                                key={page}
+                                type="button"
+                                className={`portfolio-nav-link${activePage === page ? " is-active" : ""}`}
+                                onClick={() => onPageChange(page)}
+                            >
+                                {pick(navigationLabels[page], language)}
+                            </button>
+                        ))}
 
-                    <label className={`portfolio-nav-select${activeGroupedPage ? " is-active" : ""}`}>
-                        <span className="sr-only">{pick(navigationLabels.more, language)}</span>
-                        <select
-                            aria-label={pick(navigationLabels.more, language)}
-                            value={activeGroupedPage}
-                            onChange={(event) => {
-                                if (event.target.value) {
-                                    onPageChange(event.target.value);
-                                }
-                            }}
-                        >
-                            <option value="">{pick(navigationLabels.more, language)}</option>
-                            {groupedPages.map((page) => (
-                                <option key={page} value={page}>
-                                    {pick(navigationLabels[page], language)}
-                                </option>
-                            ))}
-                        </select>
-                    </label>
-                </div>
+                        <label className={`portfolio-nav-select${activeGroupedPage ? " is-active" : ""}`}>
+                            <span className="sr-only">{pick(navigationLabels.more, language)}</span>
+                            <select
+                                aria-label={pick(navigationLabels.more, language)}
+                                value={activeGroupedPage}
+                                onChange={(event) => {
+                                    if (event.target.value) {
+                                        onPageChange(event.target.value);
+                                    }
+                                }}
+                            >
+                                <option value="">{pick(navigationLabels.more, language)}</option>
+                                {groupedPages.map((page) => (
+                                    <option key={page} value={page}>
+                                        {pick(navigationLabels[page], language)}
+                                    </option>
+                                ))}
+                            </select>
+                        </label>
+                    </div>
 
-                <div className="portfolio-controls">
-                    <LanguageButton />
-                    <ThemeToggle />
+                    <div className="portfolio-controls">
+                        <LanguageButton />
+                        <ThemeToggle />
+                    </div>
                 </div>
             </div>
         </nav>
