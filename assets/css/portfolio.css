@@ -18,6 +18,7 @@
     --portfolio-body-font: "Inter", sans-serif;
     --portfolio-mono-font: "JetBrains Mono", monospace;
     --portfolio-nav-height: 58px;
+    --portfolio-shell-width: 1180px;
     --cursor-x: 50vw;
     --cursor-y: 50vh;
     background: var(--portfolio-bg);
@@ -72,14 +73,22 @@ body.light .portfolio-app {
     border-bottom: 1px solid var(--portfolio-border);
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    gap: 1.5rem;
+    justify-content: center;
     padding: 0 2rem;
     height: var(--portfolio-nav-height);
 }
 
 body.light .portfolio-nav {
     background: rgba(247, 243, 234, 0.92);
+}
+
+.portfolio-nav-inner {
+    align-items: center;
+    display: flex;
+    gap: 1.5rem;
+    height: 100%;
+    max-width: var(--portfolio-shell-width);
+    width: 100%;
 }
 
 .portfolio-logo {
@@ -348,7 +357,7 @@ body.light .portfolio-nav {
     display: grid;
     gap: 4rem;
     grid-template-columns: minmax(0, 1fr) minmax(320px, 420px);
-    max-width: 1100px;
+    max-width: var(--portfolio-shell-width);
     position: relative;
     width: 100%;
     z-index: 1;
@@ -738,7 +747,7 @@ body.light .portfolio-nav {
 .portfolio-featured,
 .portfolio-crypto-wrap {
     margin: 0 auto;
-    max-width: 1100px;
+    max-width: var(--portfolio-shell-width);
     padding: 4rem 2rem;
 }
 
@@ -888,7 +897,7 @@ body.light .portfolio-nav {
 
 .portfolio-projects-wrap {
     margin: 0 auto;
-    max-width: 1180px;
+    max-width: var(--portfolio-shell-width);
     padding: 4rem 2rem;
 }
 
@@ -1258,7 +1267,7 @@ body.light .portfolio-nav {
 .portfolio-about-wrap,
 .portfolio-blog-wrap {
     margin: 0 auto;
-    max-width: 1100px;
+    max-width: var(--portfolio-shell-width);
     padding: 3rem 2rem;
 }
 
@@ -1550,7 +1559,7 @@ body.light .portfolio-nav {
 
 .portfolio-roadmap-wrap {
     margin: 0 auto;
-    max-width: 1100px;
+    max-width: var(--portfolio-shell-width);
     padding: 4rem 2rem 2rem;
 }
 
@@ -1871,7 +1880,7 @@ body.light .portfolio-nav {
 
 .portfolio-daily-plan-wrap {
     margin: 0 auto;
-    max-width: 1180px;
+    max-width: var(--portfolio-shell-width);
     padding: 4rem 2rem 2rem;
 }
 
@@ -2198,7 +2207,7 @@ body.light .portfolio-nav {
 
 .portfolio-market-wrap {
     margin: 0 auto;
-    max-width: 1120px;
+    max-width: var(--portfolio-shell-width);
     padding: 4rem 2rem 2rem;
 }
 
@@ -2599,7 +2608,7 @@ body.light .portfolio-nav {
     --expense-income: #22c55e;
     --expense-danger: #fb7185;
     margin: 0 auto;
-    max-width: 1120px;
+    max-width: var(--portfolio-shell-width);
     padding: 4rem 2rem 2rem;
 }
 
@@ -4161,13 +4170,16 @@ body.light .portfolio-expense-stat {
 
     .portfolio-nav {
         align-items: center;
+        height: var(--portfolio-nav-height);
+        padding: 0.7rem 0.85rem 0.75rem;
+    }
+
+    .portfolio-nav-inner {
         display: grid;
         gap: 0.65rem;
         grid-template-columns: minmax(0, 1fr) auto;
         grid-template-rows: auto auto;
-        height: var(--portfolio-nav-height);
         overflow: hidden;
-        padding: 0.7rem 0.85rem 0.75rem;
     }
 
     .portfolio-logo {
