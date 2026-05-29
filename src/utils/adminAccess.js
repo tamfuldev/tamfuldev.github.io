@@ -1,4 +1,4 @@
-const defaultDevelopmentAdminEmails = ["admin@gmail.com"];
+const defaultAdminEmails = ["admin@gmail.com"];
 
 const getConfiguredAdminEmails = () => {
     const envEmails = process.env.REACT_APP_ADMIN_EMAILS || "";
@@ -11,23 +11,13 @@ const getConfiguredAdminEmails = () => {
     );
 };
 
-const getDevelopmentAdminEmails = () =>
-    new Set([...defaultDevelopmentAdminEmails, ...getConfiguredAdminEmails()]);
+const getAllowedAdminEmails = () =>
+    new Set([...defaultAdminEmails, ...getConfiguredAdminEmails()]);
 
-const hasConfiguredAdminEmail = (user) => {
+const hasAllowedAdminEmail = (user) => {
     const email = user?.email?.toLowerCase();
 
-    return Boolean(email && getConfiguredAdminEmails().has(email));
-};
-
-const hasDevelopmentAdminEmail = (user) => {
-    if (process.env.NODE_ENV !== "development") {
-        return false;
-    }
-
-    const email = user?.email?.toLowerCase();
-
-    return Boolean(email && getDevelopmentAdminEmails().has(email));
+    return Boolean(email && getAllowedAdminEmails().has(email));
 };
 
 const hasFirestoreAdminProfile = async (user) => {
@@ -50,7 +40,7 @@ export const hasAdminClaim = async (user) => {
         return false;
     }
 
-    if (hasDevelopmentAdminEmail(user) || hasConfiguredAdminEmail(user)) {
+    if (hasAllowedAdminEmail(user)) {
         return true;
     }
 
