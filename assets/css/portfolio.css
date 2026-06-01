@@ -1119,15 +1119,28 @@ body.light .portfolio-nav {
     margin-bottom: 0;
 }
 
+.portfolio-project-description h1,
 .portfolio-project-description h2,
 .portfolio-project-description h3,
+.portfolio-project-description h4,
+.portfolio-project-description h5,
+.portfolio-project-description h6,
+.portfolio-project-impact-rich h1,
 .portfolio-project-impact-rich h2,
-.portfolio-project-impact-rich h3 {
+.portfolio-project-impact-rich h3,
+.portfolio-project-impact-rich h4,
+.portfolio-project-impact-rich h5,
+.portfolio-project-impact-rich h6 {
     color: var(--portfolio-text);
     font-family: var(--portfolio-head-font);
     font-size: 1.05rem;
     line-height: 1.35;
     margin: 0.65rem 0 0.35rem;
+}
+
+.portfolio-project-description h1,
+.portfolio-project-impact-rich h1 {
+    font-size: 1.18rem;
 }
 
 .portfolio-project-description blockquote,
@@ -1217,6 +1230,86 @@ body.light .portfolio-nav {
 .portfolio-project-impact-rich li {
     padding-left: 1rem;
     position: relative;
+}
+
+.portfolio-project-description .ql-size-small,
+.portfolio-project-impact-rich .ql-size-small,
+.portfolio-project-impact-item .ql-size-small,
+.portfolio-roadmap-rich .ql-size-small,
+.portfolio-roadmap-milestone-description .ql-size-small,
+.portfolio-day-task-notes .ql-size-small,
+.portfolio-blog-detail-body .ql-size-small {
+    font-size: 0.85em;
+}
+
+.portfolio-project-description .ql-size-large,
+.portfolio-project-impact-rich .ql-size-large,
+.portfolio-project-impact-item .ql-size-large,
+.portfolio-roadmap-rich .ql-size-large,
+.portfolio-roadmap-milestone-description .ql-size-large,
+.portfolio-day-task-notes .ql-size-large,
+.portfolio-blog-detail-body .ql-size-large {
+    font-size: 1.18em;
+}
+
+.portfolio-project-description .ql-size-huge,
+.portfolio-project-impact-rich .ql-size-huge,
+.portfolio-project-impact-item .ql-size-huge,
+.portfolio-roadmap-rich .ql-size-huge,
+.portfolio-roadmap-milestone-description .ql-size-huge,
+.portfolio-day-task-notes .ql-size-huge,
+.portfolio-blog-detail-body .ql-size-huge {
+    font-size: 1.45em;
+}
+
+:where(.portfolio-project-description, .portfolio-project-impact-rich, .portfolio-project-impact-item, .portfolio-roadmap-rich, .portfolio-roadmap-milestone-description, .portfolio-day-task-notes, .portfolio-blog-detail-body) .ql-font-serif {
+    font-family: Georgia, "Times New Roman", serif;
+}
+
+:where(.portfolio-project-description, .portfolio-project-impact-rich, .portfolio-project-impact-item, .portfolio-roadmap-rich, .portfolio-roadmap-milestone-description, .portfolio-day-task-notes, .portfolio-blog-detail-body) .ql-font-monospace {
+    font-family: var(--portfolio-mono-font);
+}
+
+:where(.portfolio-project-description, .portfolio-project-impact-rich, .portfolio-project-impact-item, .portfolio-roadmap-rich, .portfolio-roadmap-milestone-description, .portfolio-day-task-notes, .portfolio-blog-detail-body) .ql-align-center {
+    text-align: center;
+}
+
+:where(.portfolio-project-description, .portfolio-project-impact-rich, .portfolio-project-impact-item, .portfolio-roadmap-rich, .portfolio-roadmap-milestone-description, .portfolio-day-task-notes, .portfolio-blog-detail-body) .ql-align-right {
+    text-align: right;
+}
+
+:where(.portfolio-project-description, .portfolio-project-impact-rich, .portfolio-project-impact-item, .portfolio-roadmap-rich, .portfolio-roadmap-milestone-description, .portfolio-day-task-notes, .portfolio-blog-detail-body) .ql-align-justify {
+    text-align: justify;
+}
+
+:where(.portfolio-project-description, .portfolio-project-impact-rich, .portfolio-project-impact-item, .portfolio-roadmap-rich, .portfolio-roadmap-milestone-description, .portfolio-day-task-notes, .portfolio-blog-detail-body) .ql-direction-rtl {
+    direction: rtl;
+}
+
+:where(.portfolio-project-description, .portfolio-project-impact-rich, .portfolio-project-impact-item, .portfolio-roadmap-rich, .portfolio-roadmap-milestone-description, .portfolio-day-task-notes, .portfolio-blog-detail-body) .ql-indent-1 {
+    padding-left: 2rem;
+}
+
+:where(.portfolio-project-description, .portfolio-project-impact-rich, .portfolio-project-impact-item, .portfolio-roadmap-rich, .portfolio-roadmap-milestone-description, .portfolio-day-task-notes, .portfolio-blog-detail-body) .ql-indent-2 {
+    padding-left: 4rem;
+}
+
+:where(.portfolio-project-description, .portfolio-project-impact-rich, .portfolio-project-impact-item, .portfolio-roadmap-rich, .portfolio-roadmap-milestone-description, .portfolio-day-task-notes, .portfolio-blog-detail-body) .ql-indent-3 {
+    padding-left: 6rem;
+}
+
+:where(.portfolio-project-description, .portfolio-project-impact-rich, .portfolio-project-impact-item, .portfolio-roadmap-rich, .portfolio-roadmap-milestone-description, .portfolio-day-task-notes, .portfolio-blog-detail-body) .ql-indent-4 {
+    padding-left: 8rem;
+}
+
+:where(.portfolio-project-description, .portfolio-project-impact-rich, .portfolio-project-impact-item, .portfolio-roadmap-rich, .portfolio-roadmap-milestone-description, .portfolio-day-task-notes, .portfolio-blog-detail-body) .ql-video {
+    aspect-ratio: 16 / 9;
+    border: 1px solid var(--portfolio-border);
+    border-radius: 14px;
+    display: block;
+    margin: 1rem 0;
+    max-width: 100%;
+    width: 100%;
 }
 
 .portfolio-project-impact li::before,
@@ -1785,6 +1878,60 @@ body.light .portfolio-nav {
 .portfolio-roadmap-milestone-description p,
 .portfolio-day-task-notes p {
     margin: 0.25rem 0;
+}
+
+.portfolio-roadmap-rich h1,
+.portfolio-roadmap-rich h2,
+.portfolio-roadmap-rich h3,
+.portfolio-roadmap-rich h4,
+.portfolio-roadmap-rich h5,
+.portfolio-roadmap-rich h6,
+.portfolio-roadmap-milestone-description h1,
+.portfolio-roadmap-milestone-description h2,
+.portfolio-roadmap-milestone-description h3,
+.portfolio-roadmap-milestone-description h4,
+.portfolio-roadmap-milestone-description h5,
+.portfolio-roadmap-milestone-description h6,
+.portfolio-day-task-notes h1,
+.portfolio-day-task-notes h2,
+.portfolio-day-task-notes h3,
+.portfolio-day-task-notes h4,
+.portfolio-day-task-notes h5,
+.portfolio-day-task-notes h6 {
+    color: var(--portfolio-text);
+    font-family: var(--portfolio-head-font);
+    line-height: 1.25;
+    margin: 0.55rem 0 0.3rem;
+}
+
+.portfolio-roadmap-rich h1,
+.portfolio-roadmap-milestone-description h1,
+.portfolio-day-task-notes h1 {
+    font-size: 1.15rem;
+}
+
+.portfolio-roadmap-rich h2,
+.portfolio-roadmap-milestone-description h2,
+.portfolio-day-task-notes h2 {
+    font-size: 1.02rem;
+}
+
+.portfolio-roadmap-rich h3,
+.portfolio-roadmap-milestone-description h3,
+.portfolio-day-task-notes h3 {
+    font-size: 0.94rem;
+}
+
+.portfolio-roadmap-rich h4,
+.portfolio-roadmap-rich h5,
+.portfolio-roadmap-rich h6,
+.portfolio-roadmap-milestone-description h4,
+.portfolio-roadmap-milestone-description h5,
+.portfolio-roadmap-milestone-description h6,
+.portfolio-day-task-notes h4,
+.portfolio-day-task-notes h5,
+.portfolio-day-task-notes h6 {
+    font-size: 0.88rem;
 }
 
 .portfolio-roadmap-rich a,
@@ -3202,6 +3349,27 @@ body.light .portfolio-expense-stat {
     margin-bottom: 3rem;
 }
 
+.portfolio-page.is-blog-detail {
+    height: 100vh;
+    overflow: hidden;
+}
+
+.portfolio-page.is-blog-detail .portfolio-footer {
+    display: none;
+}
+
+.portfolio-blog-wrap.is-detail {
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - var(--portfolio-nav-height));
+    overflow: hidden;
+}
+
+.portfolio-blog-wrap.is-detail .portfolio-blog-header {
+    flex: 0 0 auto;
+    margin-bottom: 1.25rem;
+}
+
 .portfolio-blog-filters {
     display: flex;
     flex-wrap: wrap;
@@ -3394,6 +3562,104 @@ body.light .portfolio-expense-stat {
     max-width: 220px;
 }
 
+.portfolio-blog-detail-shell {
+    --portfolio-blog-toc-width: clamp(180px, 20vw, 240px);
+    align-items: start;
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: minmax(0, 1fr);
+}
+
+.portfolio-blog-wrap.is-detail .portfolio-blog-detail-shell {
+    flex: 1 1 auto;
+    min-height: 0;
+}
+
+.portfolio-blog-detail-shell.has-toc {
+    grid-template-columns: var(--portfolio-blog-toc-width) minmax(0, 1fr);
+}
+
+.portfolio-blog-detail-shell.has-toc .portfolio-blog-detail {
+    grid-column: 2;
+}
+
+.portfolio-blog-toc {
+    align-self: start;
+    background: var(--portfolio-card);
+    border: 1px solid var(--portfolio-border);
+    border-radius: 12px;
+    box-shadow: 0 18px 45px rgba(2, 6, 23, 0.08);
+    max-height: calc(100vh - var(--portfolio-nav-height) - 2rem);
+    overflow-y: auto;
+    padding: 1rem;
+    position: sticky;
+    top: calc(var(--portfolio-nav-height) + 1rem);
+    width: 100%;
+    z-index: 4;
+}
+
+.portfolio-blog-wrap.is-detail .portfolio-blog-toc {
+    max-height: 100%;
+    position: static;
+    top: auto;
+}
+
+.portfolio-blog-toc-title {
+    color: var(--portfolio-accent);
+    font-family: var(--portfolio-mono-font);
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    margin-bottom: 0.75rem;
+    text-transform: uppercase;
+}
+
+.portfolio-blog-toc nav {
+    display: grid;
+    gap: 0.2rem;
+}
+
+.portfolio-blog-toc-link {
+    border-left: 1px solid var(--portfolio-border);
+    color: var(--portfolio-muted);
+    display: block;
+    font-size: 0.82rem;
+    line-height: 1.45;
+    padding: 0.42rem 0 0.42rem 0.75rem;
+    text-decoration: none;
+    transition: background-color 0.18s ease, border-color 0.18s ease, color 0.18s ease;
+}
+
+.portfolio-blog-toc-link:hover {
+    border-color: var(--portfolio-accent);
+    color: var(--portfolio-text);
+}
+
+.portfolio-blog-toc-link.is-active,
+.portfolio-blog-toc-link[aria-current="true"] {
+    background: rgba(123, 184, 245, 0.1);
+    border-color: var(--portfolio-accent);
+    color: var(--portfolio-text);
+    font-weight: 700;
+}
+
+.portfolio-blog-toc-link.is-h1 {
+    color: var(--portfolio-text);
+    font-weight: 700;
+}
+
+.portfolio-blog-toc-link.is-h3 {
+    font-size: 0.78rem;
+    padding-left: 1.3rem;
+}
+
+.portfolio-blog-toc-link.is-h4,
+.portfolio-blog-toc-link.is-h5,
+.portfolio-blog-toc-link.is-h6 {
+    font-size: 0.76rem;
+    padding-left: 1.8rem;
+}
+
 .portfolio-blog-detail {
     background: var(--portfolio-card);
     border: 1px solid var(--portfolio-border);
@@ -3403,19 +3669,71 @@ body.light .portfolio-expense-stat {
     position: relative;
 }
 
+.portfolio-blog-wrap.is-detail .portfolio-blog-detail {
+    height: 100%;
+    min-height: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scroll-behavior: auto;
+    scroll-padding-top: 1rem;
+    scrollbar-color: rgba(232, 255, 72, 0.45) transparent;
+    scrollbar-width: thin;
+}
+
+.portfolio-blog-wrap.is-detail .portfolio-blog-detail::-webkit-scrollbar {
+    width: 8px;
+}
+
+.portfolio-blog-wrap.is-detail .portfolio-blog-detail::-webkit-scrollbar-thumb {
+    background: rgba(232, 255, 72, 0.35);
+    border-radius: 999px;
+}
+
 .portfolio-blog-detail:hover::before {
     opacity: 1;
 }
 
 .portfolio-blog-back {
+    align-items: center;
+    background: rgba(232, 255, 72, 0.06);
+    border: 1px solid var(--portfolio-border);
+    border-radius: 999px;
+    color: var(--portfolio-accent);
+    display: inline-flex;
+    flex-wrap: wrap;
+    font-family: var(--portfolio-mono-font);
+    font-size: 0.76rem;
+    gap: 0.45rem;
+    line-height: 1.45;
+    margin-bottom: 1.5rem;
+    max-width: 100%;
+    padding: 0.45rem 0.75rem;
+}
+
+.portfolio-blog-back button {
     background: transparent;
     border: 0;
     color: var(--portfolio-accent);
     cursor: pointer;
-    font-family: var(--portfolio-mono-font);
-    font-size: 0.78rem;
-    margin-bottom: 1.5rem;
+    font: inherit;
     padding: 0;
+}
+
+.portfolio-blog-back button:hover {
+    color: var(--portfolio-text);
+}
+
+.portfolio-blog-back > span[aria-hidden="true"] {
+    color: var(--portfolio-muted);
+}
+
+.portfolio-blog-breadcrumb-current {
+    color: var(--portfolio-muted);
+    display: inline-block;
+    max-width: min(48vw, 520px);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .portfolio-blog-detail-meta {
@@ -3461,11 +3779,20 @@ body.light .portfolio-expense-stat {
     white-space: pre-line;
 }
 
+.portfolio-blog-detail-body h1,
 .portfolio-blog-detail-body h2,
-.portfolio-blog-detail-body h3 {
+.portfolio-blog-detail-body h3,
+.portfolio-blog-detail-body h4,
+.portfolio-blog-detail-body h5,
+.portfolio-blog-detail-body h6 {
     font-family: var(--portfolio-head-font);
     line-height: 1.15;
     margin: 1.6rem 0 0.7rem;
+    scroll-margin-top: calc(var(--portfolio-nav-height) + 1.2rem);
+}
+
+.portfolio-blog-detail-body h1 {
+    font-size: 1.9rem;
 }
 
 .portfolio-blog-detail-body h2 {
@@ -3474,6 +3801,15 @@ body.light .portfolio-expense-stat {
 
 .portfolio-blog-detail-body h3 {
     font-size: 1.25rem;
+}
+
+.portfolio-blog-detail-body h4 {
+    font-size: 1.08rem;
+}
+
+.portfolio-blog-detail-body h5,
+.portfolio-blog-detail-body h6 {
+    font-size: 1rem;
 }
 
 .portfolio-blog-detail-body ul,
@@ -4160,6 +4496,30 @@ body.light .portfolio-expense-stat {
 
     .portfolio-project-showcase {
         grid-template-columns: 1fr;
+    }
+
+    .portfolio-blog-detail-shell,
+    .portfolio-blog-detail-shell.has-toc {
+        grid-template-columns: 1fr;
+    }
+
+    .portfolio-blog-detail-shell.has-toc .portfolio-blog-detail {
+        grid-column: auto;
+    }
+
+    .portfolio-blog-toc {
+        max-height: min(36vh, 260px);
+        position: sticky;
+        top: calc(var(--portfolio-nav-height) + 0.75rem);
+        width: 100%;
+    }
+
+    .portfolio-blog-wrap.is-detail .portfolio-blog-detail-shell.has-toc {
+        grid-template-rows: auto minmax(0, 1fr);
+    }
+
+    .portfolio-blog-wrap.is-detail .portfolio-blog-toc {
+        max-height: min(30vh, 220px);
     }
 }
 
