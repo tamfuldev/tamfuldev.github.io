@@ -17,4 +17,29 @@ describe("sanitizeRichHtml", () => {
         expect(result).toContain('href="https://example.com"');
         expect(result).not.toContain("javascript:");
     });
+
+    it("keeps safe Quill classes and inline color styles", () => {
+        const result = sanitizeRichHtml(
+            '<h4 class="ql-align-center ql-indent-1"><span style="color: rgb(230, 0, 0); background-color: #fff3cd; background-image: url(javascript:alert(1));">Title</span></h4>'
+        );
+
+        expect(result).toContain("<h4");
+        expect(result).toContain("ql-align-center");
+        expect(result).toContain("ql-indent-1");
+        expect(result).toContain("color:");
+        expect(result).toContain("background-color:");
+        expect(result).not.toContain("background-image");
+        expect(result).not.toContain("javascript:");
+    });
+
+    it("keeps trusted video embeds and removes untrusted iframes", () => {
+        const result = sanitizeRichHtml(
+            '<iframe src="https://www.youtube.com/embed/demo"></iframe><iframe src="https://example.com/embed/demo"></iframe>'
+        );
+
+        expect(result).toContain('src="https://www.youtube.com/embed/demo"');
+        expect(result).toContain("ql-video");
+        expect(result).toContain("sandbox=");
+        expect(result).not.toContain("example.com/embed/demo");
+    });
 });

@@ -16,15 +16,10 @@ const PortfolioNav = ({ activePage, canAccessPrivatePages = false, language, onP
     return (
         <nav className="portfolio-nav">
             <div className="portfolio-nav-inner">
-                <button
-                    type="button"
-                    className="portfolio-logo"
-                    onClick={() => onPageChange("home")}
-                >
-                    Tam<span>.</span>
-                </button>
-
                 <div className="portfolio-nav-main">
+                    <button type="button" className="portfolio-logo" onClick={() => onPageChange("home")}>
+                        Tam<span>.</span>
+                    </button>
                     <div className="portfolio-nav-links">
                         {primaryPages.map((page) => (
                             <button

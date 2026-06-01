@@ -620,6 +620,25 @@ body.light .admin-login-page {
 .admin-quill .ql-toolbar {
     background: var(--admin-surface-2);
     border-bottom: 1px solid var(--admin-border);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem;
+}
+
+.admin-quill .ql-toolbar .ql-formats {
+    margin-right: 0.25rem;
+}
+
+.admin-quill .ql-toolbar .ql-picker.ql-font {
+    width: 118px;
+}
+
+.admin-quill .ql-toolbar .ql-picker.ql-header {
+    width: 96px;
+}
+
+.admin-quill .ql-toolbar .ql-picker.ql-size {
+    width: 88px;
 }
 
 .admin-quill .ql-container {
@@ -631,6 +650,116 @@ body.light .admin-login-page {
     font-size: 0.95rem;
     line-height: 1.7;
     min-height: 220px;
+}
+
+.admin-quill .ql-editor h1,
+.admin-quill .ql-editor h2,
+.admin-quill .ql-editor h3,
+.admin-quill .ql-editor h4,
+.admin-quill .ql-editor h5,
+.admin-quill .ql-editor h6,
+.admin-rich-preview h1,
+.admin-rich-preview h2,
+.admin-rich-preview h3,
+.admin-rich-preview h4,
+.admin-rich-preview h5,
+.admin-rich-preview h6 {
+    color: var(--admin-text);
+    line-height: 1.25;
+    margin: 0.65rem 0 0.35rem;
+}
+
+.admin-quill .ql-editor h1,
+.admin-rich-preview h1 {
+    font-size: 1.7rem;
+}
+
+.admin-quill .ql-editor h2,
+.admin-rich-preview h2 {
+    font-size: 1.35rem;
+}
+
+.admin-quill .ql-editor h3,
+.admin-rich-preview h3 {
+    font-size: 1.12rem;
+}
+
+.admin-quill .ql-editor h4,
+.admin-rich-preview h4 {
+    font-size: 1rem;
+}
+
+.admin-quill .ql-editor h5,
+.admin-quill .ql-editor h6,
+.admin-rich-preview h5,
+.admin-rich-preview h6 {
+    font-size: 0.92rem;
+}
+
+.admin-quill .ql-editor .ql-size-small,
+.admin-rich-preview .ql-size-small {
+    font-size: 0.85em;
+}
+
+.admin-quill .ql-editor .ql-size-large,
+.admin-rich-preview .ql-size-large {
+    font-size: 1.18em;
+}
+
+.admin-quill .ql-editor .ql-size-huge,
+.admin-rich-preview .ql-size-huge {
+    font-size: 1.45em;
+}
+
+.admin-rich-preview .ql-font-serif {
+    font-family: Georgia, "Times New Roman", serif;
+}
+
+.admin-rich-preview .ql-font-monospace {
+    font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+}
+
+.admin-rich-preview .ql-align-center {
+    text-align: center;
+}
+
+.admin-rich-preview .ql-align-right {
+    text-align: right;
+}
+
+.admin-rich-preview .ql-align-justify {
+    text-align: justify;
+}
+
+.admin-rich-preview .ql-direction-rtl {
+    direction: rtl;
+}
+
+.admin-rich-preview .ql-indent-1 {
+    padding-left: 2rem;
+}
+
+.admin-rich-preview .ql-indent-2 {
+    padding-left: 4rem;
+}
+
+.admin-rich-preview .ql-indent-3 {
+    padding-left: 6rem;
+}
+
+.admin-rich-preview .ql-indent-4 {
+    padding-left: 8rem;
+}
+
+.admin-quill .ql-editor .ql-video,
+.admin-rich-preview .ql-video {
+    aspect-ratio: 16 / 9;
+    border: 1px solid var(--admin-border);
+    border-radius: 12px;
+    display: block;
+    margin: 0.75rem 0;
+    max-width: 100%;
+    width: 100%;
 }
 
 .admin-quill.admin-quill-compact .ql-container,

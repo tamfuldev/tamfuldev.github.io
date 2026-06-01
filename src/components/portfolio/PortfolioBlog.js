@@ -44,6 +44,7 @@ const blogCopy = {
             { id: "oldest", label: "Oldest -> Newest" },
             { id: "popular", label: "Popular / Most read" },
         ],
+        toc: "Contents",
     },
     vi: {
         all: "Tất cả",
@@ -66,6 +67,7 @@ const blogCopy = {
             { id: "oldest", label: "Cũ nhất -> Mới nhất" },
             { id: "popular", label: "Phổ biến / Nhiều lướt đọc nhất" },
         ],
+        toc: "Mục lục",
     },
 };
 
@@ -153,9 +155,58 @@ const splitContentBlocks = (content) =>
         .map((block) => block.trim())
         .filter(Boolean);
 
+const createHeadingId = (text, index, usedIds) => {
+    const baseId = text
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/^-|-$/g, "") || `section-${index + 1}`;
+    let id = baseId;
+    let duplicateIndex = 2;
+
+    while (usedIds.has(id)) {
+        id = `${baseId}-${duplicateIndex}`;
+        duplicateIndex += 1;
+    }
+
+    usedIds.add(id);
+    return id;
+};
+
+const buildBlogDetailHtml = (content) => {
+    const template = document.createElement("template");
+    const usedIds = new Set();
+    const sanitizedContent = sanitizeRichHtml(content);
+
+    template.innerHTML = sanitizedContent;
+
+    const tocItems = Array.from(template.content.querySelectorAll("h1, h2, h3, h4, h5, h6")).map((heading, index) => {
+        const title = stripHtml(heading.textContent || "").trim();
+        const id = heading.id || createHeadingId(title, index, usedIds);
+
+        heading.id = id;
+
+        return {
+            id,
+            level: heading.tagName.toLowerCase(),
+            title,
+        };
+    }).filter((item) => item.title);
+
+    return {
+        html: template.innerHTML,
+        tocItems,
+    };
+};
+
 const PortfolioBlog = ({ activeTag, detailSlug, language, onTagChange }) => {
     const copy = blogCopy[language] || blogCopy.en;
     const navigate = useNavigate();
+    const detailArticleRef = React.useRef(null);
+    const tocAnimationFrameRef = React.useRef(0);
+    const tocScrollLockRef = React.useRef(false);
+    const tocScrollLockTimerRef = React.useRef(0);
     const viewedPostRef = React.useRef("");
     const [activeHashtag, setActiveHashtag] = React.useState("all");
     const [blogs, setBlogs] = React.useState([]);
@@ -165,6 +216,7 @@ const PortfolioBlog = ({ activeTag, detailSlug, language, onTagChange }) => {
     const [searchQuery, setSearchQuery] = React.useState("");
     const [sortMode, setSortMode] = React.useState("newest");
     const [visibleCount, setVisibleCount] = React.useState(PAGE_SIZE);
+    const [activeTocId, setActiveTocId] = React.useState("");
 
     React.useEffect(() => {
         const unsubscribe = firestore.collection(BLOG_COLLECTION).where("status", "==", "published").onSnapshot(
@@ -296,12 +348,163 @@ const PortfolioBlog = ({ activeTag, detailSlug, language, onTagChange }) => {
         : "";
     const detailBlocks = splitContentBlocks(detailContent);
     const detailHasHtml = hasHtmlContent(detailContent);
+    const detailRender = React.useMemo(
+        () => (detailHasHtml ? buildBlogDetailHtml(detailContent) : { html: "", tocItems: [] }),
+        [detailContent, detailHasHtml]
+    );
     const detailCategories = selectedPost ? getBlogCategories(selectedPost) : [];
     const detailTags = selectedPost ? getPostTags(selectedPost) : [];
 
+    const stopTocScrollAnimation = React.useCallback(() => {
+        if (tocAnimationFrameRef.current) {
+            window.cancelAnimationFrame(tocAnimationFrameRef.current);
+            tocAnimationFrameRef.current = 0;
+        }
+    }, []);
+
+    const smoothScrollDetailTo = React.useCallback((top) => {
+        const scrollContainer = detailArticleRef.current;
+
+        if (!scrollContainer) {
+            return 0;
+        }
+
+        stopTocScrollAnimation();
+
+        const maxTop = Math.max(0, scrollContainer.scrollHeight - scrollContainer.clientHeight);
+        const targetTop = Math.min(maxTop, Math.max(0, top));
+        const startTop = scrollContainer.scrollTop;
+        const distance = targetTop - startTop;
+
+        if (Math.abs(distance) < 2 || window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+            scrollContainer.scrollTop = targetTop;
+            return 0;
+        }
+
+        const duration = Math.min(620, Math.max(260, Math.abs(distance) * 0.45));
+        const startTime = window.performance.now();
+        const easeInOutCubic = (progress) =>
+            progress < 0.5 ? 4 * progress * progress * progress : 1 - Math.pow(-2 * progress + 2, 3) / 2;
+
+        const animate = (currentTime) => {
+            const progress = Math.min(1, (currentTime - startTime) / duration);
+            scrollContainer.scrollTop = startTop + distance * easeInOutCubic(progress);
+
+            if (progress < 1) {
+                tocAnimationFrameRef.current = window.requestAnimationFrame(animate);
+                return;
+            }
+
+            tocAnimationFrameRef.current = 0;
+        };
+
+        tocAnimationFrameRef.current = window.requestAnimationFrame(animate);
+        return duration;
+    }, [stopTocScrollAnimation]);
+
+    React.useEffect(() => {
+        setActiveTocId(detailRender.tocItems[0]?.id || "");
+    }, [detailRender.tocItems]);
+
+    React.useEffect(() => {
+        stopTocScrollAnimation();
+        detailArticleRef.current?.scrollTo({ top: 0 });
+    }, [selectedPost?.id, stopTocScrollAnimation]);
+
+    React.useEffect(() => () => {
+        stopTocScrollAnimation();
+        window.clearTimeout(tocScrollLockTimerRef.current);
+    }, [stopTocScrollAnimation]);
+
+    React.useEffect(() => {
+        if (!isDetailMode || detailRender.tocItems.length === 0) {
+            return undefined;
+        }
+
+        const scrollContainer = detailArticleRef.current;
+
+        if (!scrollContainer) {
+            return undefined;
+        }
+
+        const headings = detailRender.tocItems
+            .map((item) => document.getElementById(item.id))
+            .filter((heading) => heading && scrollContainer.contains(heading));
+
+        if (headings.length === 0) {
+            return undefined;
+        }
+
+        let animationFrame = 0;
+
+        const updateActiveHeading = () => {
+            animationFrame = 0;
+
+            if (tocScrollLockRef.current) {
+                return;
+            }
+
+            const containerRect = scrollContainer.getBoundingClientRect();
+            const marker = containerRect.top + Math.min(140, Math.max(72, containerRect.height * 0.18));
+            const currentHeading = headings.reduce((current, heading) => {
+                if (heading.getBoundingClientRect().top <= marker) {
+                    return heading;
+                }
+
+                return current;
+            }, headings[0]);
+
+            setActiveTocId(currentHeading.id);
+        };
+
+        const requestUpdate = () => {
+            if (animationFrame) {
+                return;
+            }
+
+            animationFrame = window.requestAnimationFrame(updateActiveHeading);
+        };
+
+        updateActiveHeading();
+        scrollContainer.addEventListener("scroll", requestUpdate, { passive: true });
+        window.addEventListener("resize", requestUpdate);
+
+        return () => {
+            if (animationFrame) {
+                window.cancelAnimationFrame(animationFrame);
+            }
+
+            scrollContainer.removeEventListener("scroll", requestUpdate);
+            window.removeEventListener("resize", requestUpdate);
+        };
+    }, [detailRender.tocItems, isDetailMode]);
+
+    const handleTocClick = React.useCallback((event, id) => {
+        event.preventDefault();
+        setActiveTocId(id);
+
+        const target = document.getElementById(id);
+        const scrollContainer = detailArticleRef.current;
+
+        if (target && scrollContainer?.contains(target)) {
+            const containerRect = scrollContainer.getBoundingClientRect();
+            const targetRect = target.getBoundingClientRect();
+            const top = scrollContainer.scrollTop + targetRect.top - containerRect.top - 16;
+
+            tocScrollLockRef.current = true;
+            const duration = smoothScrollDetailTo(top);
+            window.clearTimeout(tocScrollLockTimerRef.current);
+            tocScrollLockTimerRef.current = window.setTimeout(() => {
+                tocScrollLockRef.current = false;
+                setActiveTocId(id);
+            }, duration + 90);
+            window.history.replaceState(null, "", `${window.location.pathname}${window.location.search}#${id}`);
+        }
+    }, [smoothScrollDetailTo]);
+
     return (
-        <div className="portfolio-page">
-            <section className="portfolio-blog-wrap">
+        <div className={`portfolio-page${isDetailMode ? " is-blog-detail" : ""}`}>
+            <section className={`portfolio-blog-wrap${isDetailMode ? " is-detail" : ""}`}>
                 <div className="portfolio-blog-header">
                     <h1>{pick(blogContent.title, language)}</h1>
                     <p>{pick(blogContent.description, language)}</p>
@@ -324,77 +527,103 @@ const PortfolioBlog = ({ activeTag, detailSlug, language, onTagChange }) => {
                         )}
 
                         {!loading && !error && selectedPost && (
-                            <article className="portfolio-blog-detail">
-                                <button
-                                    type="button"
-                                    className="portfolio-blog-back"
-                                    onClick={() => navigate("/blog")}
-                                >
-                                    {copy.back}
-                                </button>
-
-                                <div className="portfolio-blog-detail-meta">
-                                    <span>{formatDate(getPostDateValue(selectedPost))}</span>
-                                    <span>{estimateReadTime(selectedPost, language)}</span>
-                                    <span>{copy.reads(Number(selectedPost.views) || 0)}</span>
-                                </div>
-
-                                <h2>{detailTitle}</h2>
-                                {detailExcerptHasHtml ? (
-                                    <div
-                                        className="portfolio-blog-detail-excerpt"
-                                        dangerouslySetInnerHTML={{ __html: sanitizeRichHtml(detailExcerpt) }}
-                                    />
-                                ) : (
-                                    detailExcerpt && (
-                                        <p className="portfolio-blog-detail-excerpt">{detailExcerpt}</p>
-                                    )
+                            <div className={`portfolio-blog-detail-shell${detailRender.tocItems.length > 0 ? " has-toc" : ""}`}>
+                                {detailRender.tocItems.length > 0 && (
+                                    <aside className="portfolio-blog-toc" aria-label={copy.toc}>
+                                        <div className="portfolio-blog-toc-title">{copy.toc}</div>
+                                        <nav>
+                                            {detailRender.tocItems.map((item) => (
+                                                <a
+                                                    aria-current={activeTocId === item.id ? "true" : undefined}
+                                                    className={`portfolio-blog-toc-link is-${item.level}${activeTocId === item.id ? " is-active" : ""}`}
+                                                    href={`#${item.id}`}
+                                                    key={item.id}
+                                                    onClick={(event) => handleTocClick(event, item.id)}
+                                                >
+                                                    {item.title}
+                                                </a>
+                                            ))}
+                                        </nav>
+                                    </aside>
                                 )}
-
-                                <div className="portfolio-blog-detail-tags">
-                                    {detailCategories.map((category) => (
-                                        <button
-                                            type="button"
-                                            className="portfolio-filter-tag"
-                                            key={category}
-                                            onClick={() => {
-                                                onTagChange(normalizeFilter(category));
-                                                navigate("/blog");
-                                            }}
-                                        >
-                                            {category}
+                                <article className="portfolio-blog-detail" ref={detailArticleRef}>
+                                    <nav className="portfolio-blog-back" aria-label="Blog breadcrumb">
+                                        <button type="button" onClick={() => navigate("/")}>
+                                            Home
                                         </button>
-                                    ))}
-                                    {detailTags.map((tag) => (
-                                        <button
-                                            type="button"
-                                            className="portfolio-hashtag-chip"
-                                            key={tag}
-                                            onClick={() => {
-                                                setActiveHashtag(normalizeFilter(tag));
-                                                navigate("/blog");
-                                            }}
-                                        >
-                                            #{tag}
+                                        <span aria-hidden="true">&gt;</span>
+                                        <button type="button" onClick={() => navigate("/blog")}>
+                                            Blog
                                         </button>
-                                    ))}
-                                </div>
+                                        <span aria-hidden="true">&gt;</span>
+                                        <span className="portfolio-blog-breadcrumb-current" aria-current="page">
+                                            {detailTitle}
+                                        </span>
+                                    </nav>
 
-                                {detailHasHtml ? (
-                                    <div
-                                        className="portfolio-blog-detail-body"
-                                        dangerouslySetInnerHTML={{ __html: sanitizeRichHtml(detailContent) }}
-                                    />
-                                ) : (
-                                    <div className="portfolio-blog-detail-body">
-                                        {detailBlocks.map((block) => (
-                                            <p key={block}>{block}</p>
+                                    <div className="portfolio-blog-detail-meta">
+                                        <span>{formatDate(getPostDateValue(selectedPost))}</span>
+                                        <span>{estimateReadTime(selectedPost, language)}</span>
+                                        <span>{copy.reads(Number(selectedPost.views) || 0)}</span>
+                                    </div>
+
+                                    <h2>{detailTitle}</h2>
+                                    {detailExcerptHasHtml ? (
+                                        <div
+                                            className="portfolio-blog-detail-excerpt"
+                                            dangerouslySetInnerHTML={{ __html: sanitizeRichHtml(detailExcerpt) }}
+                                        />
+                                    ) : (
+                                        detailExcerpt && (
+                                            <p className="portfolio-blog-detail-excerpt">{detailExcerpt}</p>
+                                        )
+                                    )}
+
+                                    <div className="portfolio-blog-detail-tags">
+                                        {detailCategories.map((category) => (
+                                            <button
+                                                type="button"
+                                                className="portfolio-filter-tag"
+                                                key={category}
+                                                onClick={() => {
+                                                    onTagChange(normalizeFilter(category));
+                                                    navigate("/blog");
+                                                }}
+                                            >
+                                                {category}
+                                            </button>
+                                        ))}
+                                        {detailTags.map((tag) => (
+                                            <button
+                                                type="button"
+                                                className="portfolio-hashtag-chip"
+                                                key={tag}
+                                                onClick={() => {
+                                                    setActiveHashtag(normalizeFilter(tag));
+                                                    navigate("/blog");
+                                                }}
+                                            >
+                                                #{tag}
+                                            </button>
                                         ))}
                                     </div>
-                                )}
 
-                                <BlogEngagement blogId={selectedPost.id} language={language} />
-                            </article>
+                                    {detailHasHtml ? (
+                                        <div
+                                            className="portfolio-blog-detail-body"
+                                            dangerouslySetInnerHTML={{ __html: detailRender.html }}
+                                        />
+                                    ) : (
+                                        <div className="portfolio-blog-detail-body">
+                                            {detailBlocks.map((block) => (
+                                                <p key={block}>{block}</p>
+                                            ))}
+                                        </div>
+                                    )}
+
+                                    <BlogEngagement blogId={selectedPost.id} language={language} />
+                                </article>
+                            </div>
                         )}
                     </>
                 ) : (
