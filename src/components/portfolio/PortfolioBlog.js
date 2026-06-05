@@ -28,16 +28,21 @@ const blogCopy = {
         allDates: "All dates",
         allHashtags: "All hashtags",
         back: "< Back to blogs",
+        breadcrumbBlog: "Blog",
+        breadcrumbHome: "Home",
         empty: "No blog posts match these filters.",
+        filterTitle: "Topics",
         hashtagLabel: "Filter by hashtag",
         loadMore: "Load more posts",
         loading: "Loading blog posts...",
         notFound: "This blog post was not found or is not published yet.",
         openPost: "Open blog post",
+        readPost: "Read post",
         reads: (views) => `${views} reads`,
         resultCount: (count) => `${count} ${count === 1 ? "post" : "posts"} found`,
         searchLabel: "Search blogs",
         searchPlaceholder: "Search blog title, content, category, hashtag...",
+        selectDateLabel: "Time",
         sortLabel: "Sort blogs",
         sortOptions: [
             { id: "newest", label: "Newest -> Oldest" },
@@ -69,6 +74,35 @@ const blogCopy = {
         ],
         toc: "Mục lục",
     },
+};
+
+blogCopy.vi = {
+    all: "Tất cả",
+    allDates: "Tất cả thời gian",
+    allHashtags: "Tất cả hashtag",
+    back: "< Quay lại blog",
+    breadcrumbBlog: "Bài viết",
+    breadcrumbHome: "Trang chủ",
+    empty: "Chưa có bài viết phù hợp với bộ lọc hiện tại.",
+    filterTitle: "Chủ đề",
+    hashtagLabel: "Lọc theo hashtag",
+    loadMore: "Tải thêm bài viết",
+    loading: "Đang tải bài viết...",
+    notFound: "Không tìm thấy bài viết hoặc bài viết chưa được xuất bản.",
+    openPost: "Mở bài viết",
+    readPost: "Đọc bài",
+    reads: (views) => `${views} lượt đọc`,
+    resultCount: (count) => `${count} bài viết phù hợp`,
+    searchLabel: "Tìm kiếm",
+    searchPlaceholder: "Tìm theo tiêu đề, nội dung, chủ đề hoặc hashtag...",
+    selectDateLabel: "Thời gian",
+    sortLabel: "Sắp xếp",
+    sortOptions: [
+        { id: "newest", label: "Mới nhất trước" },
+        { id: "oldest", label: "Cũ nhất trước" },
+        { id: "popular", label: "Nhiều lượt đọc" },
+    ],
+    toc: "Mục lục",
 };
 
 const toMillis = (value) => {
@@ -549,11 +583,11 @@ const PortfolioBlog = ({ activeTag, detailSlug, language, onTagChange }) => {
                                 <article className="portfolio-blog-detail" ref={detailArticleRef}>
                                     <nav className="portfolio-blog-back" aria-label="Blog breadcrumb">
                                         <button type="button" onClick={() => navigate("/")}>
-                                            Home
+                                            {copy.breadcrumbHome}
                                         </button>
                                         <span aria-hidden="true">&gt;</span>
                                         <button type="button" onClick={() => navigate("/blog")}>
-                                            Blog
+                                            {copy.breadcrumbBlog}
                                         </button>
                                         <span aria-hidden="true">&gt;</span>
                                         <span className="portfolio-blog-breadcrumb-current" aria-current="page">
@@ -628,21 +662,9 @@ const PortfolioBlog = ({ activeTag, detailSlug, language, onTagChange }) => {
                     </>
                 ) : (
                     <>
-                        <div className="portfolio-blog-filters">
-                            {categoryFilters.map((filter) => (
-                                <button
-                                    key={filter.id}
-                                    type="button"
-                                    className={`portfolio-filter-tag${activeTag === filter.id ? " is-active" : ""}`}
-                                    onClick={() => onTagChange(filter.id)}
-                                >
-                                    {filter.label}
-                                </button>
-                            ))}
-                        </div>
-
                         <div className="portfolio-blog-tools">
-                            <label className="portfolio-blog-search" aria-label={copy.searchLabel}>
+                            <label className="portfolio-blog-control portfolio-blog-search">
+                                <span>{copy.searchLabel}</span>
                                 <input
                                     value={searchQuery}
                                     onChange={(event) => setSearchQuery(event.target.value)}
@@ -650,32 +672,52 @@ const PortfolioBlog = ({ activeTag, detailSlug, language, onTagChange }) => {
                                 />
                             </label>
 
-                            <select
-                                className="portfolio-blog-select"
-                                aria-label={copy.sortLabel}
-                                value={sortMode}
-                                onChange={(event) => setSortMode(event.target.value)}
-                            >
-                                {copy.sortOptions.map((option) => (
-                                    <option key={option.id} value={option.id}>
-                                        {option.label}
-                                    </option>
-                                ))}
-                            </select>
+                            <label className="portfolio-blog-control">
+                                <span>{copy.sortLabel}</span>
+                                <select
+                                    className="portfolio-blog-select"
+                                    value={sortMode}
+                                    onChange={(event) => setSortMode(event.target.value)}
+                                >
+                                    {copy.sortOptions.map((option) => (
+                                        <option key={option.id} value={option.id}>
+                                            {option.label}
+                                        </option>
+                                    ))}
+                                </select>
+                            </label>
 
-                            <select
-                                className="portfolio-blog-select"
-                                aria-label="Date filter"
-                                value={dateFilter}
-                                onChange={(event) => setDateFilter(event.target.value)}
-                            >
-                                <option value="all">{copy.allDates}</option>
-                                {dateFilters.map((filter) => (
-                                    <option key={filter.id} value={filter.id}>
+                            <label className="portfolio-blog-control">
+                                <span>{copy.selectDateLabel}</span>
+                                <select
+                                    className="portfolio-blog-select"
+                                    value={dateFilter}
+                                    onChange={(event) => setDateFilter(event.target.value)}
+                                >
+                                    <option value="all">{copy.allDates}</option>
+                                    {dateFilters.map((filter) => (
+                                        <option key={filter.id} value={filter.id}>
+                                            {filter.label}
+                                        </option>
+                                    ))}
+                                </select>
+                            </label>
+                        </div>
+
+                        <div className="portfolio-blog-filter-panel">
+                            <div className="portfolio-blog-filter-title">{copy.filterTitle}</div>
+                            <div className="portfolio-blog-filters">
+                                {categoryFilters.map((filter) => (
+                                    <button
+                                        key={filter.id}
+                                        type="button"
+                                        className={`portfolio-filter-tag${activeTag === filter.id ? " is-active" : ""}`}
+                                        onClick={() => onTagChange(filter.id)}
+                                    >
                                         {filter.label}
-                                    </option>
+                                    </button>
                                 ))}
-                            </select>
+                            </div>
                         </div>
 
                         {hashtagFilters.length > 1 && (
@@ -764,6 +806,9 @@ const PortfolioBlog = ({ activeTag, detailSlug, language, onTagChange }) => {
                                                     </span>
                                                     <span className="portfolio-blog-read-time">
                                                         {copy.reads(Number(post.views) || 0)}
+                                                    </span>
+                                                    <span className="portfolio-blog-read-action">
+                                                        {copy.readPost}
                                                     </span>
                                                 </div>
                                             </article>

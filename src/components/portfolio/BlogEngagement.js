@@ -12,6 +12,12 @@ const reactions = [
     { icon: "🤔", id: "think", label: "Think" },
 ];
 
+reactions[0].icon = "👍";
+reactions[1].icon = "🔥";
+reactions[2].icon = "❤️";
+reactions[3].icon = "👏";
+reactions[4].icon = "🤔";
+
 const copy = {
     en: {
         authHint: "Login or create an account to react and comment.",
@@ -45,6 +51,49 @@ const copy = {
         switchLogin: "Đã có tài khoản? Đăng nhập",
         switchRegister: "Lần đầu ghé chơi? Tạo tài khoản",
     },
+};
+
+copy.en = {
+    ...copy.en,
+    commentCount: (count) => `${count} ${count === 1 ? "comment" : "comments"}`,
+    commentHelper: "Keep it clear and respectful. Maximum 1000 characters.",
+    loggedInAs: "Commenting as",
+    reactionHint: "Pick one reaction for this post.",
+    reactionLabels: {
+        clap: "Clap",
+        fire: "Fire",
+        like: "Like",
+        love: "Love",
+        think: "Think",
+    },
+};
+
+copy.vi = {
+    authHint: "Đăng nhập hoặc tạo tài khoản để thả cảm xúc và bình luận.",
+    commentPlaceholder: "Viết bình luận của bạn...",
+    commentCount: (count) => `${count} bình luận`,
+    commentHelper: "Viết rõ ý, tôn trọng người đọc. Tối đa 1000 ký tự.",
+    comments: "Bình luận",
+    displayName: "Tên hiển thị",
+    email: "Email",
+    loggedInAs: "Đang bình luận với tài khoản",
+    login: "Đăng nhập",
+    logout: "Đăng xuất",
+    noComments: "Chưa có bình luận nào. Hãy là người đầu tiên chia sẻ góc nhìn.",
+    password: "Mật khẩu",
+    reactionHint: "Chọn một cảm xúc cho bài viết này.",
+    reactionLabels: {
+        clap: "Vỗ tay",
+        fire: "Hay",
+        like: "Thích",
+        love: "Yêu thích",
+        think: "Suy ngẫm",
+    },
+    reactions: "Cảm xúc",
+    register: "Tạo tài khoản",
+    send: "Gửi bình luận",
+    switchLogin: "Đã có tài khoản? Đăng nhập",
+    switchRegister: "Chưa có tài khoản? Tạo tài khoản",
 };
 
 const BlogEngagement = ({ blogId, language = "en" }) => {
@@ -225,6 +274,7 @@ const BlogEngagement = ({ blogId, language = "en" }) => {
                     <FiMessageCircle />
                     <div>
                         <h3>{text.reactions}</h3>
+                        <span>{text.reactionHint}</span>
                     </div>
                 </div>
 
@@ -236,7 +286,7 @@ const BlogEngagement = ({ blogId, language = "en" }) => {
                             disabled={savingReaction === reaction.id}
                             key={reaction.id}
                             onClick={() => handleReaction(reaction.id)}
-                            title={reaction.label}
+                            title={text.reactionLabels?.[reaction.id] || reaction.label}
                         >
                             <span>{reaction.icon}</span>
                             <strong>{reactionCounts[reaction.id] || 0}</strong>
@@ -249,6 +299,7 @@ const BlogEngagement = ({ blogId, language = "en" }) => {
                 <div className="portfolio-comment-panel-head">
                     <div>
                         <h3>{text.comments}</h3>
+                        <span>{text.commentCount(comments.length)}</span>
                     </div>
                     {user && (
                         <button type="button" className="portfolio-comment-logout" onClick={() => auth.signOut()}>
@@ -309,6 +360,10 @@ const BlogEngagement = ({ blogId, language = "en" }) => {
 
                 {user && (
                     <form className="portfolio-comment-form" onSubmit={handleSubmitComment}>
+                        <div className="portfolio-comment-user">
+                            <span>{text.loggedInAs}</span>
+                            <strong>{user.displayName || user.email}</strong>
+                        </div>
                         <textarea
                             value={comment}
                             onChange={(event) => setComment(event.target.value)}
@@ -316,10 +371,14 @@ const BlogEngagement = ({ blogId, language = "en" }) => {
                             maxLength={1000}
                             rows="4"
                         />
-                        <button type="submit" disabled={savingComment || !comment.trim()}>
-                            <FiSend />
-                            {savingComment ? "..." : text.send}
-                        </button>
+                        <div className="portfolio-comment-form-footer">
+                            <span>{comment.length}/1000</span>
+                            <button type="submit" disabled={savingComment || !comment.trim()}>
+                                <FiSend />
+                                {savingComment ? "..." : text.send}
+                            </button>
+                        </div>
+                        <p>{text.commentHelper}</p>
                     </form>
                 )}
 

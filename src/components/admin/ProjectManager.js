@@ -14,16 +14,20 @@ const emptyProjectForm = {
     categoryVi: "",
     description: "",
     descriptionVi: "",
+    demoUrl: "",
     impact: "",
     impactVi: "",
     imageAlt: "",
     imageUrl: "",
     order: "0",
     period: "",
+    projectUrl: "",
+    repositoryUrl: "",
     status: "published",
     tech: "",
     title: "",
     titleVi: "",
+    sourceUrl: "",
     url: "",
 };
 
@@ -88,6 +92,7 @@ const mapProjectToForm = (project) => ({
     accent: project.accent || "backend",
     category: project.category || "",
     categoryVi: project.categoryVi || "",
+    demoUrl: project.demoUrl || project.liveUrl || project.url || "",
     description: project.description || "",
     descriptionVi: project.descriptionVi || "",
     impact: legacyListToRichText(project.impact),
@@ -96,10 +101,13 @@ const mapProjectToForm = (project) => ({
     imageUrl: project.imageUrl || project.image || project.coverImage || project.thumbnailUrl || "",
     order: String(project.order ?? 0),
     period: project.period || "",
+    projectUrl: project.projectUrl || project.productUrl || project.caseStudyUrl || "",
+    repositoryUrl: project.repositoryUrl || project.repoUrl || project.githubUrl || project.sourceUrl || "",
     status: project.status || "published",
     tech: joinTags(project.tech),
     title: project.title || "",
     titleVi: project.titleVi || "",
+    sourceUrl: project.sourceUrl || project.repositoryUrl || project.repoUrl || project.githubUrl || "",
     url: project.url || "",
 });
 
@@ -168,6 +176,7 @@ const ProjectManager = () => {
             accent: form.accent,
             category: form.category.trim(),
             categoryVi: form.categoryVi.trim(),
+            demoUrl: form.demoUrl.trim(),
             description: normalizeRichText(form.description),
             descriptionVi: normalizeRichText(form.descriptionVi),
             impact: normalizeRichText(form.impact),
@@ -176,13 +185,16 @@ const ProjectManager = () => {
             imageUrl: form.imageUrl.trim(),
             order: Number(form.order) || 0,
             period: form.period.trim(),
+            projectUrl: form.projectUrl.trim(),
+            repositoryUrl: form.repositoryUrl.trim(),
             status: form.status,
             tech: splitTags(form.tech),
             title: form.title.trim(),
             titleVi: form.titleVi.trim(),
+            sourceUrl: form.repositoryUrl.trim() || form.sourceUrl.trim(),
             updatedAt: now,
             updatedBy: user?.email || "admin",
-            url: form.url.trim(),
+            url: form.demoUrl.trim() || form.url.trim(),
         };
 
         try {
@@ -391,14 +403,38 @@ const ProjectManager = () => {
                             />
                         </label>
 
-                        <label>
-                            Project URL
-                            <input
-                                value={form.url}
-                                onChange={(event) => handleChange("url", event.target.value)}
-                                placeholder="https://github.com/..."
-                            />
-                        </label>
+                        <div className="admin-form-grid">
+                            <label>
+                                Demo / live URL
+                                <input
+                                    value={form.demoUrl}
+                                    onChange={(event) => {
+                                        handleChange("demoUrl", event.target.value);
+                                        handleChange("url", event.target.value);
+                                    }}
+                                    placeholder="https://.../live-demo"
+                                />
+                            </label>
+                            <label>
+                                Project URL
+                                <input
+                                    value={form.projectUrl}
+                                    onChange={(event) => handleChange("projectUrl", event.target.value)}
+                                    placeholder="https://.../project"
+                                />
+                            </label>
+                            <label>
+                                Repository URL
+                                <input
+                                    value={form.repositoryUrl}
+                                    onChange={(event) => {
+                                        handleChange("repositoryUrl", event.target.value);
+                                        handleChange("sourceUrl", event.target.value);
+                                    }}
+                                    placeholder="https://github.com/..."
+                                />
+                            </label>
+                        </div>
 
                         <div className="admin-form-grid">
                             <label>
