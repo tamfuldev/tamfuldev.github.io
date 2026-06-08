@@ -69,24 +69,24 @@ const roadmapCopy = {
         vi: "Chưa có phase roadmap nào được public.",
     },
     error: {
-        en: "Could not load roadmap data from Firestore.",
-        vi: "Không thể tải dữ liệu roadmap từ Firestore.",
+        en: "Could not load roadmap data.",
+        vi: "Không thể tải dữ liệu roadmap.",
     },
     footer: {
-        en: "Public roadmap - powered by Firestore",
-        vi: "Public roadmap - dữ liệu từ Firestore",
+        en: "Public roadmap - powered",
+        vi: "Public roadmap - dữ liệu",
     },
     loading: {
-        en: "Loading roadmap from Firestore...",
-        vi: "Đang tải roadmap từ Firestore...",
+        en: "Loading roadmap...",
+        vi: "Đang tải roadmap...",
     },
     progress: {
         en: "Overall progress",
         vi: "Tiến độ tổng thể",
     },
     subtitle: {
-        en: "A public timeline of phases and milestones, updated from Firestore without requiring login.",
-        vi: "Timeline public của các phase và milestone, cập nhật từ Firestore và không cần đăng nhập.",
+        en: "A public timeline of phases and milestones, requiring login.",
+        vi: "Timeline public của các phase và milestone, không cần đăng nhập.",
     },
     title: {
         en: "Roadmap",
@@ -190,7 +190,6 @@ const RoadmapView = ({ language = "en" }) => {
                 <header className="portfolio-roadmap-hero">
                     <div>
                         <h1>{pick(roadmapCopy.title, language)}</h1>
-                        {/* <p>{pick(roadmapCopy.subtitle, language)}</p> */}
                     </div>
 
                     <div className="portfolio-roadmap-progress-card">

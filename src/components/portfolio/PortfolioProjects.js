@@ -263,7 +263,7 @@ const PortfolioProjects = ({ language }) => {
                     <p>{pick(projectsContent.description, language)}</p>
                 </div>
 
-                {loading && <div className="portfolio-project-state">Loading projects from Firestore...</div>}
+                {loading && <div className="portfolio-project-state">Loading projects...</div>}
 
                 {!loading && !projects.length && (
                     <div className="portfolio-project-state">No published projects yet.</div>

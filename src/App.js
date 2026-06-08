@@ -20,7 +20,7 @@ function App() {
   const [loading, setLoading] = React.useState(true);
 
   React.useEffect(() => {
-    let unsubscribe = () => {};
+    let unsubscribe = () => { };
     let mounted = true;
 
     Promise.all([
@@ -96,7 +96,7 @@ function App() {
           <Routes>
             <Route path="/" element={
               <>
-                <Loader delay={400}/>
+                <Loader delay={400} />
                 <Base canAccessPrivatePages={isAdmin} />
               </>
             }
@@ -141,10 +141,12 @@ function App() {
             }
             />
             <Route path="/market-analysis" element={
-              <>
-                <Loader delay={300} />
-                <Base canAccessPrivatePages={isAdmin} initialPage="marketAnalysis" />
-              </>
+              <ProtectedRoute>
+                <>
+                  <Loader delay={300} />
+                  <Base canAccessPrivatePages={isAdmin} initialPage="marketAnalysis" />
+                </>
+              </ProtectedRoute>
             }
             />
             <Route path="/login" element={<Login />} />
