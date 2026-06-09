@@ -1,13 +1,14 @@
 import {
     aboutContent,
     experiences,
-    skillGroups,
+    skillColumns,
 } from "../../data/portfolioContent";
 import { pick } from "../../utils/localization";
 import PageFooter from "./PageFooter";
 import SocialLinks from "./SocialLinks";
 
-const PortfolioAbout = ({ avatarSrc, language }) => (
+const PortfolioAbout = ({ avatarSrc, language }) => {
+    return (
     <div className="portfolio-page">
         <section className="portfolio-about-wrap">
             <div className="portfolio-about-hero">
@@ -40,21 +41,27 @@ const PortfolioAbout = ({ avatarSrc, language }) => (
             <div className="portfolio-section-heading">
                 {pick(aboutContent.skillsTitle, language)}
             </div>
-            <div className="portfolio-skills-wrap">
-                {skillGroups.map((group) => (
-                    <div key={pick(group.label, "en")} className="portfolio-skill-category">
-                        <div className="portfolio-skill-cat-label">{pick(group.label, language)}</div>
-                        <div className="portfolio-skill-tags">
-                            {group.items.map((item) => (
-                                <span
-                                    key={pick(item, "en")}
-                                    className={`portfolio-skill-tag ${group.level}`}
-                                >
-                                    {pick(item, language)}
-                                </span>
-                            ))}
-                        </div>
-                    </div>
+            <div className="portfolio-skill-columns">
+                {skillColumns.map((column, columnIndex) => (
+                    <article
+                        key={`skill-column-${columnIndex}`}
+                        className="portfolio-skill-panel"
+                        style={{ "--skill-index": columnIndex }}
+                    >
+                        {column.map((section) => (
+                            <section
+                                key={pick(section.title, "en")}
+                                className="portfolio-skill-section"
+                            >
+                                <h3>{pick(section.title, language)}</h3>
+                                <ul>
+                                    {section.items.map((item) => (
+                                        <li key={pick(item, "en")}>{pick(item, language)}</li>
+                                    ))}
+                                </ul>
+                            </section>
+                        ))}
+                    </article>
                 ))}
             </div>
 
@@ -75,6 +82,20 @@ const PortfolioAbout = ({ avatarSrc, language }) => (
                             {pick(experience.role, language)}
                         </div>
                         <div className="portfolio-timeline-company">{experience.company}</div>
+                        {experience.summary && (
+                            <p className="portfolio-timeline-summary">
+                                {pick(experience.summary, language)}
+                            </p>
+                        )}
+                        {experience.tech?.length > 0 && (
+                            <div className="portfolio-timeline-tech">
+                                {experience.tech.map((tech) => (
+                                    <span key={tech} className="portfolio-tech-chip">
+                                        {tech}
+                                    </span>
+                                ))}
+                            </div>
+                        )}
                         <ul className="portfolio-timeline-points">
                             {experience.points.map((point) => (
                                 <li key={pick(point, "en")}>{pick(point, language)}</li>
@@ -89,6 +110,7 @@ const PortfolioAbout = ({ avatarSrc, language }) => (
             <span>{pick(aboutContent.name, language)}</span> - {pick(aboutContent.footer, language)}
         </PageFooter>
     </div>
-);
+    );
+};
 
 export default PortfolioAbout;

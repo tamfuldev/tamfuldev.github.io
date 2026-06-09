@@ -7,6 +7,7 @@ import {
 import { pick } from "../../utils/localization";
 import PageFooter from "./PageFooter";
 import SocialLinks from "./SocialLinks";
+import { FiArrowUpRight } from "react-icons/fi";
 
 const PortfolioHome = ({ avatarSrc, language, onPageChange }) => (
     <div className="portfolio-page">
@@ -22,11 +23,13 @@ const PortfolioHome = ({ avatarSrc, language, onPageChange }) => (
                         <br />
                         {pick(heroContent.titleLine3, language)}
                     </h1>
-                    <p className="portfolio-tagline">
-                        {pick(heroContent.taglineLead, language)}
-                        <strong>{pick(heroContent.taglineName, language)}</strong>
+                    <div className="portfolio-tagline">
+                        <p>
+                            {pick(heroContent.taglineLead, language)}
+                            <strong>{pick(heroContent.taglineName, language)}</strong>
+                        </p>
                         <p>{pick(heroContent.taglineTail, language)}</p>
-                    </p>
+                    </div>
                     <SocialLinks />
                     <div className="portfolio-hero-cta">
                         <button
@@ -73,18 +76,46 @@ const PortfolioHome = ({ avatarSrc, language, onPageChange }) => (
         </section>
 
         <section className="portfolio-featured">
-            <div className="portfolio-section-label">
-                {pick(heroContent.featuredLabel, language)}
-            </div>
-            <div className="portfolio-section-title">
-                {pick(heroContent.featuredTitle, language)}
+            <div className="portfolio-featured-head">
+                <div>
+                    <div className="portfolio-section-label">
+                        {pick(heroContent.featuredLabel, language)}
+                    </div>
+                    <div className="portfolio-section-title">
+                        {pick(heroContent.featuredTitle, language)}
+                    </div>
+                </div>
+                <div className="portfolio-featured-copy">
+                    <p>{pick(heroContent.featuredDescription, language)}</p>
+                    <button
+                        type="button"
+                        className="portfolio-featured-action"
+                        onClick={() => onPageChange("projects")}
+                    >
+                        {pick(heroContent.featuredCta, language)}
+                        <FiArrowUpRight aria-hidden="true" />
+                    </button>
+                </div>
             </div>
             <div className="portfolio-projects-grid">
-                {featuredProjects.map((project) => (
-                    <article key={pick(project.title, "en")} className="portfolio-project-card">
-                        <div className="portfolio-project-tag">{pick(project.tag, language)}</div>
+                {featuredProjects.map((project, index) => (
+                    <article
+                        key={pick(project.title, "en")}
+                        className={`portfolio-project-card${index === 0 ? " is-lead" : ""}`}
+                    >
+                        <div className="portfolio-project-card-topline">
+                            <div className="portfolio-project-tag">{pick(project.tag, language)}</div>
+                            <span className="portfolio-project-number">
+                                {String(index + 1).padStart(2, "0")}
+                            </span>
+                        </div>
                         <h3>{pick(project.title, language)}</h3>
                         <p>{pick(project.description, language)}</p>
+                        {project.outcome && (
+                            <div className="portfolio-project-outcome">
+                                {pick(project.outcome, language)}
+                            </div>
+                        )}
                         <div className="portfolio-project-tech">
                             {project.tech.map((tech) => (
                                 <span key={tech} className="portfolio-tech-chip">

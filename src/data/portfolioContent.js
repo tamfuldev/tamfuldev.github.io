@@ -56,6 +56,11 @@ export const heroContent = {
     secondaryCta: localized("Download CV", "Tải CV xuống"),
     featuredLabel: localized("// Featured Work", "// Dự án nổi bật"),
     featuredTitle: localized("What I have built", "Những gì tôi đã xây dựng"),
+    featuredDescription: localized(
+        "A compact look at the backend systems, performance work, infrastructure, and product tooling I have improved in production.",
+        "Một lát cắt gọn về các hệ thống backend, tối ưu hiệu năng, hạ tầng và công cụ sản phẩm tôi đã cải thiện trong môi trường production."
+    ),
+    featuredCta: localized("Explore all projects", "Xem tất cả dự án"),
     footer: localized(
         "Backend Engineer - Ho Chi Minh City, VN - ngoctam2303001@gmail.com",
         "Kỹ sư Backend - Thành phố Hồ Chí Minh, VN - ngoctam2303001@gmail.com"
@@ -77,6 +82,7 @@ export const featuredProjects = [
             "Architected RESTful API system handling thousands of concurrent requests with Redis caching layer reducing response time by 60%.",
             "Thiết kế hệ thống RESTful API xử lý hàng nghìn request đồng thời, kết hợp Redis cache giúp giảm thời gian phản hồi 60%."
         ),
+        outcome: localized("60% faster responses", "Phản hồi nhanh hơn 60%"),
         tech: ["Laravel", "Redis", "MySQL"],
     },
     {
@@ -86,6 +92,7 @@ export const featuredProjects = [
             "Refactored legacy database queries and implemented smart indexing strategies, achieving significant improvements in system throughput.",
             "Refactor truy vấn CSDL cũ và áp dụng chiến lược indexing hợp lý để cải thiện rõ rệt thông lượng hệ thống."
         ),
+        outcome: localized("Cleaner reporting flow", "Luồng báo cáo gọn hơn"),
         tech: ["MySQL", "Redis", "PHP"],
     },
     {
@@ -95,7 +102,38 @@ export const featuredProjects = [
             "Dockerized multi-service applications ensuring consistent environments across development, staging, and production pipelines.",
             "Đóng gói ứng dụng nhiều service bảng Docker để giữ môi trường dev, staging va production nhất quán."
         ),
+        outcome: localized("Repeatable releases", "Release lặp lại ổn định"),
         tech: ["Docker", "Laravel", "Nginx"],
+    },
+    {
+        tag: localized("Async Processing", "Xử lý bất đồng bộ"),
+        title: localized("Queue Worker Reliability", "Ổn định queue worker"),
+        description: localized(
+            "Improved background job handling with clearer retries, safer failure paths, and better separation between heavy work and user-facing requests.",
+            "Cải thiện xử lý background job với retry rõ ràng hơn, luồng lỗi an toàn hơn và tách bạch tác vụ nặng khỏi request người dùng."
+        ),
+        outcome: localized("Less production noise", "Giảm nhiễu production"),
+        tech: ["Queue/Job", "Redis", "Laravel"],
+    },
+    {
+        tag: localized("Product Tooling", "Công cụ sản phẩm"),
+        title: localized("Portfolio Blog CMS", "CMS blog portfolio"),
+        description: localized(
+            "Built a protected content workflow for creating, editing, translating, and publishing portfolio articles with Firebase-backed storage.",
+            "Xây workflow nội dung được bảo vệ để tạo, sửa, dịch và publish bài viết portfolio với dữ liệu lưu trên Firebase."
+        ),
+        outcome: localized("Faster publishing", "Publish nhanh hơn"),
+        tech: ["React", "Firebase", "Firestore"],
+    },
+    {
+        tag: localized("Integration", "Tích hợp"),
+        title: localized("Third-party API Integrations", "Tích hợp API bên thứ ba"),
+        description: localized(
+            "Designed API integration flows with validation, request tracing, and practical contracts for teams consuming external services.",
+            "Thiết kế luồng tích hợp API có validation, tracing request và contract rõ ràng cho đội ngũ sử dụng dịch vụ bên ngoài."
+        ),
+        outcome: localized("Safer handoffs", "Bàn giao an toàn hơn"),
+        tech: ["REST API", "OAuth", "Webhooks"],
     },
 ];
 
@@ -206,82 +244,83 @@ export const aboutContent = {
     footer: localized("Backend Engineer - ngoctam2303001@gmail.com", "Kỹ sư Backend - ngoctam2303001@gmail.com"),
 };
 
-export const skillGroups = [
-    {
-        label: localized("AI & Developer Tools", "AI & công cụ lập trình"),
-        level: "secondary",
-        items: ["Claude Code", "OpenAI Codex"],
-    },
-    {
-        label: localized("Languages & Frameworks", "Ngôn ngữ & Framework"),
-        level: "primary",
-        items: [
-            "PHP",
-            "Laravel",
-            "JavaScript",
-            "TailwindCSS",
-            "GraphQL",
-            "Socket/Realtime",
-            "Twig",
-        ],
-    },
-    {
-        label: localized("Database & Search", "Cơ sở dữ liệu & Tìm kiếm"),
-        level: "primary",
-        items: ["MySQL", "Redis/Cache", "SQL", "Firebase", "Elasticsearch"],
-    },
-    {
-        label: localized("Architecture & Software Design", "Kiến trúc & Thiết kế phần mềm"),
-        level: "secondary",
-        items: [
-            "Design Pattern",
-            "RESTful API",
-            "Swagger/OpenAPI",
-            "Security",
-        ],
-    },
-    {
-        label: localized("Performance & Engineering Practices", "Hiệu năng & Thực hành kỹ thuật"),
-        level: "secondary",
-        items: [
-            localized("Performance Optimization", "Tối ưu hiệu năng"),
-            localized("Query Tuning", "Tinh chỉnh truy vấn"),
-            localized("Caching Strategy", "Chiến lược cache"),
-            localized("Code Review", "Code review"),
-        ],
-    },
-    {
-        label: localized("DevOps & Infrastructure", "DevOps & Hạ tầng"),
-        level: "tertiary",
-        items: ["Docker", "Linux", "Queue/Job", "AWS"],
-    },
-    {
-        label: localized("Tools & Project Management", "Công cụ & Quản lý dự án"),
-        level: "tertiary",
-        items: [
-            "Git/GitHub",
-            "Bitbucket",
-            "SourceTree",
-            "Backlog",
-            "Postman"
-        ],
-    },
-    {
-        label: localized("Languages", "Ngôn ngữ"),
-        level: "tertiary",
-        items: [
-            localized("English - Technical Reading", "Tiếng Anh - Đọc kỹ thuật"),
-            // localized("Japanese - N3", "Tiếng Nhật - N3"),
-        ],
-    },
+export const skillColumns = [
+    [
+        {
+            title: localized("Programming Languages", "Ngôn ngữ lập trình"),
+            items: ["PHP", "JavaScript", "HTML, CSS", "SQL"],
+        },
+        {
+            title: localized("Frameworks & Platforms", "Frameworks & nền tảng"),
+            items: [
+                "Laravel",
+                "TailwindCSS",
+                "GraphQL",
+                "Socket/Realtime",
+                "Twig",
+            ],
+        },
+    ],
+    [
+        {
+            title: localized("Database", "Cơ sở dữ liệu"),
+            items: ["MySQL", "Redis / Cache", "Firebase", "Elasticsearch"],
+        },
+        {
+            title: localized("Version Control", "Quản lý mã nguồn"),
+            items: ["Git / GitHub", "Bitbucket", "SourceTree"],
+        },
+        {
+            title: localized("IDE & Tools", "IDE & công cụ"),
+            items: ["Visual Studio Code", "Postman", "Swagger / OpenAPI", "Backlog"],
+        },
+    ],
+    [
+        {
+            title: localized("Foreign Language", "Ngoại ngữ"),
+            items: [
+                localized("English - Technical Reading", "Tiếng Anh - Đọc tài liệu kỹ thuật"),
+            ],
+        },
+        {
+            title: localized("Knowledge", "Kiến thức"),
+            items: [
+                localized(
+                    "Deep understanding about OOP, Design Patterns, and SOLID principles.",
+                    "Hiểu sâu về OOP, Design Pattern và nguyên tắc SOLID."
+                ),
+                localized(
+                    "Good understanding about performance optimization, query tuning, and caching strategy.",
+                    "Nắm tốt tối ưu hiệu năng, tinh chỉnh truy vấn và chiến lược cache."
+                ),
+                localized(
+                    "Good understanding software design, database design, RESTful API, and security.",
+                    "Nắm tốt thiết kế phần mềm, thiết kế CSDL, RESTful API và security."
+                ),
+                localized(
+                    "Good teamwork, code review, communication, and Agile/Scrum workflow.",
+                    "Làm việc nhóm, code review, giao tiếp và quy trình Agile/Scrum tốt."
+                ),
+            ],
+        },
+        {
+            title: localized("AI & Developer Tools", "AI & công cụ lập trình"),
+            items: ["Claude Code", "OpenAI Codex"],
+        },
+    ],
 ];
 
 export const experiences = [
     {
         date: "2022 - Present",
-        role: localized("Backend Developer", "Lập trình viên Backend"),
+        role: localized("Backend Engineer", "Backend Engineer"),
         company: "Wacontre Co., Ltd",
         mutedDot: false,
+        summary: localized(
+            "Working on production Laravel systems with a focus on API reliability, performance tuning, caching, and maintainable backend architecture.",
+            "Làm việc trên các hệ thống Laravel production, tập trung vào độ ổn định API, tối ưu hiệu năng, caching và kiến trúc backend dễ bảo trì."
+        ),
+        tech: ["Laravel", "PHP", "MySQL", "Redis", "Docker", "REST API", "Queue/Job"],
         points: [
             localized(
                 "Developed and maintained scalable Laravel backend systems ensuring high availability and performance.",
@@ -289,23 +328,36 @@ export const experiences = [
             ),
             localized(
                 "Designed RESTful API and integrated third-party services to enhance product functionality.",
-                "Thiết kế RESTful API và tích hợp dịch vụ bên thứ ba để mở dụng tính năng sản phẩm."
+                "Thiết kế RESTful API và tích hợp dịch vụ bên thứ ba để mở rộng tính năng sản phẩm."
             ),
             localized(
                 "Optimized performance through Redis caching and query tuning, achieving significant speed improvements.",
                 "Tối ưu hiệu năng bằng Redis cache và tinh chỉnh truy vấn, giúp cải thiện tốc độ đáng kể."
             ),
+            localized(
+                "Implemented background jobs, queue flows, validation, and error handling for safer production operations.",
+                "Triển khai background jobs, luồng queue, validation và xử lý lỗi để vận hành production an toàn hơn."
+            ),
+            localized(
+                "Collaborated with frontend and product teams to define API contracts, review edge cases, and release features in sprint cycles.",
+                "Phối hợp với frontend và product để thống nhất API contract, review edge cases và release tính năng theo sprint."
+            ),
         ],
     },
     {
         date: "2021 - 2022",
-        role: localized("Junior Backend Developer", "Lập trình viên Backend Junior"),
+        role: localized("Junior Fullstack Engineer", "Junior Fullstack Engineer"),
         company: "Onicorn Media, JSC",
         mutedDot: false,
+        summary: localized(
+            "Built and maintained Laravel web applications across backend features, admin screens, bug fixes, and product delivery support.",
+            "Xây dựng và bảo trì ứng dụng web Laravel, tham gia backend features, màn hình admin, fix bug và hỗ trợ bàn giao sản phẩm."
+        ),
+        tech: ["Laravel", "PHP", "JavaScript", "MySQL", "HTML/CSS", "Git"],
         points: [
             localized(
                 "Participated in Laravel web application development and maintenance, improving overall code quality.",
-                "Tham gia phát triển và bảo trì ứng dụng web Laravel, đồng thời nâng cao chất lương code tổng thể."
+                "Tham gia phát triển và bảo trì ứng dụng web Laravel, đồng thời nâng cao chất lượng code tổng thể."
             ),
             localized(
                 "Collaborated cross-functionally to ship features and hotfixes in tight sprint cycles.",
@@ -313,15 +365,24 @@ export const experiences = [
             ),
             localized(
                 "Enhanced application performance through systematic code reviews and optimization.",
-                "Cải thiện hiệu năng ứng dụng thông qua review code va tối ưu hệ thống."
+                "Cải thiện hiệu năng ứng dụng thông qua review code và tối ưu hệ thống."
+            ),
+            localized(
+                "Handled bug fixing, UI integration, database changes, and small feature releases from requirement to deployment handoff.",
+                "Xử lý bug fixing, tích hợp UI, thay đổi database và release các feature nhỏ từ yêu cầu đến bàn giao triển khai."
             ),
         ],
     },
     {
         date: "2018 - 2022",
-        role: localized("Information Technology - Honors", "Công nghệ thông tin - Loai Gioi"),
+        role: localized("Information Technology - Honors", "Công nghệ thông tin - Loại Giỏi"),
         company: "Thu Duc College",
         mutedDot: true,
+        summary: localized(
+            "Built a foundation in software development, databases, web applications, and collaborative project work.",
+            "Xây nền tảng về phát triển phần mềm, cơ sở dữ liệu, ứng dụng web và làm việc nhóm trong dự án."
+        ),
+        tech: ["PHP", "Laravel", "MySQL", "HTML/CSS", "JavaScript", "Team Projects"],
         points: [
             localized(
                 "Built Laravel web apps and participated in student tech competitions.",
@@ -330,6 +391,10 @@ export const experiences = [
             localized(
                 "Contributed to large team projects with successful outcomes.",
                 "Đóng góp vào các dự án nhóm quy mô lớn với kết quả tốt."
+            ),
+            localized(
+                "Graduated with Honors in Information Technology.",
+                "Tốt nghiệp ngành Công nghệ thông tin loại Giỏi."
             ),
         ],
     },
