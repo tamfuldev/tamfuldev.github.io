@@ -1,5 +1,14 @@
 import React from "react";
-import { FiCheckCircle, FiCircle, FiClock, FiFlag, FiTrendingUp } from "react-icons/fi";
+import {
+    FiBookOpen,
+    FiCheckCircle,
+    FiCircle,
+    FiClock,
+    FiExternalLink,
+    FiFlag,
+    FiLayers,
+    FiTrendingUp,
+} from "react-icons/fi";
 import { firestore } from "../../configs/firebase";
 import { sanitizeRichHtml } from "../../utils/blogAdmin";
 import { pick } from "../../utils/localization";
@@ -8,16 +17,41 @@ import PageFooter from "./PageFooter";
 const statusMeta = {
     doing: {
         icon: <FiClock />,
-        label: "Doing",
+        label: {
+            en: "Doing",
+            vi: "Dang lam",
+        },
     },
     done: {
         icon: <FiCheckCircle />,
-        label: "Done",
+        label: {
+            en: "Done",
+            vi: "Da xong",
+        },
     },
     todo: {
         icon: <FiCircle />,
-        label: "Todo",
+        label: {
+            en: "Todo",
+            vi: "Can hoc",
+        },
     },
+};
+
+const statusFilters = ["all", "todo", "doing", "done"];
+
+const externalRoadmap = {
+    category: {
+        en: "roadmap.sh reference",
+        vi: "tham khao roadmap.sh",
+    },
+    description: {
+        en: "Full official Product Manager roadmap diagram.",
+        vi: "So do Product Manager day du tren roadmap.sh.",
+    },
+    source: "roadmap.sh",
+    title: "Product Manager",
+    url: "https://roadmap.sh/product-manager",
 };
 
 const normalizeStatus = (status) => {
@@ -64,38 +98,71 @@ const normalizeMilestone = (milestone, index = 0) => ({
 });
 
 const roadmapCopy = {
+    allMilestones: {
+        en: "All milestones",
+        vi: "Tat ca milestone",
+    },
     empty: {
         en: "No roadmap phases published yet.",
-        vi: "Chưa có phase roadmap nào được public.",
+        vi: "Chua co phase roadmap nao duoc public.",
     },
     error: {
         en: "Could not load roadmap data.",
-        vi: "Không thể tải dữ liệu roadmap.",
+        vi: "Khong the tai du lieu roadmap.",
+    },
+    filterEmpty: {
+        en: "No milestones match this filter yet.",
+        vi: "Chua co milestone nao khop bo loc nay.",
     },
     footer: {
         en: "Public roadmap - powered",
-        vi: "Public roadmap - dữ liệu",
+        vi: "Public roadmap - du lieu",
+    },
+    learningMap: {
+        en: "Learning map",
+        vi: "Lo trinh hoc",
     },
     loading: {
         en: "Loading roadmap...",
-        vi: "Đang tải roadmap...",
+        vi: "Dang tai roadmap...",
+    },
+    milestones: {
+        en: "Milestones",
+        vi: "Milestone",
+    },
+    phases: {
+        en: "Phases",
+        vi: "Phase",
+    },
+    phaseNav: {
+        en: "Phase index",
+        vi: "Muc luc phase",
     },
     progress: {
         en: "Overall progress",
-        vi: "Tiến độ tổng thể",
+        vi: "Tien do tong the",
+    },
+    status: {
+        en: "Status",
+        vi: "Trang thai",
+    },
+    viewExternal: {
+        en: "Open full diagram",
+        vi: "Mo so do day du",
     },
     subtitle: {
-        en: "A public timeline of phases and milestones, requiring login.",
-        vi: "Timeline public của các phase và milestone, không cần đăng nhập.",
+        en: "A focused learning path with phases, progress, and milestone status.",
+        vi: "Lo trinh hoc tap co phase, tien do va trang thai milestone ro rang.",
     },
     title: {
-        en: "Roadmap",
-        vi: "Roadmap",
+        en: "Developer Roadmap",
+        vi: "Developer Roadmap",
     },
 };
 
 const RoadmapView = ({ language = "en" }) => {
     const [error, setError] = React.useState("");
+    const [filter, setFilter] = React.useState("all");
     const [loading, setLoading] = React.useState(true);
     const [phases, setPhases] = React.useState([]);
 
@@ -117,6 +184,7 @@ const RoadmapView = ({ language = "en" }) => {
                                 if (inlineMilestones.length) {
                                     return {
                                         ...phase,
+                                        order: Number.isFinite(phase.order) ? phase.order : phaseIndex,
                                         milestones: inlineMilestones.sort(sortByOrder),
                                     };
                                 }
@@ -175,21 +243,41 @@ const RoadmapView = ({ language = "en" }) => {
     const summary = React.useMemo(() => {
         const milestones = phases.flatMap((phase) => phase.milestones || []);
         const done = milestones.filter((milestone) => milestone.status === "done").length;
+        const doing = milestones.filter((milestone) => milestone.status === "doing").length;
         const total = milestones.length;
+        const todo = Math.max(total - done - doing, 0);
 
         return {
+            doing,
             done,
+            phaseCount: phases.length,
             percent: total ? Math.round((done / total) * 100) : 0,
+            todo,
             total,
         };
     }, [phases]);
+
+    const visiblePhases = React.useMemo(() => {
+        if (filter === "all") {
+            return phases;
+        }
+
+        return phases
+            .map((phase) => ({
+                ...phase,
+                milestones: (phase.milestones || []).filter((milestone) => milestone.status === filter),
+            }))
+            .filter((phase) => phase.milestones.length);
+    }, [filter, phases]);
 
     return (
         <div className="portfolio-page">
             <section className="portfolio-roadmap-wrap">
                 <header className="portfolio-roadmap-hero">
                     <div>
+                        <span className="portfolio-section-label">{pick(roadmapCopy.learningMap, language)}</span>
                         <h1>{pick(roadmapCopy.title, language)}</h1>
+                        <p>{pick(roadmapCopy.subtitle, language)}</p>
                     </div>
 
                     <div className="portfolio-roadmap-progress-card">
@@ -207,6 +295,56 @@ const RoadmapView = ({ language = "en" }) => {
                     </div>
                 </header>
 
+                {!loading && !error && Boolean(phases.length) && (
+                    <div className="portfolio-roadmap-toolbar">
+                        <div className="portfolio-roadmap-stat">
+                            <FiLayers />
+                            <span>{summary.phaseCount}</span>
+                            <small>{pick(roadmapCopy.phases, language)}</small>
+                        </div>
+                        <div className="portfolio-roadmap-stat">
+                            <FiBookOpen />
+                            <span>{summary.total}</span>
+                            <small>{pick(roadmapCopy.milestones, language)}</small>
+                        </div>
+
+                        <div className="portfolio-roadmap-filters" aria-label={pick(roadmapCopy.status, language)}>
+                            {statusFilters.map((status) => {
+                                const meta = statusMeta[status];
+                                const label = status === "all"
+                                    ? pick(roadmapCopy.allMilestones, language)
+                                    : pick(meta.label, language);
+                                const count = status === "all" ? summary.total : summary[status];
+
+                                return (
+                                    <button
+                                        className={filter === status ? "is-active" : ""}
+                                        key={status}
+                                        onClick={() => setFilter(status)}
+                                        type="button"
+                                    >
+                                        {meta?.icon}
+                                        <span>{label}</span>
+                                        <strong>{count}</strong>
+                                    </button>
+                                );
+                            })}
+                        </div>
+                    </div>
+                )}
+
+                <section className="portfolio-roadmap-external" aria-label={externalRoadmap.title}>
+                    <div>
+                        <span>{pick(externalRoadmap.category, language)}</span>
+                        <h2>{externalRoadmap.title}</h2>
+                        <p>{pick(externalRoadmap.description, language)}</p>
+                    </div>
+                    <a href={externalRoadmap.url} rel="noreferrer" target="_blank">
+                        <FiExternalLink />
+                        {pick(roadmapCopy.viewExternal, language)}
+                    </a>
+                </section>
+
                 {loading && <div className="portfolio-roadmap-state">{pick(roadmapCopy.loading, language)}</div>}
 
                 {!loading && error && (
@@ -221,76 +359,104 @@ const RoadmapView = ({ language = "en" }) => {
                 )}
 
                 {!loading && !error && Boolean(phases.length) && (
-                    <div className="portfolio-roadmap-timeline">
-                        {phases.map((phase, index) => (
-                            <article className="portfolio-roadmap-phase" key={phase.id}>
-                                <div className="portfolio-roadmap-marker">
+                    <div className="portfolio-roadmap-layout">
+                        <aside className="portfolio-roadmap-index" aria-label={pick(roadmapCopy.phaseNav, language)}>
+                            <strong>{pick(roadmapCopy.phaseNav, language)}</strong>
+                            {phases.map((phase, index) => (
+                                <a href={`#roadmap-phase-${phase.id}`} key={phase.id}>
                                     <span>{String(index + 1).padStart(2, "0")}</span>
-                                </div>
+                                    {phase.title || phase.name || "Untitled phase"}
+                                </a>
+                            ))}
+                        </aside>
 
-                                <div className="portfolio-roadmap-card">
-                                    <div className="portfolio-roadmap-card-head">
-                                        <div>
-                                            <span className="portfolio-roadmap-phase-kicker">
-                                                Phase {index + 1}
-                                            </span>
-                                            <h2>{phase.title || phase.name || "Untitled phase"}</h2>
-                                        </div>
-                                        <FiFlag />
-                                    </div>
+                        {visiblePhases.length ? (
+                            <div className="portfolio-roadmap-timeline">
+                                {visiblePhases.map((phase) => {
+                                    const phaseIndex = phases.findIndex((item) => item.id === phase.id);
+                                    const phaseMilestones = phase.milestones || [];
+                                    const phaseDone = phaseMilestones.filter((milestone) => milestone.status === "done").length;
+                                    const phasePercent = phaseMilestones.length
+                                        ? Math.round((phaseDone / phaseMilestones.length) * 100)
+                                        : 0;
 
-                                    {phase.description && (
-                                        <div
-                                            className="portfolio-roadmap-rich"
-                                            dangerouslySetInnerHTML={{ __html: sanitizeRichHtml(phase.description) }}
-                                        />
-                                    )}
+                                    return (
+                                        <article className="portfolio-roadmap-phase" id={`roadmap-phase-${phase.id}`} key={phase.id}>
+                                            <div className="portfolio-roadmap-marker">
+                                                <span>{String(phaseIndex + 1).padStart(2, "0")}</span>
+                                            </div>
 
-                                    <div className="portfolio-roadmap-milestones">
-                                        {(phase.milestones || []).map((milestone) => {
-                                            const meta = statusMeta[milestone.status] || statusMeta.todo;
-
-                                            return (
-                                                <div
-                                                    className={`portfolio-roadmap-milestone is-${milestone.status}`}
-                                                    key={milestone.id}
-                                                >
-                                                    <span className="portfolio-roadmap-status-icon">
-                                                        {meta.icon}
-                                                    </span>
+                                            <div className="portfolio-roadmap-card">
+                                                <div className="portfolio-roadmap-card-head">
                                                     <div>
-                                                        <strong>{milestone.title}</strong>
-                                                        {milestone.description && (
-                                                            <div
-                                                                className="portfolio-roadmap-milestone-description"
-                                                                dangerouslySetInnerHTML={{
-                                                                    __html: sanitizeRichHtml(milestone.description),
-                                                                }}
-                                                            />
-                                                        )}
+                                                        <span className="portfolio-roadmap-phase-kicker">
+                                                            Phase {phaseIndex + 1}
+                                                        </span>
+                                                        <h2>{phase.title || phase.name || "Untitled phase"}</h2>
                                                     </div>
-                                                    <span className={`portfolio-roadmap-badge is-${milestone.status}`}>
-                                                        {meta.label}
-                                                    </span>
+                                                    <div className="portfolio-roadmap-phase-meta">
+                                                        <span>{phasePercent}%</span>
+                                                        <FiFlag />
+                                                    </div>
                                                 </div>
-                                            );
-                                        })}
 
-                                        {!phase.milestones?.length && (
-                                            <div className="portfolio-roadmap-milestone is-empty">
-                                                <span className="portfolio-roadmap-status-icon">
-                                                    <FiCircle />
-                                                </span>
-                                                <div>
-                                                    <strong>No milestones yet</strong>
-                                                    <small>Add milestones in admin to show them here.</small>
+                                                {phase.description && (
+                                                    <div
+                                                        className="portfolio-roadmap-rich"
+                                                        dangerouslySetInnerHTML={{ __html: sanitizeRichHtml(phase.description) }}
+                                                    />
+                                                )}
+
+                                                <div className="portfolio-roadmap-milestones">
+                                                    {phaseMilestones.map((milestone) => {
+                                                        const meta = statusMeta[milestone.status] || statusMeta.todo;
+
+                                                        return (
+                                                            <div
+                                                                className={`portfolio-roadmap-milestone is-${milestone.status}`}
+                                                                key={milestone.id}
+                                                            >
+                                                                <span className="portfolio-roadmap-status-icon">
+                                                                    {meta.icon}
+                                                                </span>
+                                                                <div>
+                                                                    <strong>{milestone.title}</strong>
+                                                                    {milestone.description && (
+                                                                        <div
+                                                                            className="portfolio-roadmap-milestone-description"
+                                                                            dangerouslySetInnerHTML={{
+                                                                                __html: sanitizeRichHtml(milestone.description),
+                                                                            }}
+                                                                        />
+                                                                    )}
+                                                                </div>
+                                                                <span className={`portfolio-roadmap-badge is-${milestone.status}`}>
+                                                                    {pick(meta.label, language)}
+                                                                </span>
+                                                            </div>
+                                                        );
+                                                    })}
+
+                                                    {!phaseMilestones.length && (
+                                                        <div className="portfolio-roadmap-milestone is-empty">
+                                                            <span className="portfolio-roadmap-status-icon">
+                                                                <FiCircle />
+                                                            </span>
+                                                            <div>
+                                                                <strong>No milestones yet</strong>
+                                                                <small>Add milestones in admin to show them here.</small>
+                                                            </div>
+                                                        </div>
+                                                    )}
                                                 </div>
                                             </div>
-                                        )}
-                                    </div>
-                                </div>
-                            </article>
-                        ))}
+                                        </article>
+                                    );
+                                })}
+                            </div>
+                        ) : (
+                            <div className="portfolio-roadmap-state">{pick(roadmapCopy.filterEmpty, language)}</div>
+                        )}
                     </div>
                 )}
             </section>

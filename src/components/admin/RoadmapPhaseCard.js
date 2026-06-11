@@ -16,8 +16,15 @@ import { quillFormats, quillModules } from "./quillConfig";
 
 const emptyMilestoneForm = {
     description: "",
+    status: "todo",
     title: "",
 };
+
+const milestoneStatuses = [
+    { label: "Todo", value: "todo" },
+    { label: "Doing", value: "doing" },
+    { label: "Done", value: "done" },
+];
 
 const reorderById = (items, sourceId, targetId) => {
     const sourceIndex = items.findIndex((item) => item.id === sourceId);
@@ -83,6 +90,7 @@ const RoadmapPhaseCard = ({
         setEditingMilestoneId(milestone.id);
         setForm({
             description: milestone.description || "",
+            status: milestone.status || "todo",
             title: milestone.title || "",
         });
     };
@@ -98,6 +106,8 @@ const RoadmapPhaseCard = ({
 
         const payload = {
             description: normalizeRichText(form.description),
+            completedAt: form.status === "done" ? new Date() : null,
+            status: form.status || "todo",
             title: form.title.trim(),
             updatedAt: new Date(),
         };
@@ -110,7 +120,6 @@ const RoadmapPhaseCard = ({
                     ...payload,
                     createdAt: new Date(),
                     order: milestones.length,
-                    status: "todo",
                 });
             }
 
@@ -225,7 +234,7 @@ const RoadmapPhaseCard = ({
 
                 {milestones.map((milestone) => (
                     <div
-                        className={`admin-milestone-card ${milestone.status === "done" ? "is-done" : ""}`}
+                        className={`admin-milestone-card is-${milestone.status || "todo"}`}
                         draggable
                         key={milestone.id}
                         onDragOver={(event) => event.preventDefault()}
@@ -243,6 +252,9 @@ const RoadmapPhaseCard = ({
                         </button>
                         <div>
                             <strong>{milestone.title}</strong>
+                            <span className={`admin-milestone-status is-${milestone.status || "todo"}`}>
+                                {milestone.status || "todo"}
+                            </span>
                             {milestone.description && (
                                 <div
                                     className="admin-rich-preview"
@@ -270,6 +282,17 @@ const RoadmapPhaseCard = ({
                     onChange={(event) => setForm((current) => ({ ...current, title: event.target.value }))}
                     placeholder="Milestone title"
                 />
+                <select
+                    aria-label="Milestone status"
+                    value={form.status}
+                    onChange={(event) => setForm((current) => ({ ...current, status: event.target.value }))}
+                >
+                    {milestoneStatuses.map((status) => (
+                        <option key={status.value} value={status.value}>
+                            {status.label}
+                        </option>
+                    ))}
+                </select>
                 <ReactQuill
                     className="admin-quill admin-quill-compact"
                     formats={quillFormats}

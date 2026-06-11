@@ -2,6 +2,15 @@ import React from "react";
 import firebase from "firebase/compat/app";
 import { useNavigate } from "react-router-dom";
 import {
+    FiBookmark,
+    FiChevronRight,
+    FiClock,
+    FiEye,
+    FiSearch,
+    FiTag,
+    FiTrendingUp,
+} from "react-icons/fi";
+import {
     aboutContent,
     blogContent,
 } from "../../data/portfolioContent";
@@ -105,6 +114,20 @@ blogCopy.vi = {
     toc: "Mục lục",
 };
 
+Object.assign(blogCopy.en, {
+    latestPosts: "Newest posts",
+    sidebarTitle: "Community style feed",
+    topPosts: "Most read",
+    trendingTopics: "Trending topics",
+});
+
+Object.assign(blogCopy.vi, {
+    latestPosts: "Bai viet moi nhat",
+    sidebarTitle: "Feed kieu cong dong",
+    topPosts: "Doc nhieu",
+    trendingTopics: "Chu de noi bat",
+});
+
 const toMillis = (value) => {
     if (!value) {
         return 0;
@@ -151,6 +174,14 @@ const getPostMonthKey = (post) => {
 
     return `${date.getFullYear()}-${month}`;
 };
+
+const getInitials = (name = "") =>
+    String(name)
+        .split(/\s+/)
+        .filter(Boolean)
+        .slice(0, 2)
+        .map((part) => part.charAt(0).toUpperCase())
+        .join("") || "TN";
 
 const formatMonthLabel = (monthKey, language) => {
     const [year, month] = monthKey.split("-").map(Number);
@@ -373,6 +404,37 @@ const PortfolioBlog = ({ activeTag, detailSlug, language, onTagChange }) => {
 
     const visiblePosts = filteredPosts.slice(0, visibleCount);
     const canLoadMore = visibleCount < filteredPosts.length;
+    const authorName = pick(aboutContent.name, language) || "Tam";
+    const authorHandle = "tamfuldev";
+    const authorInitials = getInitials(authorName);
+
+    const topPosts = React.useMemo(
+        () =>
+            [...blogs]
+                .sort((a, b) => (Number(b.views) || 0) - (Number(a.views) || 0) ||
+                    toMillis(getPostDateValue(b)) - toMillis(getPostDateValue(a)))
+                .slice(0, 4),
+        [blogs]
+    );
+
+    const trendingTopics = React.useMemo(() => {
+        const counts = new Map();
+
+        blogs.flatMap((blog) => getBlogCategories(blog)).forEach((category) => {
+            const id = normalizeFilter(category);
+
+            if (!id) {
+                return;
+            }
+
+            const current = counts.get(id) || { count: 0, id, label: category };
+            counts.set(id, { ...current, count: current.count + 1 });
+        });
+
+        return Array.from(counts.values())
+            .sort((a, b) => b.count - a.count || a.label.localeCompare(b.label))
+            .slice(0, 8);
+    }, [blogs]);
 
     const detailTitle = selectedPost ? resolveBlogText(selectedPost, "title", language) : "";
     const detailExcerpt = selectedPost ? resolveBlogText(selectedPost, "excerpt", language) : "";
@@ -662,14 +724,30 @@ const PortfolioBlog = ({ activeTag, detailSlug, language, onTagChange }) => {
                     </>
                 ) : (
                     <>
+                        <div className="portfolio-blog-tabs" aria-label={copy.filterTitle}>
+                            {categoryFilters.map((filter) => (
+                                <button
+                                    key={filter.id}
+                                    type="button"
+                                    className={activeTag === filter.id ? "is-active" : ""}
+                                    onClick={() => onTagChange(filter.id)}
+                                >
+                                    {filter.label}
+                                </button>
+                            ))}
+                        </div>
+
                         <div className="portfolio-blog-tools">
                             <label className="portfolio-blog-control portfolio-blog-search">
                                 <span>{copy.searchLabel}</span>
-                                <input
-                                    value={searchQuery}
-                                    onChange={(event) => setSearchQuery(event.target.value)}
-                                    placeholder={copy.searchPlaceholder}
-                                />
+                                <div>
+                                    <FiSearch />
+                                    <input
+                                        value={searchQuery}
+                                        onChange={(event) => setSearchQuery(event.target.value)}
+                                        placeholder={copy.searchPlaceholder}
+                                    />
+                                </div>
                             </label>
 
                             <label className="portfolio-blog-control">
@@ -704,131 +782,197 @@ const PortfolioBlog = ({ activeTag, detailSlug, language, onTagChange }) => {
                             </label>
                         </div>
 
-                        <div className="portfolio-blog-filter-panel">
-                            <div className="portfolio-blog-filter-title">{copy.filterTitle}</div>
-                            <div className="portfolio-blog-filters">
-                                {categoryFilters.map((filter) => (
-                                    <button
-                                        key={filter.id}
-                                        type="button"
-                                        className={`portfolio-filter-tag${activeTag === filter.id ? " is-active" : ""}`}
-                                        onClick={() => onTagChange(filter.id)}
-                                    >
-                                        {filter.label}
-                                    </button>
-                                ))}
-                            </div>
-                        </div>
-
-                        {hashtagFilters.length > 1 && (
-                            <div className="portfolio-hashtag-row" aria-label={copy.hashtagLabel}>
-                                {hashtagFilters.map((filter) => (
-                                    <button
-                                        type="button"
-                                        key={filter.id}
-                                        className={`portfolio-hashtag-chip${activeHashtag === filter.id ? " is-active" : ""}`}
-                                        onClick={() => setActiveHashtag(filter.id)}
-                                    >
-                                        {filter.id === "all" ? filter.label : `#${filter.label}`}
-                                    </button>
-                                ))}
-                            </div>
-                        )}
-
-                        {!loading && !error && (
-                            <div className="portfolio-blog-result-meta">
-                                {copy.resultCount(filteredPosts.length)}
-                            </div>
-                        )}
-
-                        {loading && (
-                            <div className="portfolio-blog-state">
-                                {copy.loading}
-                            </div>
-                        )}
-
-                        {error && <div className="portfolio-blog-state is-error">{error}</div>}
-
-                        {!loading && !error && !visiblePosts.length && (
-                            <div className="portfolio-blog-state">
-                                {copy.empty}
-                            </div>
-                        )}
-
-                        {!!visiblePosts.length && (
-                            <>
-                                <div className="portfolio-blog-grid">
-                                    {visiblePosts.map((post) => {
-                                        const postCategories = getBlogCategories(post);
-                                        const postTags = getPostTags(post);
-                                        const title = resolveBlogText(post, "title", language);
-
-                                        return (
-                                            <article
-                                                id={`blog-${post.slug || post.id}`}
-                                                key={post.id}
-                                                className="portfolio-blog-post"
-                                                role="button"
-                                                tabIndex={0}
-                                                aria-label={`${copy.openPost}: ${title}`}
-                                                onClick={() => handleOpenPost(post)}
-                                                onKeyDown={(event) => {
-                                                    if (event.key === "Enter" || event.key === " ") {
-                                                        event.preventDefault();
-                                                        handleOpenPost(post);
-                                                    }
-                                                }}
-                                            >
-                                                <div className="portfolio-blog-post-left">
-                                                    <h3>{title}</h3>
-                                                    <p>{stripHtml(resolveBlogText(post, "excerpt", language))}</p>
-                                                    {!!postTags.length && (
-                                                        <div className="portfolio-blog-inline-tags">
-                                                            {postTags.slice(0, 4).map((tag) => (
-                                                                <span key={tag}>#{tag}</span>
-                                                            ))}
-                                                        </div>
-                                                    )}
-                                                </div>
-                                                <div className="portfolio-blog-post-meta">
-                                                    <span className="portfolio-blog-date">
-                                                        {formatDate(getPostDateValue(post))}
-                                                    </span>
-                                                    <div className="portfolio-blog-category-list">
-                                                        {postCategories.map((category) => (
-                                                            <span className="portfolio-blog-tag" key={category}>
-                                                                {category}
-                                                            </span>
-                                                        ))}
-                                                    </div>
-                                                    <span className="portfolio-blog-read-time">
-                                                        {estimateReadTime(post, language)}
-                                                    </span>
-                                                    <span className="portfolio-blog-read-time">
-                                                        {copy.reads(Number(post.views) || 0)}
-                                                    </span>
-                                                    <span className="portfolio-blog-read-action">
-                                                        {copy.readPost}
-                                                    </span>
-                                                </div>
-                                            </article>
-                                        );
-                                    })}
+                        <div className="portfolio-blog-list-shell">
+                            <main className="portfolio-blog-feed">
+                                <div className="portfolio-blog-feed-head">
+                                    <div>
+                                        <span>{copy.latestPosts}</span>
+                                        <strong>{copy.resultCount(filteredPosts.length)}</strong>
+                                    </div>
                                 </div>
 
-                                {canLoadMore && (
-                                    <div className="portfolio-load-more-wrap">
-                                        <button
-                                            type="button"
-                                            className="portfolio-btn portfolio-btn-secondary portfolio-load-more"
-                                            onClick={() => setVisibleCount((count) => count + PAGE_SIZE)}
-                                        >
-                                            {copy.loadMore}
-                                        </button>
+                                {loading && (
+                                    <div className="portfolio-blog-state">
+                                        {copy.loading}
                                     </div>
                                 )}
-                            </>
-                        )}
+
+                                {error && <div className="portfolio-blog-state is-error">{error}</div>}
+
+                                {!loading && !error && !visiblePosts.length && (
+                                    <div className="portfolio-blog-state">
+                                        {copy.empty}
+                                    </div>
+                                )}
+
+                                {!!visiblePosts.length && (
+                                    <>
+                                        <div className="portfolio-blog-grid">
+                                            {visiblePosts.map((post) => {
+                                                const postCategories = getBlogCategories(post);
+                                                const postTags = getPostTags(post);
+                                                const title = resolveBlogText(post, "title", language);
+                                                const excerpt = stripHtml(resolveBlogText(post, "excerpt", language));
+                                                const views = Number(post.views) || 0;
+
+                                                return (
+                                                    <article
+                                                        id={`blog-${post.slug || post.id}`}
+                                                        key={post.id}
+                                                        className="portfolio-blog-post"
+                                                    >
+                                                        <div className="portfolio-blog-author-avatar" aria-hidden="true">
+                                                            {authorInitials}
+                                                        </div>
+
+                                                        <div className="portfolio-blog-post-left">
+                                                            <div className="portfolio-blog-author-row">
+                                                                <strong>{authorName}</strong>
+                                                                <span>@{authorHandle}</span>
+                                                                <span>{formatDate(getPostDateValue(post))}</span>
+                                                                <span>{estimateReadTime(post, language)}</span>
+                                                            </div>
+
+                                                            <h3>
+                                                                <button
+                                                                    type="button"
+                                                                    onClick={() => handleOpenPost(post)}
+                                                                >
+                                                                    {title}
+                                                                </button>
+                                                            </h3>
+                                                            {excerpt && <p>{excerpt}</p>}
+
+                                                            <div className="portfolio-blog-category-list">
+                                                                {postCategories.map((category) => (
+                                                                    <button
+                                                                        type="button"
+                                                                        className="portfolio-blog-tag"
+                                                                        key={category}
+                                                                        onClick={() => onTagChange(normalizeFilter(category))}
+                                                                    >
+                                                                        {category}
+                                                                    </button>
+                                                                ))}
+                                                            </div>
+
+                                                            {!!postTags.length && (
+                                                                <div className="portfolio-blog-inline-tags">
+                                                                    {postTags.slice(0, 5).map((tag) => (
+                                                                        <button
+                                                                            type="button"
+                                                                            key={tag}
+                                                                            onClick={() => setActiveHashtag(normalizeFilter(tag))}
+                                                                        >
+                                                                            #{tag}
+                                                                        </button>
+                                                                    ))}
+                                                                </div>
+                                                            )}
+                                                        </div>
+
+                                                        <div className="portfolio-blog-post-meta" aria-label="Post stats">
+                                                            <span>
+                                                                <FiEye />
+                                                                <strong>{views}</strong>
+                                                            </span>
+                                                            <span>
+                                                                <FiClock />
+                                                                <strong>{estimateReadTime(post, language).replace(/\s.*$/, "")}</strong>
+                                                            </span>
+                                                            <button
+                                                                type="button"
+                                                                className="portfolio-blog-open-icon"
+                                                                onClick={() => handleOpenPost(post)}
+                                                                aria-label={`${copy.openPost}: ${title}`}
+                                                            >
+                                                                <FiChevronRight />
+                                                            </button>
+                                                        </div>
+                                                    </article>
+                                                );
+                                            })}
+                                        </div>
+
+                                        {canLoadMore && (
+                                            <div className="portfolio-load-more-wrap">
+                                                <button
+                                                    type="button"
+                                                    className="portfolio-btn portfolio-btn-secondary portfolio-load-more"
+                                                    onClick={() => setVisibleCount((count) => count + PAGE_SIZE)}
+                                                >
+                                                    {copy.loadMore}
+                                                </button>
+                                            </div>
+                                        )}
+                                    </>
+                                )}
+                            </main>
+
+                            <aside className="portfolio-blog-sidebar" aria-label={copy.sidebarTitle}>
+                                <section>
+                                    <div className="portfolio-blog-sidebar-title">
+                                        <FiTrendingUp />
+                                        <span>{copy.topPosts}</span>
+                                    </div>
+                                    <div className="portfolio-blog-side-list">
+                                        {topPosts.map((post) => (
+                                            <button
+                                                type="button"
+                                                key={post.id}
+                                                onClick={() => handleOpenPost(post)}
+                                            >
+                                                <strong>{resolveBlogText(post, "title", language)}</strong>
+                                                <span>{copy.reads(Number(post.views) || 0)}</span>
+                                            </button>
+                                        ))}
+                                    </div>
+                                </section>
+
+                                {!!trendingTopics.length && (
+                                    <section>
+                                        <div className="portfolio-blog-sidebar-title">
+                                            <FiTag />
+                                            <span>{copy.trendingTopics}</span>
+                                        </div>
+                                        <div className="portfolio-blog-topic-list">
+                                            {trendingTopics.map((topic) => (
+                                                <button
+                                                    type="button"
+                                                    className={activeTag === topic.id ? "is-active" : ""}
+                                                    key={topic.id}
+                                                    onClick={() => onTagChange(topic.id)}
+                                                >
+                                                    <span>{topic.label}</span>
+                                                    <strong>{topic.count}</strong>
+                                                </button>
+                                            ))}
+                                        </div>
+                                    </section>
+                                )}
+
+                                {hashtagFilters.length > 1 && (
+                                    <section>
+                                        <div className="portfolio-blog-sidebar-title">
+                                            <FiBookmark />
+                                            <span>{copy.hashtagLabel}</span>
+                                        </div>
+                                        <div className="portfolio-hashtag-row" aria-label={copy.hashtagLabel}>
+                                            {hashtagFilters.map((filter) => (
+                                                <button
+                                                    type="button"
+                                                    key={filter.id}
+                                                    className={`portfolio-hashtag-chip${activeHashtag === filter.id ? " is-active" : ""}`}
+                                                    onClick={() => setActiveHashtag(filter.id)}
+                                                >
+                                                    {filter.id === "all" ? filter.label : `#${filter.label}`}
+                                                </button>
+                                            ))}
+                                        </div>
+                                    </section>
+                                )}
+                            </aside>
+                        </div>
                     </>
                 )}
             </section>

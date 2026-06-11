@@ -1,4 +1,5 @@
 .admin-app {
+    --admin-font: "Proxima Nova", "Proxima Nova Alt", "Helvetica Neue", Arial, sans-serif;
     --admin-bg: #08080a;
     --admin-surface: #0f0f12;
     --admin-surface-2: #16161a;
@@ -13,7 +14,7 @@
     background: var(--admin-bg);
     color: var(--admin-text);
     display: grid;
-    font-family: "Inter", "Segoe UI", system-ui, sans-serif;
+    font-family: var(--admin-font);
     grid-template-columns: 280px minmax(0, 1fr);
     min-height: 100vh;
 }
@@ -33,6 +34,7 @@ body.light .admin-app {
 }
 
 .admin-login-page {
+    --admin-font: "Proxima Nova", "Proxima Nova Alt", "Helvetica Neue", Arial, sans-serif;
     --admin-bg: #08080a;
     --admin-surface: #0f0f12;
     --admin-card: #101014;
@@ -48,7 +50,7 @@ body.light .admin-app {
         var(--admin-bg);
     color: var(--admin-text);
     display: flex;
-    font-family: "Inter", "Segoe UI", system-ui, sans-serif;
+    font-family: var(--admin-font);
     justify-content: center;
     min-height: 100vh;
     padding: 1.25rem;
@@ -76,7 +78,7 @@ body.light .admin-login-page {
 }
 
 .admin-login-card h2 {
-    font-family: "Syne", sans-serif;
+    font-family: var(--admin-font);
     font-size: 2.2rem;
     margin-bottom: 0.5rem;
 }
@@ -170,7 +172,7 @@ body.light .admin-login-page {
     border-radius: 8px;
     color: #08080a;
     display: inline-flex;
-    font-family: "Syne", sans-serif;
+    font-family: var(--admin-font);
     font-size: 1.25rem;
     font-weight: 800;
     height: 42px;
@@ -181,7 +183,7 @@ body.light .admin-login-page {
 .admin-brand strong,
 .admin-topbar h1,
 .admin-editor h2 {
-    font-family: "Syne", sans-serif;
+    font-family: var(--admin-font);
     font-weight: 800;
 }
 
@@ -279,7 +281,7 @@ body.light .admin-login-page {
 }
 
 .admin-kicker {
-    font-family: "JetBrains Mono", monospace;
+    font-family: var(--admin-font);
     font-size: 0.72rem;
     letter-spacing: 0.12em;
     margin-bottom: 0.35rem;
@@ -396,7 +398,7 @@ body.light .admin-login-page {
 }
 
 .admin-stat-card strong {
-    font-family: "JetBrains Mono", monospace;
+    font-family: var(--admin-font);
     font-size: 1.7rem;
 }
 
@@ -475,7 +477,7 @@ body.light .admin-login-page {
 
 .admin-table th {
     color: var(--admin-muted);
-    font-family: "JetBrains Mono", monospace;
+    font-family: var(--admin-font);
     font-size: 0.72rem;
     font-weight: 600;
     letter-spacing: 0.08em;
@@ -512,14 +514,14 @@ body.light .admin-login-page {
     border: 1px solid rgba(232, 255, 72, 0.18);
     border-radius: 999px;
     color: var(--admin-accent);
-    font-family: "JetBrains Mono", monospace;
+    font-family: var(--admin-font);
     font-size: 0.7rem;
     padding: 0.25rem 0.5rem;
 }
 
 .admin-status {
     border-radius: 999px;
-    font-family: "JetBrains Mono", monospace;
+    font-family: var(--admin-font);
     font-size: 0.7rem;
     padding: 0.35rem 0.65rem;
     text-transform: uppercase;
@@ -614,7 +616,7 @@ body.light .admin-login-page {
 .admin-quill .ql-toolbar,
 .admin-quill .ql-container {
     border: 0;
-    font-family: "Inter", "Segoe UI", system-ui, sans-serif;
+    font-family: var(--admin-font);
 }
 
 .admin-quill .ql-toolbar {
@@ -712,11 +714,11 @@ body.light .admin-login-page {
 }
 
 .admin-rich-preview .ql-font-serif {
-    font-family: Georgia, "Times New Roman", serif;
+    font-family: var(--admin-font);
 }
 
 .admin-rich-preview .ql-font-monospace {
-    font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+    font-family: var(--admin-font);
 }
 
 .admin-rich-preview .ql-align-center {
@@ -915,7 +917,7 @@ body.light .admin-login-page {
 .admin-manager-hero h2,
 .admin-panel h2,
 .admin-roadmap-phase h2 {
-    font-family: "Syne", sans-serif;
+    font-family: var(--admin-font);
 }
 
 .admin-manager-hero h2 {
@@ -930,7 +932,7 @@ body.light .admin-login-page {
 
 .admin-manager-hero code {
     color: var(--admin-accent);
-    font-family: "JetBrains Mono", monospace;
+    font-family: var(--admin-font);
 }
 
 .admin-hero-icon {
@@ -1063,6 +1065,10 @@ body.light .admin-login-page {
     opacity: 0.82;
 }
 
+.admin-milestone-card.is-doing {
+    border-color: rgba(123, 184, 245, 0.35);
+}
+
 .admin-milestone-card.is-done strong,
 .admin-task-card.is-done strong {
     text-decoration: line-through;
@@ -1080,6 +1086,29 @@ body.light .admin-login-page {
     color: var(--admin-muted);
     font-size: 0.82rem;
     line-height: 1.55;
+}
+
+.admin-milestone-status {
+    border: 1px solid var(--admin-border);
+    border-radius: 999px;
+    display: inline-flex;
+    font-family: var(--admin-font);
+    font-size: 0.68rem;
+    margin: 0.35rem 0 0.15rem;
+    padding: 0.18rem 0.45rem;
+    text-transform: uppercase;
+}
+
+.admin-milestone-status.is-done {
+    background: rgba(74, 222, 128, 0.1);
+    border-color: rgba(74, 222, 128, 0.22);
+    color: #4ade80;
+}
+
+.admin-milestone-status.is-doing {
+    background: rgba(123, 184, 245, 0.1);
+    border-color: rgba(123, 184, 245, 0.22);
+    color: var(--admin-blue);
 }
 
 .admin-milestone-toggle,
@@ -1111,7 +1140,8 @@ body.light .admin-login-page {
     gap: 0.6rem;
 }
 
-.admin-inline-form input {
+.admin-inline-form input,
+.admin-inline-form select {
     background: var(--admin-card);
     border: 1px solid var(--admin-border);
     border-radius: 8px;
@@ -1158,7 +1188,7 @@ body.light .admin-login-page {
 }
 
 .admin-project-card h3 {
-    font-family: "Syne", sans-serif;
+    font-family: var(--admin-font);
     font-size: 1.15rem;
     margin: 0.55rem 0 0.35rem;
 }
@@ -1177,7 +1207,7 @@ body.light .admin-login-page {
 
 .admin-project-order {
     color: var(--admin-muted);
-    font-family: "JetBrains Mono", monospace;
+    font-family: var(--admin-font);
     font-size: 0.75rem;
 }
 
@@ -1219,7 +1249,7 @@ body.light .admin-login-page {
 }
 
 .admin-daily-stats strong {
-    font-family: "JetBrains Mono", monospace;
+    font-family: var(--admin-font);
     font-size: 1.2rem;
 }
 
@@ -1236,7 +1266,7 @@ body.light .admin-login-page {
 
 .admin-task-priority {
     border-radius: 999px;
-    font-family: "JetBrains Mono", monospace;
+    font-family: var(--admin-font);
     font-size: 0.68rem;
     padding: 0.25rem 0.5rem;
     text-transform: uppercase;
@@ -1306,7 +1336,7 @@ body.light .admin-login-page {
         var(--expense-bg);
     color: var(--expense-text);
     display: grid;
-    font-family: "Inter", "Segoe UI", system-ui, sans-serif;
+    font-family: var(--admin-font);
     grid-template-columns: 292px minmax(0, 1fr);
     min-height: 100vh;
 }
@@ -1337,7 +1367,7 @@ body.light .admin-login-page {
     box-shadow: 0 16px 34px rgba(236, 72, 153, 0.24);
     color: #fff;
     display: inline-flex;
-    font-family: "Syne", sans-serif;
+    font-family: var(--admin-font);
     font-size: 1.35rem;
     font-weight: 900;
     height: 48px;
@@ -1349,7 +1379,7 @@ body.light .admin-login-page {
 .expense-admin-topbar h1,
 .expense-admin-card h2,
 .expense-admin-modal h2 {
-    font-family: "Syne", sans-serif;
+    font-family: var(--admin-font);
 }
 
 .expense-admin-brand div {
@@ -1584,7 +1614,7 @@ body.light .admin-login-page {
 
 .expense-admin-stat-card strong {
     align-self: end;
-    font-family: "JetBrains Mono", monospace;
+    font-family: var(--admin-font);
     font-size: clamp(1.15rem, 2.4vw, 1.75rem);
     letter-spacing: -0.04em;
     position: relative;
@@ -1698,7 +1728,7 @@ body.light .admin-login-page {
 
 .expense-admin-top-item span {
     color: var(--expense-muted);
-    font-family: "JetBrains Mono", monospace;
+    font-family: var(--admin-font);
 }
 
 .expense-admin-top-item i,
@@ -1895,7 +1925,7 @@ body.light .admin-login-page {
 }
 
 .expense-admin-budget-row > strong {
-    font-family: "JetBrains Mono", monospace;
+    font-family: var(--admin-font);
 }
 
 .expense-admin-report-grid,
@@ -1914,7 +1944,7 @@ body.light .admin-login-page {
 }
 
 .expense-admin-report-grid strong {
-    font-family: "JetBrains Mono", monospace;
+    font-family: var(--admin-font);
     font-size: 1.2rem;
 }
 
@@ -2205,7 +2235,7 @@ body.light .admin-login-page {
 
 .admin-app .expense-admin-card-head h2,
 .admin-app .expense-admin-modal h2 {
-    font-family: "Syne", sans-serif;
+    font-family: var(--admin-font);
     font-size: 1.35rem;
     letter-spacing: 0;
 }

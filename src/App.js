@@ -123,12 +123,10 @@ function App() {
             }
             />
             <Route path="/roadmap" element={
-              <ProtectedRoute>
-                <>
-                  <Loader delay={300} />
-                  <Base canAccessPrivatePages={isAdmin} initialPage="roadmap" />
-                </>
-              </ProtectedRoute>
+              <>
+                <Loader delay={300} />
+                <Base canAccessPrivatePages={isAdmin} initialPage="roadmap" />
+              </>
             }
             />
             <Route path="/daily-plan" element={

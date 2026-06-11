@@ -32,7 +32,7 @@ html {
 }
 
 body {
-    font-family: Inter,sans-serif;
+    font-family: "Proxima Nova", "Proxima Nova Alt", "Helvetica Neue", Arial, sans-serif;
     background: var(--bg);
     color: var(--fg);
     line-height: 1.6;
@@ -1054,7 +1054,7 @@ body.light .notfound-panel {
 
 .notfound-terminal code,
 .notfound-panel pre {
-    font-family: "JetBrains Mono", "SFMono-Regular", Consolas, monospace;
+    font-family: "Proxima Nova", "Proxima Nova Alt", "Helvetica Neue", Arial, sans-serif;
 }
 
 .notfound-terminal code {
