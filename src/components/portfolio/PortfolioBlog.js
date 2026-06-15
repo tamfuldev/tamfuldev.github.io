@@ -122,10 +122,10 @@ Object.assign(blogCopy.en, {
 });
 
 Object.assign(blogCopy.vi, {
-    latestPosts: "Bai viet moi nhat",
-    sidebarTitle: "Feed kieu cong dong",
-    topPosts: "Doc nhieu",
-    trendingTopics: "Chu de noi bat",
+    latestPosts: "Bài viết mới nhất",
+    sidebarTitle: "Feed kiểu cộng đồng",
+    topPosts: "Đọc nhiều",
+    trendingTopics: "Chủ đề nổi bật",
 });
 
 const toMillis = (value) => {

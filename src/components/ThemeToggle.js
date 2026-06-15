@@ -41,7 +41,7 @@ const ThemeToggle = () => {
                 </span>
                 <span className="theme-toggle-thumb"></span>
             </span>
-            <span className="theme-toggle-text">{isDark ? "Dark" : "Light"}</span>
+            {/* <span className="theme-toggle-text">{isDark ? "Dark" : "Light"}</span> */}
         </label>
     );
 }

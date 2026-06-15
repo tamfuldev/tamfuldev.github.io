@@ -4,8 +4,8 @@ import { navigationLabels } from "../../data/portfolioContent";
 import { pick } from "../../utils/localization";
 
 const primaryPages = ["home", "about", "projects"];
-const privateGroupedPages = ["dailyPlan", "crypto", "marketAnalysis"];
-const publicGroupedPages = ["blog", "roadmap"];
+const privateGroupedPages = ["dailyPlan", "crypto", "marketAnalysis", "roadmap"];
+const publicGroupedPages = ["blog"];
 
 const PortfolioNav = ({ activePage, canAccessPrivatePages = false, language, onPageChange }) => {
     const groupedPages = canAccessPrivatePages

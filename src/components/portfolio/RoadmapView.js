@@ -19,21 +19,21 @@ const statusMeta = {
         icon: <FiClock />,
         label: {
             en: "Doing",
-            vi: "Dang lam",
+            vi: "Đang làm",
         },
     },
     done: {
         icon: <FiCheckCircle />,
         label: {
             en: "Done",
-            vi: "Da xong",
+            vi: "Đã xong",
         },
     },
     todo: {
         icon: <FiCircle />,
         label: {
             en: "Todo",
-            vi: "Can hoc",
+            vi: "Cần học",
         },
     },
 };
@@ -43,11 +43,11 @@ const statusFilters = ["all", "todo", "doing", "done"];
 const externalRoadmap = {
     category: {
         en: "roadmap.sh reference",
-        vi: "tham khao roadmap.sh",
+        vi: "tham khảo roadmap.sh",
     },
     description: {
         en: "Full official Product Manager roadmap diagram.",
-        vi: "So do Product Manager day du tren roadmap.sh.",
+        vi: "Sơ dồ Product Manager đầy đủ trên roadmap.sh.",
     },
     source: "roadmap.sh",
     title: "Product Manager",
@@ -99,32 +99,32 @@ const normalizeMilestone = (milestone, index = 0) => ({
 
 const roadmapCopy = {
     allMilestones: {
-        en: "All milestones",
-        vi: "Tat ca milestone",
+        en: "All",
+        vi: "Tất cả",
     },
     empty: {
         en: "No roadmap phases published yet.",
-        vi: "Chua co phase roadmap nao duoc public.",
+        vi: "Chưa có phase roadmap nào được public.",
     },
     error: {
         en: "Could not load roadmap data.",
-        vi: "Khong the tai du lieu roadmap.",
+        vi: "Không thể tải dữ liệu roadmap.",
     },
     filterEmpty: {
         en: "No milestones match this filter yet.",
-        vi: "Chua co milestone nao khop bo loc nay.",
+        vi: "Chưa có milestone nào khớp bộ lọc này.",
     },
     footer: {
         en: "Public roadmap - powered",
-        vi: "Public roadmap - du lieu",
+        vi: "Public roadmap - dữ liệu",
     },
     learningMap: {
         en: "Learning map",
-        vi: "Lo trinh hoc",
+        vi: "Lộ trình học",
     },
     loading: {
         en: "Loading roadmap...",
-        vi: "Dang tai roadmap...",
+        vi: "Đang tải roadmap...",
     },
     milestones: {
         en: "Milestones",
@@ -136,23 +136,23 @@ const roadmapCopy = {
     },
     phaseNav: {
         en: "Phase index",
-        vi: "Muc luc phase",
+        vi: "Mục lục phase",
     },
     progress: {
         en: "Overall progress",
-        vi: "Tien do tong the",
+        vi: "Tiến độ tổng thể",
     },
     status: {
         en: "Status",
-        vi: "Trang thai",
+        vi: "Trạng thái",
     },
     viewExternal: {
         en: "Open full diagram",
-        vi: "Mo so do day du",
+        vi: "Mở sơ đồ đầy đủ",
     },
     subtitle: {
         en: "A focused learning path with phases, progress, and milestone status.",
-        vi: "Lo trinh hoc tap co phase, tien do va trang thai milestone ro rang.",
+        vi: "Lộ trình học tập có phase, tiến độ và trạng thái milestone rõ ràng.",
     },
     title: {
         en: "Developer Roadmap",
