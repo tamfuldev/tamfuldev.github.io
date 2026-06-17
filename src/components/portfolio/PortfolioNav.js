@@ -3,14 +3,14 @@ import ThemeToggle from "../ThemeToggle";
 import { navigationLabels } from "../../data/portfolioContent";
 import { pick } from "../../utils/localization";
 
-const primaryPages = ["home", "about", "blog", "projects"];
+const primaryPages = ["home", "about", "projects"];
 const privateGroupedPages = ["dailyPlan", "crypto", "marketAnalysis", "roadmap"];
-// const publicGroupedPages = ["blog"];
+const publicGroupedPages = ["blog"];
 
 const PortfolioNav = ({ activePage, canAccessPrivatePages = false, language, onPageChange }) => {
     const groupedPages = canAccessPrivatePages
-        ? privateGroupedPages // [...publicGroupedPages, ...privateGroupedPages]
-        : [];
+        ? [...publicGroupedPages, ...privateGroupedPages]
+        : publicGroupedPages;
     const activeGroupedPage = groupedPages.includes(activePage) ? activePage : "";
 
     return (
