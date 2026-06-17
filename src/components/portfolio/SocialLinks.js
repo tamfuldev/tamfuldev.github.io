@@ -2,6 +2,7 @@ import {
     FaFacebookF,
     FaGithub,
     FaLinkedinIn,
+    FaRegEnvelope,
     FaTwitter,
     FaYoutube,
 } from "react-icons/fa";
@@ -12,7 +13,8 @@ const socialIcons = {
     github: FaGithub,
     linkedin: FaLinkedinIn,
     youtube: FaYoutube,
-    twitter: FaTwitter
+    twitter: FaTwitter,
+    email: FaRegEnvelope
 };
 
 const SocialLinks = ({ compact = false, className = "" }) => (

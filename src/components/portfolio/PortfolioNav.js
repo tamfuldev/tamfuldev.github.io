@@ -3,14 +3,14 @@ import ThemeToggle from "../ThemeToggle";
 import { navigationLabels } from "../../data/portfolioContent";
 import { pick } from "../../utils/localization";
 
-const primaryPages = ["home", "about", "projects"];
+const primaryPages = ["home", "about", "blog", "projects"];
 const privateGroupedPages = ["dailyPlan", "crypto", "marketAnalysis", "roadmap"];
 const publicGroupedPages = ["blog"];
 
 const PortfolioNav = ({ activePage, canAccessPrivatePages = false, language, onPageChange }) => {
     const groupedPages = canAccessPrivatePages
-        ? [...publicGroupedPages, ...privateGroupedPages]
-        : publicGroupedPages;
+        ? privateGroupedPages // [...publicGroupedPages, ...privateGroupedPages]
+        : [];
     const activeGroupedPage = groupedPages.includes(activePage) ? activePage : "";
 
     return (
@@ -32,25 +32,28 @@ const PortfolioNav = ({ activePage, canAccessPrivatePages = false, language, onP
                             </button>
                         ))}
 
-                        <label className={`portfolio-nav-select${activeGroupedPage ? " is-active" : ""}`}>
-                            <span className="sr-only">{pick(navigationLabels.more, language)}</span>
-                            <select
-                                aria-label={pick(navigationLabels.more, language)}
-                                value={activeGroupedPage}
-                                onChange={(event) => {
-                                    if (event.target.value) {
-                                        onPageChange(event.target.value);
-                                    }
-                                }}
-                            >
-                                <option value="">{pick(navigationLabels.more, language)}</option>
-                                {groupedPages.map((page) => (
-                                    <option key={page} value={page}>
-                                        {pick(navigationLabels[page], language)}
-                                    </option>
-                                ))}
-                            </select>
-                        </label>
+                        {groupedPages?.length > 0 ?
+                            <label className={`portfolio-nav-select${activeGroupedPage ? " is-active" : ""}`}>
+                                <span className="sr-only">{pick(navigationLabels.more, language)}</span>
+                                <select
+                                    aria-label={pick(navigationLabels.more, language)}
+                                    value={activeGroupedPage}
+                                    onChange={(event) => {
+                                        if (event.target.value) {
+                                            onPageChange(event.target.value);
+                                        }
+                                    }}
+                                >
+                                    <option value="">{pick(navigationLabels.more, language)}</option>
+                                    {groupedPages.map((page) => (
+                                        <option key={page} value={page}>
+                                            {pick(navigationLabels[page], language)}
+                                        </option>
+                                    ))}
+                                </select>
+                            </label>
+                            : <></>
+                        }
                     </div>
 
                     <div className="portfolio-controls">

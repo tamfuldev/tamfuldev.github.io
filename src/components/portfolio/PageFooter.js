@@ -15,7 +15,7 @@ const PageFooter = ({ children }) => (
             </div>
 
             <div className="portfolio-footer-contact">
-                <a href="mailto:ngoctam2303001@gmail.com">ngoctam2303001@gmail.com</a>
+                {/* <a href="mailto:ngoctam2303001@gmail.com">ngoctam2303001@gmail.com</a> */}
                 <SocialLinks compact className="portfolio-footer-socials" />
             </div>
         </div>

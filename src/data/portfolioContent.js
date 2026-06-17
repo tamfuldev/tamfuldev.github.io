@@ -39,6 +39,11 @@ export const socialLinks = [
         label: "Twitter",
         url: "https://x.com/tamnus_sol",
     },
+    {
+        id: "email",
+        label: "Email",
+        url: "mailto:ngoctam2303001@gmail.com",
+    }
 ];
 
 export const heroContent = {
@@ -62,8 +67,8 @@ export const heroContent = {
     ),
     featuredCta: localized("Explore all projects", "Xem tất cả dự án"),
     footer: localized(
-        "Backend Engineer - Ho Chi Minh City, VN - ngoctam2303001@gmail.com",
-        "Kỹ sư Backend - Thành phố Hồ Chí Minh, VN - ngoctam2303001@gmail.com"
+        "Backend Engineer",
+        "Kỹ sư Backend"
     ),
 };
 
@@ -146,7 +151,7 @@ export const projectsContent = {
     ),
     cta: localized("Open project", "Xem dự án"),
     impactLabel: localized("Impact", "Tác động"),
-    footer: localized("Backend Engineer - project portfolio", "Kỹ sư Backend - portfolio dự án"),
+    footer: localized("Backend Engineer", "Kỹ sư Backend"),
 };
 
 export const portfolioProjects = [
@@ -241,38 +246,37 @@ export const aboutContent = {
     portfolioLabel: localized("Portfolio Site", "Trang portfolio"),
     skillsTitle: localized("Skills and Expertise", "Kỹ năng và chuyên môn"),
     experienceTitle: localized("Experience", "Kinh nghiệm"),
-    footer: localized("Backend Engineer - ngoctam2303001@gmail.com", "Kỹ sư Backend - ngoctam2303001@gmail.com"),
+    footer: localized("Backend Engineer", "Kỹ sư Backend"),
 };
 
 export const skillColumns = [
     [
         {
             title: localized("Programming Languages", "Ngôn ngữ lập trình"),
-            items: ["PHP", "JavaScript", "HTML, CSS", "SQL"],
+            items: ["PHP", "JavaScript", "HTML, CSS"],
         },
         {
             title: localized("Frameworks & Platforms", "Frameworks & nền tảng"),
             items: [
                 "Laravel",
-                "TailwindCSS",
-                "GraphQL",
-                "Socket/Realtime",
                 "Twig",
+                "TailwindCSS",
+                "GraphQL"
             ],
         },
     ],
     [
         {
             title: localized("Database", "Cơ sở dữ liệu"),
-            items: ["MySQL", "Redis / Cache", "Firebase", "Elasticsearch"],
+            items: ["MySQL", "Redis/Cache", "Firebase", "Elasticsearch"],
         },
         {
             title: localized("Version Control", "Quản lý mã nguồn"),
-            items: ["Git / GitHub", "Bitbucket", "SourceTree"],
+            items: ["Git/GitHub", "Bitbucket", "SourceTree", "Docker"],
         },
         {
             title: localized("IDE & Tools", "IDE & công cụ"),
-            items: ["Visual Studio Code", "Postman", "Swagger / OpenAPI", "Backlog"],
+            items: ["Visual Studio Code", "Postman/Bruno", "Swagger/OpenAPI", "Backlog", "Linux"],
         },
     ],
     [
@@ -294,8 +298,8 @@ export const skillColumns = [
                     "Nắm tốt tối ưu hiệu năng, tinh chỉnh truy vấn và chiến lược cache."
                 ),
                 localized(
-                    "Good understanding software design, database design, RESTful API, and security.",
-                    "Nắm tốt thiết kế phần mềm, thiết kế CSDL, RESTful API và security."
+                    "Good understanding software design, database design, RESTful API, and Security.",
+                    "Nắm tốt thiết kế phần mềm, thiết kế CSDL, RESTful API và Security."
                 ),
                 localized(
                     "Good teamwork, code review, communication, and Agile/Scrum workflow.",

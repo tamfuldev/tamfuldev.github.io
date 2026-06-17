@@ -279,8 +279,8 @@ body.light .site-header {
 
 .theme-toggle {
     align-items: center;
-    background: var(--glass);
-    border: 1px solid var(--border);
+    /* background: var(--glass); */
+    /* border: 1px solid var(--border); */
     border-radius: 8px;
     color: var(--fg);
     cursor: pointer;
@@ -295,7 +295,7 @@ body.light .site-header {
 }
 
 .theme-toggle:hover {
-    background: var(--border);
+    /* background: var(--border); */
     transform: translateY(-2px);
 }
 
@@ -308,8 +308,8 @@ body.light .site-header {
 }
 
 .theme-toggle:focus-within {
-    outline: 2px solid var(--accent);
-    outline-offset: 3px;
+    /* outline: 2px solid var(--accent); */
+    /* outline-offset: 3px; */
 }
 
 .theme-toggle-track {
@@ -329,10 +329,11 @@ body.light .site-header {
 
 .theme-toggle-icon {
     display: inline-flex;
-    font-size: 10px;
+    font-size: 11px;    
     line-height: 1;
     position: relative;
     z-index: 1;
+    color: var(--muted);
 }
 
 .theme-toggle-thumb {

@@ -8,15 +8,9 @@ const LanguageButton = () => {
     return (
         <HelmetProvider>
             <Helmet htmlAttributes={{ lang: language }} />
-
-            <button
-                type="button"
-                onClick={toggleLanguage}
-                className="control-btn"
-                aria-label="Toggle language"
-            >
-                {language.toUpperCase()}
-            </button>
+            <span onClick={toggleLanguage} className="language">
+                {language == "en" ? "English" : "Vietnamese"}
+            </span>
         </HelmetProvider>
     );
 };
