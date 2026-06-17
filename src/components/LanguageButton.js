@@ -9,7 +9,7 @@ const LanguageButton = () => {
         <HelmetProvider>
             <Helmet htmlAttributes={{ lang: language }} />
             <span onClick={toggleLanguage} className="language">
-                {language == "en" ? "English" : "Vietnamese"}
+                {language === "en" ? "English" : "Vietnamese"}
             </span>
         </HelmetProvider>
     );
