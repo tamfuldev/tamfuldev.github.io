@@ -35,9 +35,9 @@ export const socialLinks = [
         url: "https://www.youtube.com/@tamcactus",
     },
     {
-        id: "twitter",
-        label: "Twitter",
-        url: "https://x.com/tamnus_sol",
+        id: "reddit",
+        label: "Reddit",
+        url: "https://www.reddit.com/user/GolfOther8411/",
     },
     {
         id: "email",
@@ -48,7 +48,7 @@ export const socialLinks = [
 
 export const heroContent = {
     kicker: localized("// Backend Engineer - Ho Chi Minh City", "// Kỹ sư Backend - Thành phố Hồ Chí Minh"),
-    titleLine1: localized("I build backends", "Tôi xây backend"),
+    titleLine1: localized("I build backend", "Tôi xây backend"),
     titleLine2: localized("that do not break", "vận hành bền vững"),
     titleLine3: localized("under pressure.", "dưới áp lực."),
     taglineLead: localized("Hi, I'm ", "Xin chào, tôi là "),

@@ -679,8 +679,8 @@ body.light .portfolio-nav {
 
 .portfolio-orbit-ring-1 {
     animation-duration: 12s;
-    height: 350px;
-    width: 350px;
+    height: 380px;
+    width: 380px;
 }
 
 .portfolio-orbit-ring-2 {
@@ -6624,4 +6624,7 @@ body.light .portfolio-expense-stat {
     .portfolio-click-burst {
         display: none;
     }
+}
+.light .portfolio-project-modal-close {
+    color: var(--portfolio-bg);
 }

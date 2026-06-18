@@ -2,8 +2,8 @@ import {
     FaFacebookF,
     FaGithub,
     FaLinkedinIn,
+    FaReddit,
     FaRegEnvelope,
-    FaTwitter,
     FaYoutube,
 } from "react-icons/fa";
 import { socialLinks } from "../../data/portfolioContent";
@@ -13,7 +13,7 @@ const socialIcons = {
     github: FaGithub,
     linkedin: FaLinkedinIn,
     youtube: FaYoutube,
-    twitter: FaTwitter,
+    reddit: FaReddit,
     email: FaRegEnvelope
 };
 

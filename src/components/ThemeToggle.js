@@ -2,7 +2,7 @@ import React from 'react';
 
 const ThemeToggle = () => {
     const [theme, setTheme] = React.useState(() => {
-        return localStorage.getItem("theme") || "dark";
+        return localStorage.getItem("theme") || "light";
     });
     const isDark = theme !== "light";
 
