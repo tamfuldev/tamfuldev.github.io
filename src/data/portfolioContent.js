@@ -35,11 +35,6 @@ export const socialLinks = [
         url: "https://www.youtube.com/@tamcactus",
     },
     {
-        id: "reddit",
-        label: "Reddit",
-        url: "https://www.reddit.com/user/GolfOther8411/",
-    },
-    {
         id: "email",
         label: "Email",
         url: "mailto:ngoctam2303001@gmail.com",
@@ -290,8 +285,8 @@ export const skillColumns = [
             title: localized("Knowledge", "Kiến thức"),
             items: [
                 localized(
-                    "Deep understanding about OOP, Design Patterns, and SOLID principles.",
-                    "Hiểu sâu về OOP, Design Pattern và nguyên tắc SOLID."
+                    "OOP, Design Patterns",
+                    "OOP, Design Pattern"
                 ),
                 localized(
                     "Good understanding about performance optimization, query tuning, and caching strategy.",

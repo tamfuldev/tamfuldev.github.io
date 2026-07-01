@@ -41,7 +41,8 @@ const PortfolioHome = ({ avatarSrc, language, onPageChange }) => (
                         </button>
                         <a
                             className="portfolio-btn portfolio-btn-secondary"
-                            href="mailto:ngoctam2303001@gmail.com"
+                            href={(language === 'en' ? 'https://www.topcv.vn/xem-cv/DQECDA9TXQhRUlZTVA4KBAVUVQMDVVoMWgRQVA694b' : 'https://www.topcv.vn/xem-cv/BgIJVgdUAFYBBFVTC1NVDFAFAFUEAl4CUAQEWg07a7')}
+                            target="_blank"
                         >
                             {pick(heroContent.secondaryCta, language)}
                         </a>
