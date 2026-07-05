@@ -9,16 +9,16 @@
   "dependencies": {
     "@emotion/react": "^11.10.8",
     "@emotion/styled": "^11.8.1",
-    "axios": "^1.13.2",
-    "dompurify": "^3.4.7",
-    "firebase": "^12.7.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
+    "axios": "^1.18.1",
+    "dompurify": "^3.4.11",
+    "firebase": "^12.15.0",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7",
     "react-helmet-async": "^3.0.0",
-    "react-quill-new": "3.7.0",
-    "react-router-dom": "^6.11.0",
-    "recharts": "^2.15.4",
-    "web-vitals": "^3.3.2"
+    "react-quill-new": "3.8.3",
+    "react-router-dom": "^7.18.1",
+    "recharts": "^3.9.2",
+    "web-vitals": "^5.3.0"
   },
   "overrides": {
     "quill": "2.0.2"
