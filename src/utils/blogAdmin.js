@@ -65,10 +65,7 @@ export const getBlogCategories = (blog = {}) => {
 };
 
 export const stripHtml = (value = "") =>
-    String(value || "")
-        .replace(/<style[\s\S]*?<\/style>/gi, " ")
-        .replace(/<script[\s\S]*?<\/script>/gi, " ")
-        .replace(/<[^>]+>/g, " ")
+    DOMPurify.sanitize(String(value || ""), { ALLOWED_TAGS: [], ALLOWED_ATTR: [] })
         .replace(/&nbsp;/g, " ")
         .replace(/&lt;/g, "<")
         .replace(/&gt;/g, ">")
