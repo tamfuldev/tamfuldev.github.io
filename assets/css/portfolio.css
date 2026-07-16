@@ -14,7 +14,7 @@
     --portfolio-border: #1e1e24;
     --portfolio-hover-border: #34343c;
     --portfolio-button-ink: #08080a;
-    --portfolio-font: "Proxima Nova", "Proxima Nova Alt", "Helvetica Neue", Arial, sans-serif;
+    --portfolio-font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, "Helvetica Neue", Arial, sans-serif;
     --portfolio-head-font: var(--portfolio-font);
     --portfolio-body-font: var(--portfolio-font);
     --portfolio-mono-font: var(--portfolio-font);
@@ -362,16 +362,16 @@ body.light .portfolio-nav {
     position: absolute;
 }
 
-/* .portfolio-hero-bg::before,
+.portfolio-hero-bg::before,
 .portfolio-hero-bg::after {
     border: 1px solid rgba(232, 255, 72, 0.08);
     border-radius: 999px;
     content: "";
     filter: blur(0.2px);
     position: absolute;
-} */
+}
 
-/* .portfolio-hero-bg::before {
+.portfolio-hero-bg::before {
     animation: portfolio-drift 12s ease-in-out infinite;
     height: 22rem;
     right: 8%;
@@ -385,7 +385,14 @@ body.light .portfolio-nav {
     height: 14rem;
     left: 7%;
     width: 14rem;
-} */
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .portfolio-hero-bg::before,
+    .portfolio-hero-bg::after {
+        animation: none;
+    }
+}
 
 .portfolio-hero-content {
     animation: portfolio-fade-up 0.8s ease both;
@@ -819,6 +826,7 @@ body.light .portfolio-nav {
     font-weight: 800;
     letter-spacing: 0;
     margin-bottom: 2.5rem;
+    margin-top: 0;
     position: relative;
 }
 
@@ -935,6 +943,23 @@ body.light .portfolio-nav {
     border-color: var(--portfolio-hover-border);
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.18);
     transform: translateY(-6px) scale(1.01);
+}
+
+.portfolio-reveal {
+    opacity: 0;
+    transform: translateY(24px);
+}
+
+.portfolio-reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .portfolio-reveal {
+        opacity: 1;
+        transform: none;
+    }
 }
 
 .portfolio-project-card:hover::after,
@@ -2035,6 +2060,7 @@ body.light .portfolio-nav {
     font-size: 1.2rem;
     font-weight: 700;
     margin-bottom: 1.5rem;
+    margin-top: 0;
     padding-bottom: 0.5rem;
     position: relative;
 }
