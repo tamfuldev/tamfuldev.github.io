@@ -198,8 +198,17 @@ body.light .portfolio-nav {
     font-size: 0.82rem;
     min-height: 38px;
     outline: 0;
+    overflow: hidden;
     padding: 0.45rem 2.2rem 0.45rem 0.9rem;
+    text-overflow: ellipsis;
     transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+    white-space: nowrap;
+}
+
+@media (min-width: 769px) {
+    .portfolio-nav-select select {
+        max-width: 150px;
+    }
 }
 
 .portfolio-nav-select::after {
@@ -1935,7 +1944,7 @@ body.light .portfolio-nav {
     }
 }
 
-@media (max-width: 760px) {
+@media (max-width: 768px) {
     .portfolio-project-modal {
         max-height: calc(100dvh - 1rem);
     }
@@ -2438,7 +2447,7 @@ body.light .portfolio-skill-panel {
 .portfolio-roadmap-progress-card strong {
     display: block;
     font-family: var(--portfolio-head-font);
-    font-size: 3rem;
+    font-size: clamp(2rem, 5vw, 3rem);
     letter-spacing: -0.05em;
     margin: 0.15rem 0;
 }
@@ -2983,7 +2992,7 @@ body.light .portfolio-skill-panel {
 
 .portfolio-daily-plan-summary strong {
     font-family: var(--portfolio-head-font);
-    font-size: 3rem;
+    font-size: clamp(2rem, 5vw, 3rem);
     letter-spacing: -0.05em;
 }
 
@@ -4260,6 +4269,7 @@ body.light .portfolio-expense-stat {
 
 .portfolio-page.is-blog-detail {
     height: 100vh;
+    height: 100dvh;
     overflow: hidden;
 }
 
@@ -4271,6 +4281,7 @@ body.light .portfolio-expense-stat {
     display: flex;
     flex-direction: column;
     height: calc(100vh - var(--portfolio-nav-height));
+    height: calc(100dvh - var(--portfolio-nav-height));
     overflow: hidden;
 }
 
@@ -5584,7 +5595,7 @@ body.light .portfolio-expense-stat {
     margin-bottom: 0;
 }
 
-@media (max-width: 1020px) {
+@media (max-width: 1024px) {
     .portfolio-blog-list-shell {
         grid-template-columns: 1fr;
     }
@@ -6324,6 +6335,16 @@ body.light .portfolio-expense-stat {
     .portfolio-orbit-wrap {
         height: 300px;
         width: 300px;
+    }
+
+    .portfolio-orbit-ring-1 {
+        height: 290px;
+        width: 290px;
+    }
+
+    .portfolio-orbit-ring-2 {
+        height: 425px;
+        width: 425px;
     }
 
     .portfolio-avatar-circle {
