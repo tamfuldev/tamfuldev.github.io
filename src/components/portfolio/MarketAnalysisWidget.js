@@ -521,7 +521,7 @@ const MarketAnalysisWidget = ({ defaultSymbol = "BTC", language = "en" }) => {
                 </div>
             </section>
 
-            <PageFooter>
+            <PageFooter language={language}>
                 <span>{pick(aboutContent.name, language)}</span> - {pick(cryptoContent.footer, language)}
             </PageFooter>
         </div>

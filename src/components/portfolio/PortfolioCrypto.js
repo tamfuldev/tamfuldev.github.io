@@ -125,7 +125,7 @@ const PortfolioCrypto = ({ fallbackCoins, language }) => {
                 </div>
             </section>
 
-            <PageFooter>
+            <PageFooter language={language}>
                 <span>{pick(aboutContent.name, language)}</span> - {pick(cryptoContent.footer, language)}
             </PageFooter>
         </div>

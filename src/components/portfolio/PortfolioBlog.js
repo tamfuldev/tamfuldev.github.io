@@ -977,7 +977,7 @@ const PortfolioBlog = ({ activeTag, detailSlug, language, onTagChange }) => {
                 )}
             </section>
 
-            <PageFooter>
+            <PageFooter language={language}>
                 <span>{pick(aboutContent.name, language)}</span> - {pick(blogContent.footer, language)}
             </PageFooter>
         </div>

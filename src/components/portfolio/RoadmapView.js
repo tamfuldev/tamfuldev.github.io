@@ -461,7 +461,7 @@ const RoadmapView = ({ language = "en" }) => {
                 )}
             </section>
 
-            <PageFooter>{pick(roadmapCopy.footer, language)}</PageFooter>
+            <PageFooter language={language}>{pick(roadmapCopy.footer, language)}</PageFooter>
         </div>
     );
 };

@@ -3,26 +3,35 @@
 }
 
 .portfolio-app {
-    --portfolio-bg: #08080a;
-    --portfolio-bg-2: #0f0f12;
-    --portfolio-bg-3: #16161a;
-    --portfolio-card: #0f0f12;
-    --portfolio-accent: #e8ff48;
-    --portfolio-accent-2: #b8cc2a;
-    --portfolio-text: #efefef;
-    --portfolio-muted: #77777f;
-    --portfolio-border: #1e1e24;
-    --portfolio-hover-border: #34343c;
-    --portfolio-button-ink: #08080a;
-    --portfolio-font: "Proxima Nova", "Proxima Nova Alt", "Helvetica Neue", Arial, sans-serif;
-    --portfolio-head-font: var(--portfolio-font);
-    --portfolio-body-font: var(--portfolio-font);
-    --portfolio-mono-font: var(--portfolio-font);
-    --font-body: var(--portfolio-font);
+    /* Palette "Halo" — electric teal + violet on deep-space navy.
+       Accent hues are exposed as RGB triplets so every glow/tint tracks the theme. */
+    --portfolio-bg: #070b14;
+    --portfolio-bg-2: #0d1322;
+    --portfolio-bg-3: #141d31;
+    --portfolio-card: #0d1322;
+    --portfolio-accent: #45e0c8;
+    --portfolio-accent-2: #8f7cf6;
+    --portfolio-accent-rgb: 69, 224, 200;
+    --portfolio-accent-2-rgb: 143, 124, 246;
+    --portfolio-text: #eaf1f8;
+    --portfolio-muted: #7e8aa3;
+    --portfolio-border: #1d2740;
+    --portfolio-hover-border: #35426a;
+    --portfolio-button-ink: #041016;
+    --portfolio-nav-bg: rgba(9, 14, 24, 0.82);
+    --portfolio-glass: rgba(255, 255, 255, 0.04);
+    --font-sans-fallback: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --portfolio-font: "Be Vietnam Pro", var(--font-sans-fallback);
+    --portfolio-head-font: "Bricolage Grotesque", "Be Vietnam Pro", var(--font-sans-fallback);
+    --portfolio-body-font: "Be Vietnam Pro", var(--font-sans-fallback);
+    --portfolio-mono-font: "JetBrains Mono", ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+    --font-body: var(--portfolio-body-font);
     --portfolio-nav-height: 58px;
     --portfolio-shell-width: 1180px;
     --cursor-x: 50vw;
     --cursor-y: 50vh;
+    --tilt-x: 0;
+    --tilt-y: 0;
     background: var(--portfolio-bg);
     color: var(--portfolio-text);
     font-family: var(--portfolio-body-font);
@@ -35,29 +44,48 @@
 
 .portfolio-app::before {
     background:
-        radial-gradient(circle at var(--cursor-x) var(--cursor-y), rgba(232, 255, 72, 0.13), transparent 18rem),
-        radial-gradient(circle at calc(var(--cursor-x) + 8rem) calc(var(--cursor-y) + 4rem), rgba(123, 184, 245, 0.08), transparent 16rem);
+        radial-gradient(circle at var(--cursor-x) var(--cursor-y), rgba(var(--portfolio-accent-rgb), 0.13), transparent 18rem),
+        radial-gradient(circle at calc(var(--cursor-x) + 8rem) calc(var(--cursor-y) + 4rem), rgba(var(--portfolio-accent-2-rgb), 0.08), transparent 16rem);
     content: "";
     inset: 0;
-    opacity: 0.75;
+    opacity: 0.6;
     pointer-events: none;
     position: fixed;
     transition: opacity 0.25s ease;
     z-index: 0;
 }
 
+/* Three.js ambient depth field — sits beneath all content and the cursor glow. */
+.portfolio-webgl-bg {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.75;
+}
+
+body.light .portfolio-webgl-bg {
+    opacity: 0.5;
+}
+
 body.light .portfolio-app {
-    --portfolio-bg: #f5f7fb;
+    --portfolio-bg: #eef2f8;
     --portfolio-bg-2: #ffffff;
-    --portfolio-bg-3: #e9edf4;
+    --portfolio-bg-3: #e1e8f2;
     --portfolio-card: #ffffff;
-    --portfolio-accent: #6f821e;
-    --portfolio-accent-2: #556515;
-    --portfolio-text: #16181d;
-    --portfolio-muted: #667085;
-    --portfolio-border: #d7dde8;
-    --portfolio-hover-border: #aab4c4;
-    --portfolio-button-ink: #111316;
+    --portfolio-accent: #0d9488;
+    --portfolio-accent-2: #6d5ae6;
+    --portfolio-accent-rgb: 13, 148, 136;
+    --portfolio-accent-2-rgb: 109, 90, 230;
+    --portfolio-text: #0e1729;
+    --portfolio-muted: #566378;
+    --portfolio-border: #d3dce9;
+    --portfolio-hover-border: #aeb9cc;
+    --portfolio-button-ink: #ffffff;
+    --portfolio-nav-bg: rgba(255, 255, 255, 0.82);
+    --portfolio-glass: rgba(13, 19, 34, 0.03);
 }
 
 .portfolio-app button,
@@ -70,8 +98,8 @@ body.light .portfolio-app {
     position: fixed;
     inset: 0 0 auto;
     z-index: 1000;
-    background: rgba(10, 10, 10, 0.92);
-    backdrop-filter: blur(12px);
+    background: var(--portfolio-nav-bg);
+    backdrop-filter: blur(14px) saturate(1.2);
     border-bottom: 1px solid var(--portfolio-border);
     display: flex;
     align-items: center;
@@ -81,7 +109,7 @@ body.light .portfolio-app {
 }
 
 body.light .portfolio-nav {
-    background: rgba(247, 243, 234, 0.92);
+    background: var(--portfolio-nav-bg);
 }
 
 .portfolio-nav-inner {
@@ -198,8 +226,17 @@ body.light .portfolio-nav {
     font-size: 0.82rem;
     min-height: 38px;
     outline: 0;
+    overflow: hidden;
     padding: 0.45rem 2.2rem 0.45rem 0.9rem;
+    text-overflow: ellipsis;
     transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+    white-space: nowrap;
+}
+
+@media (min-width: 769px) {
+    .portfolio-nav-select select {
+        max-width: 150px;
+    }
 }
 
 .portfolio-nav-select::after {
@@ -214,7 +251,7 @@ body.light .portfolio-nav {
 
 .portfolio-nav-select:hover select,
 .portfolio-nav-select.is-active select {
-    border-color: rgba(232, 255, 72, 0.38);
+    border-color: rgba(var(--portfolio-accent-rgb), 0.38);
     box-shadow: 0 10px 24px rgba(0, 0, 0, 0.14);
     transform: translateY(-1px);
 }
@@ -357,21 +394,21 @@ body.light .portfolio-nav {
 }
 
 .portfolio-hero-bg {
-    background: radial-gradient(ellipse 55% 65% at 65% 45%, rgba(232, 255, 72, 0.05) 0%, transparent 65%);
+    background: radial-gradient(ellipse 55% 65% at 65% 45%, rgba(var(--portfolio-accent-rgb), 0.05) 0%, transparent 65%);
     inset: 0;
     position: absolute;
 }
 
-/* .portfolio-hero-bg::before,
+.portfolio-hero-bg::before,
 .portfolio-hero-bg::after {
-    border: 1px solid rgba(232, 255, 72, 0.08);
+    border: 1px solid rgba(var(--portfolio-accent-rgb), 0.08);
     border-radius: 999px;
     content: "";
     filter: blur(0.2px);
     position: absolute;
-} */
+}
 
-/* .portfolio-hero-bg::before {
+.portfolio-hero-bg::before {
     animation: portfolio-drift 12s ease-in-out infinite;
     height: 22rem;
     right: 8%;
@@ -385,7 +422,14 @@ body.light .portfolio-nav {
     height: 14rem;
     left: 7%;
     width: 14rem;
-} */
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .portfolio-hero-bg::before,
+    .portfolio-hero-bg::after {
+        animation: none;
+    }
+}
 
 .portfolio-hero-content {
     animation: portfolio-fade-up 0.8s ease both;
@@ -414,7 +458,7 @@ body.light .portfolio-nav {
     animation: portfolio-status-blink 1.4s ease-in-out infinite;
     background: var(--portfolio-accent);
     border-radius: 50%;
-    box-shadow: 0 0 16px rgba(232, 255, 72, 0.45);
+    box-shadow: 0 0 16px rgba(var(--portfolio-accent-rgb), 0.45);
     content: "";
     height: 7px;
     margin-right: 0.6rem;
@@ -510,7 +554,7 @@ body.light .portfolio-nav {
 }
 
 .portfolio-social-link::before {
-    background: radial-gradient(circle, rgba(232, 255, 72, 0.18), transparent 68%);
+    background: radial-gradient(circle, rgba(var(--portfolio-accent-rgb), 0.18), transparent 68%);
     content: "";
     inset: -40%;
     opacity: 0;
@@ -526,7 +570,7 @@ body.light .portfolio-nav {
 }
 
 .portfolio-social-link:hover {
-    border-color: rgba(232, 255, 72, 0.35);
+    border-color: rgba(var(--portfolio-accent-rgb), 0.35);
     box-shadow: 0 12px 30px rgba(0, 0, 0, 0.22);
     color: var(--portfolio-text);
     transform: translateY(-3px) rotate(-1deg);
@@ -615,6 +659,15 @@ body.light .portfolio-nav {
     margin: 0 auto;
     position: relative;
     width: 360px;
+    /* Pointer-driven 3D parallax: the whole rig tilts in perspective while the
+       avatar floats forward on the Z axis. Falls back to flat when --tilt is 0
+       (touch devices / reduced-motion never set it). */
+    transform: perspective(1100px)
+        rotateY(calc(var(--tilt-x) * 9deg))
+        rotateX(calc(var(--tilt-y) * -9deg));
+    transform-style: preserve-3d;
+    transition: transform 0.4s ease-out;
+    will-change: transform;
 }
 
 .portfolio-avatar-circle {
@@ -622,6 +675,7 @@ body.light .portfolio-nav {
     background: var(--portfolio-bg-3);
     border: 2px solid var(--portfolio-border);
     border-radius: 50%;
+    box-shadow: 0 30px 60px -20px rgba(0, 0, 0, 0.55);
     display: flex;
     height: 260px;
     justify-content: center;
@@ -629,14 +683,14 @@ body.light .portfolio-nav {
     overflow: hidden;
     position: absolute;
     top: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%) translateZ(60px);
     width: 260px;
     z-index: 2;
 }
 
 .portfolio-avatar-circle::before {
     animation: portfolio-avatar-scan 4.5s ease-in-out infinite;
-    background: linear-gradient(180deg, transparent, rgba(232, 255, 72, 0.15), transparent);
+    background: linear-gradient(180deg, transparent, rgba(var(--portfolio-accent-rgb), 0.15), transparent);
     content: "";
     height: 42%;
     left: -10%;
@@ -648,7 +702,7 @@ body.light .portfolio-nav {
 
 .portfolio-avatar-circle::after {
     animation: portfolio-orbit-pulse 3.4s ease-in-out infinite;
-    /* border: 1px solid rgba(232, 255, 72, 0.18); */
+    /* border: 1px solid rgba(var(--portfolio-accent-rgb), 0.18); */
     border-radius: 50%;
     content: "";
     inset: 9px;
@@ -666,7 +720,7 @@ body.light .portfolio-nav {
 
 .portfolio-orbit-ring {
     animation: portfolio-spin linear infinite;
-    border: 1px solid rgba(232, 255, 72, 0.12);
+    border: 1px solid rgba(var(--portfolio-accent-rgb), 0.12);
     border-radius: 50%;
     left: 50%;
     position: absolute;
@@ -674,20 +728,17 @@ body.light .portfolio-nav {
     transform: translate(-50%, -50%);
 }
 .light .portfolio-orbit-ring {
-    border: 1px solid rgba(45, 46, 41, 0.12) !important;
+    border: 1px solid rgba(var(--portfolio-accent-rgb), 0.22) !important;
 }
 
-.portfolio-orbit-ring-1 {
-    animation-duration: 12s;
-    height: 380px;
-    width: 380px;
-}
-
-.portfolio-orbit-ring-2 {
-    animation-direction: reverse;
-    animation-duration: 20s;
-    height: 540px;
-    width: 540px;
+/* Single orbit ring — six skill tags spread evenly at 60° around it.
+   --orbit-r is the ring radius; tag transforms read it so one variable keeps
+   the whole rig responsive. */
+.portfolio-orbit-ring-main {
+    animation-duration: 30s;
+    height: calc(var(--orbit-r) * 2);
+    width: calc(var(--orbit-r) * 2);
+    --orbit-r: 230px;
 }
 
 .portfolio-orbit-icon {
@@ -701,40 +752,45 @@ body.light .portfolio-nav {
     font-weight: 700;
     height: 36px;
     justify-content: center;
+    left: 50%;
     letter-spacing: 0.5px;
+    margin: -18px 0 0 -36px;
     position: absolute;
+    top: 50%;
     width: 72px;
-    box-shadow: 0 0 0 rgba(232, 255, 72, 0);
+    box-shadow: 0 0 0 rgba(var(--portfolio-accent-rgb), 0);
     transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .portfolio-orbit-wrap:hover .portfolio-orbit-icon {
-    border-color: rgba(232, 255, 72, 0.35);
-    box-shadow: 0 0 24px rgba(232, 255, 72, 0.12);
+    border-color: rgba(var(--portfolio-accent-rgb), 0.35);
+    box-shadow: 0 0 24px rgba(var(--portfolio-accent-rgb), 0.12);
 }
 
-.portfolio-top-center {
-    left: 50%;
-    top: -18px;
-    transform: translateX(-50%);
+/* θ = 0/60/120/180/240/300°. The trailing counter-rotation keeps each label
+   horizontal at rest; the ring's own spin then tilts them together. */
+.portfolio-orbit-pos-1 {
+    transform: rotate(0deg) translateY(calc(var(--orbit-r) * -1)) rotate(0deg);
 }
 
-.portfolio-bottom-center {
-    bottom: -18px;
-    left: 50%;
-    transform: translateX(-50%);
+.portfolio-orbit-pos-2 {
+    transform: rotate(60deg) translateY(calc(var(--orbit-r) * -1)) rotate(-60deg);
 }
 
-.portfolio-left-center {
-    left: -18px;
-    top: 50%;
-    transform: translateY(-50%);
+.portfolio-orbit-pos-3 {
+    transform: rotate(120deg) translateY(calc(var(--orbit-r) * -1)) rotate(-120deg);
 }
 
-.portfolio-right-center {
-    right: -18px;
-    top: 50%;
-    transform: translateY(-50%);
+.portfolio-orbit-pos-4 {
+    transform: rotate(180deg) translateY(calc(var(--orbit-r) * -1)) rotate(-180deg);
+}
+
+.portfolio-orbit-pos-5 {
+    transform: rotate(240deg) translateY(calc(var(--orbit-r) * -1)) rotate(-240deg);
+}
+
+.portfolio-orbit-pos-6 {
+    transform: rotate(300deg) translateY(calc(var(--orbit-r) * -1)) rotate(-300deg);
 }
 
 .portfolio-stats-bar {
@@ -819,6 +875,7 @@ body.light .portfolio-nav {
     font-weight: 800;
     letter-spacing: 0;
     margin-bottom: 2.5rem;
+    margin-top: 0;
     position: relative;
 }
 
@@ -863,7 +920,7 @@ body.light .portfolio-nav {
 }
 
 .portfolio-featured-action:hover {
-    border-color: rgba(232, 255, 72, 0.35);
+    border-color: rgba(var(--portfolio-accent-rgb), 0.35);
     color: var(--portfolio-accent);
     transform: translateY(-2px);
 }
@@ -902,7 +959,7 @@ body.light .portfolio-nav {
 
 .portfolio-project-card.is-lead {
     background:
-        linear-gradient(145deg, rgba(232, 255, 72, 0.08), transparent 42%),
+        linear-gradient(145deg, rgba(var(--portfolio-accent-rgb), 0.08), transparent 42%),
         var(--portfolio-card);
 }
 
@@ -910,7 +967,7 @@ body.light .portfolio-nav {
 .portfolio-crypto-card::before,
 .portfolio-blog-post::before,
 .portfolio-blog-detail::before {
-    background: radial-gradient(circle at 30% 0%, rgba(232, 255, 72, 0.13), transparent 34%);
+    background: radial-gradient(circle at 30% 0%, rgba(var(--portfolio-accent-rgb), 0.13), transparent 34%);
     content: "";
     inset: 0;
     opacity: 0;
@@ -937,6 +994,23 @@ body.light .portfolio-nav {
     transform: translateY(-6px) scale(1.01);
 }
 
+.portfolio-reveal {
+    opacity: 0;
+    transform: translateY(24px);
+}
+
+.portfolio-reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .portfolio-reveal {
+        opacity: 1;
+        transform: none;
+    }
+}
+
 .portfolio-project-card:hover::after,
 .portfolio-project-card:hover::before {
     opacity: 1;
@@ -960,8 +1034,8 @@ body.light .portfolio-nav {
 
 .portfolio-project-tag,
 .portfolio-blog-tag {
-    background: rgba(232, 255, 72, 0.1);
-    border: 1px solid rgba(232, 255, 72, 0.15);
+    background: rgba(var(--portfolio-accent-rgb), 0.1);
+    border: 1px solid rgba(var(--portfolio-accent-rgb), 0.15);
     border-radius: 8px;
     color: var(--portfolio-accent);
     display: inline-block;
@@ -998,8 +1072,8 @@ body.light .portfolio-nav {
 
 .portfolio-project-outcome {
     align-items: center;
-    background: rgba(232, 255, 72, 0.06);
-    border: 1px solid rgba(232, 255, 72, 0.16);
+    background: rgba(var(--portfolio-accent-rgb), 0.06);
+    border: 1px solid rgba(var(--portfolio-accent-rgb), 0.16);
     border-radius: 8px;
     color: var(--portfolio-accent);
     display: flex;
@@ -1119,7 +1193,7 @@ body.light .portfolio-nav {
 }
 
 .portfolio-project-showcase-card::before {
-    background: linear-gradient(90deg, transparent, rgba(232, 255, 72, 0.7), transparent);
+    background: linear-gradient(90deg, transparent, rgba(var(--portfolio-accent-rgb), 0.7), transparent);
     content: "";
     height: 1px;
     left: -40%;
@@ -1132,7 +1206,7 @@ body.light .portfolio-nav {
 }
 
 .portfolio-project-showcase-card:hover {
-    border-color: rgba(232, 255, 72, 0.28);
+    border-color: rgba(var(--portfolio-accent-rgb), 0.28);
     box-shadow: 0 28px 90px rgba(0, 0, 0, 0.26);
     transform: translateY(-8px);
 }
@@ -1145,7 +1219,7 @@ body.light .portfolio-nav {
 .portfolio-project-preview {
     aspect-ratio: 16 / 9;
     background:
-        linear-gradient(135deg, rgba(232, 255, 72, 0.1), rgba(123, 184, 245, 0.08)),
+        linear-gradient(135deg, rgba(var(--portfolio-accent-rgb), 0.1), rgba(var(--portfolio-accent-2-rgb), 0.08)),
         var(--portfolio-bg-2);
     border: 1px solid var(--portfolio-border);
     border-radius: 14px;
@@ -1177,7 +1251,7 @@ body.light .portfolio-nav {
 }
 
 .portfolio-project-card-orb {
-    background: radial-gradient(circle, rgba(232, 255, 72, 0.13), transparent 64%);
+    background: radial-gradient(circle, rgba(var(--portfolio-accent-rgb), 0.13), transparent 64%);
     filter: blur(2px);
     height: 230px;
     opacity: 0.8;
@@ -1190,7 +1264,7 @@ body.light .portfolio-nav {
 }
 
 .portfolio-project-showcase-card.is-performance .portfolio-project-card-orb {
-    background: radial-gradient(circle, rgba(123, 184, 245, 0.16), transparent 64%);
+    background: radial-gradient(circle, rgba(var(--portfolio-accent-2-rgb), 0.16), transparent 64%);
 }
 
 .portfolio-project-showcase-card.is-devops .portfolio-project-card-orb {
@@ -1228,8 +1302,8 @@ body.light .portfolio-nav {
 
 .portfolio-project-icon {
     align-items: center;
-    background: rgba(232, 255, 72, 0.1);
-    border: 1px solid rgba(232, 255, 72, 0.16);
+    background: rgba(var(--portfolio-accent-rgb), 0.1);
+    border: 1px solid rgba(var(--portfolio-accent-rgb), 0.16);
     border-radius: 14px;
     color: var(--portfolio-accent);
     display: inline-flex;
@@ -1601,7 +1675,7 @@ body.light .portfolio-nav {
 .portfolio-project-hover-info {
     background: rgba(10, 12, 18, 0.94);
     backdrop-filter: blur(14px);
-    border: 1px solid rgba(232, 255, 72, 0.22);
+    border: 1px solid rgba(var(--portfolio-accent-rgb), 0.22);
     border-radius: 8px;
     bottom: 5.15rem;
     box-shadow: 0 18px 50px rgba(0, 0, 0, 0.28);
@@ -1620,7 +1694,7 @@ body.light .portfolio-nav {
 
 .portfolio-project-showcase-card:hover .portfolio-project-hover-info,
 .portfolio-project-showcase-card:focus-within .portfolio-project-hover-info {
-    border-color: rgba(232, 255, 72, 0.42);
+    border-color: rgba(var(--portfolio-accent-rgb), 0.42);
     opacity: 1;
     pointer-events: auto;
     transform: translateY(0) scale(1);
@@ -1910,7 +1984,7 @@ body.light .portfolio-nav {
     }
 }
 
-@media (max-width: 760px) {
+@media (max-width: 768px) {
     .portfolio-project-modal {
         max-height: calc(100dvh - 1rem);
     }
@@ -1971,7 +2045,7 @@ body.light .portfolio-nav {
 }
 
 .portfolio-about-avatar:hover {
-    border-color: rgba(232, 255, 72, 0.35);
+    border-color: rgba(var(--portfolio-accent-rgb), 0.35);
     box-shadow: 0 22px 70px rgba(0, 0, 0, 0.22);
     transform: translateY(-4px);
 }
@@ -2035,6 +2109,7 @@ body.light .portfolio-nav {
     font-size: 1.2rem;
     font-weight: 700;
     margin-bottom: 1.5rem;
+    margin-top: 0;
     padding-bottom: 0.5rem;
     position: relative;
 }
@@ -2076,7 +2151,7 @@ body.light .portfolio-skill-panel {
 }
 
 .portfolio-skill-panel:hover {
-    border-color: rgba(232, 255, 72, 0.28);
+    border-color: rgba(var(--portfolio-accent-rgb), 0.28);
     box-shadow: 0 28px 80px rgba(0, 0, 0, 0.24);
     transform: translateY(-4px);
 }
@@ -2177,7 +2252,7 @@ body.light .portfolio-skill-panel {
 
 .portfolio-timeline::after {
     animation: portfolio-timeline-scan 5s ease-in-out infinite;
-    background: linear-gradient(to bottom, transparent, rgba(232, 255, 72, 0.85), transparent);
+    background: linear-gradient(to bottom, transparent, rgba(var(--portfolio-accent-rgb), 0.85), transparent);
     content: "";
     height: 6rem;
     left: 0;
@@ -2200,7 +2275,7 @@ body.light .portfolio-skill-panel {
 }
 
 .portfolio-timeline-item:hover {
-    border-color: rgba(232, 255, 72, 0.26);
+    border-color: rgba(var(--portfolio-accent-rgb), 0.26);
     box-shadow: 0 24px 70px rgba(0, 0, 0, 0.22);
     transform: translateY(-3px);
 }
@@ -2230,8 +2305,8 @@ body.light .portfolio-skill-panel {
 }
 
 .portfolio-timeline-date {
-    background: rgba(232, 255, 72, 0.08);
-    border: 1px solid rgba(232, 255, 72, 0.16);
+    background: rgba(var(--portfolio-accent-rgb), 0.08);
+    border: 1px solid rgba(var(--portfolio-accent-rgb), 0.16);
     border-radius: 8px;
     color: var(--portfolio-accent);
     display: inline-flex;
@@ -2364,7 +2439,7 @@ body.light .portfolio-skill-panel {
 
 .portfolio-roadmap-progress-card {
     background:
-        radial-gradient(circle at 10% 10%, rgba(232, 255, 72, 0.12), transparent 12rem),
+        radial-gradient(circle at 10% 10%, rgba(var(--portfolio-accent-rgb), 0.12), transparent 12rem),
         var(--portfolio-card);
     border: 1px solid var(--portfolio-border);
     border-radius: 8px;
@@ -2378,7 +2453,7 @@ body.light .portfolio-skill-panel {
 }
 
 .portfolio-roadmap-progress-card::after {
-    background: linear-gradient(135deg, transparent, rgba(232, 255, 72, 0.08), transparent);
+    background: linear-gradient(135deg, transparent, rgba(var(--portfolio-accent-rgb), 0.08), transparent);
     content: "";
     inset: -30%;
     position: absolute;
@@ -2392,8 +2467,8 @@ body.light .portfolio-skill-panel {
 
 .portfolio-roadmap-progress-icon {
     align-items: center;
-    background: rgba(232, 255, 72, 0.1);
-    border: 1px solid rgba(232, 255, 72, 0.22);
+    background: rgba(var(--portfolio-accent-rgb), 0.1);
+    border: 1px solid rgba(var(--portfolio-accent-rgb), 0.22);
     border-radius: 8px;
     color: var(--portfolio-accent);
     display: inline-flex;
@@ -2412,7 +2487,7 @@ body.light .portfolio-skill-panel {
 .portfolio-roadmap-progress-card strong {
     display: block;
     font-family: var(--portfolio-head-font);
-    font-size: 3rem;
+    font-size: clamp(2rem, 5vw, 3rem);
     letter-spacing: -0.05em;
     margin: 0.15rem 0;
 }
@@ -2426,7 +2501,7 @@ body.light .portfolio-skill-panel {
 }
 
 .portfolio-roadmap-progress-track span {
-    background: linear-gradient(90deg, var(--portfolio-accent), #7bb8f5);
+    background: linear-gradient(90deg, var(--portfolio-accent), var(--portfolio-accent-2));
     display: block;
     height: 100%;
     transition: width 0.35s ease;
@@ -2500,13 +2575,13 @@ body.light .portfolio-skill-panel {
 
 .portfolio-roadmap-filters button:hover,
 .portfolio-roadmap-filters button.is-active {
-    border-color: rgba(232, 255, 72, 0.38);
+    border-color: rgba(var(--portfolio-accent-rgb), 0.38);
     color: var(--portfolio-text);
     transform: translateY(-1px);
 }
 
 .portfolio-roadmap-filters button.is-active {
-    background: rgba(232, 255, 72, 0.1);
+    background: rgba(var(--portfolio-accent-rgb), 0.1);
 }
 
 .portfolio-roadmap-filters button strong {
@@ -2518,7 +2593,7 @@ body.light .portfolio-skill-panel {
     align-items: center;
     animation: portfolio-fade-up 0.65s 0.12s ease both;
     background:
-        linear-gradient(135deg, rgba(232, 255, 72, 0.1), rgba(123, 184, 245, 0.08)),
+        linear-gradient(135deg, rgba(var(--portfolio-accent-rgb), 0.1), rgba(var(--portfolio-accent-2-rgb), 0.08)),
         var(--portfolio-card);
     border: 1px solid var(--portfolio-border);
     border-radius: 8px;
@@ -2672,7 +2747,7 @@ body.light .portfolio-skill-panel {
 .portfolio-roadmap-marker {
     align-items: center;
     background: var(--portfolio-bg);
-    border: 1px solid rgba(232, 255, 72, 0.35);
+    border: 1px solid rgba(var(--portfolio-accent-rgb), 0.35);
     border-radius: 999px;
     color: var(--portfolio-accent);
     display: inline-flex;
@@ -2697,7 +2772,7 @@ body.light .portfolio-skill-panel {
 }
 
 .portfolio-roadmap-card:hover {
-    border-color: rgba(232, 255, 72, 0.28);
+    border-color: rgba(var(--portfolio-accent-rgb), 0.28);
     box-shadow: 0 22px 70px rgba(0, 0, 0, 0.18);
     transform: translateY(-3px);
 }
@@ -2855,7 +2930,7 @@ body.light .portfolio-skill-panel {
 }
 
 .portfolio-roadmap-milestone.is-doing {
-    border-color: rgba(123, 184, 245, 0.3);
+    border-color: rgba(var(--portfolio-accent-2-rgb), 0.3);
 }
 
 .portfolio-roadmap-status-icon {
@@ -2869,7 +2944,7 @@ body.light .portfolio-skill-panel {
 }
 
 .portfolio-roadmap-milestone.is-doing .portfolio-roadmap-status-icon {
-    color: #7bb8f5;
+    color: var(--portfolio-accent-2);
 }
 
 .portfolio-roadmap-milestone strong,
@@ -2903,9 +2978,9 @@ body.light .portfolio-skill-panel {
 }
 
 .portfolio-roadmap-badge.is-doing {
-    background: rgba(123, 184, 245, 0.1);
-    border-color: rgba(123, 184, 245, 0.24);
-    color: #7bb8f5;
+    background: rgba(var(--portfolio-accent-2-rgb), 0.1);
+    border-color: rgba(var(--portfolio-accent-2-rgb), 0.24);
+    color: var(--portfolio-accent-2);
 }
 
 .portfolio-daily-plan-wrap {
@@ -2940,7 +3015,7 @@ body.light .portfolio-skill-panel {
 
 .portfolio-daily-plan-summary {
     background:
-        radial-gradient(circle at 12% 18%, rgba(123, 184, 245, 0.13), transparent 12rem),
+        radial-gradient(circle at 12% 18%, rgba(var(--portfolio-accent-2-rgb), 0.13), transparent 12rem),
         var(--portfolio-card);
     border: 1px solid var(--portfolio-border);
     border-radius: 22px;
@@ -2957,7 +3032,7 @@ body.light .portfolio-skill-panel {
 
 .portfolio-daily-plan-summary strong {
     font-family: var(--portfolio-head-font);
-    font-size: 3rem;
+    font-size: clamp(2rem, 5vw, 3rem);
     letter-spacing: -0.05em;
 }
 
@@ -3076,12 +3151,12 @@ body.light .portfolio-skill-panel {
 }
 
 .portfolio-calendar-day.is-selected {
-    border-color: rgba(232, 255, 72, 0.55);
+    border-color: rgba(var(--portfolio-accent-rgb), 0.55);
     box-shadow: 0 16px 40px rgba(0, 0, 0, 0.18);
 }
 
 .portfolio-calendar-day.has-plan i {
-    background: linear-gradient(90deg, var(--portfolio-accent), #7bb8f5);
+    background: linear-gradient(90deg, var(--portfolio-accent), var(--portfolio-accent-2));
     border-radius: 999px;
     bottom: 9px;
     height: 5px;
@@ -3218,15 +3293,15 @@ body.light .portfolio-skill-panel {
 }
 
 .portfolio-priority-badge.is-medium {
-    background: rgba(232, 255, 72, 0.1);
-    border-color: rgba(232, 255, 72, 0.22);
+    background: rgba(var(--portfolio-accent-rgb), 0.1);
+    border-color: rgba(var(--portfolio-accent-rgb), 0.22);
     color: var(--portfolio-accent);
 }
 
 .portfolio-priority-badge.is-low {
-    background: rgba(123, 184, 245, 0.1);
-    border-color: rgba(123, 184, 245, 0.24);
-    color: #7bb8f5;
+    background: rgba(var(--portfolio-accent-2-rgb), 0.1);
+    border-color: rgba(var(--portfolio-accent-2-rgb), 0.24);
+    color: var(--portfolio-accent-2);
 }
 
 .portfolio-status-badge.is-done {
@@ -3387,7 +3462,7 @@ body.light .portfolio-skill-panel {
 }
 
 .portfolio-market-badge.is-crypto {
-    background: rgba(232, 255, 72, 0.12);
+    background: rgba(var(--portfolio-accent-rgb), 0.12);
     color: var(--portfolio-accent);
 }
 
@@ -3623,7 +3698,7 @@ body.light .portfolio-skill-panel {
 }
 
 .portfolio-market-recommendation {
-    border-color: rgba(232, 255, 72, 0.22);
+    border-color: rgba(var(--portfolio-accent-rgb), 0.22);
 }
 
 .portfolio-market-recommendation p {
@@ -4234,6 +4309,7 @@ body.light .portfolio-expense-stat {
 
 .portfolio-page.is-blog-detail {
     height: 100vh;
+    height: 100dvh;
     overflow: hidden;
 }
 
@@ -4245,6 +4321,7 @@ body.light .portfolio-expense-stat {
     display: flex;
     flex-direction: column;
     height: calc(100vh - var(--portfolio-nav-height));
+    height: calc(100dvh - var(--portfolio-nav-height));
     overflow: hidden;
 }
 
@@ -4274,8 +4351,8 @@ body.light .portfolio-expense-stat {
 
 .portfolio-filter-tag:hover,
 .portfolio-filter-tag.is-active {
-    background: rgba(232, 255, 72, 0.12);
-    border-color: rgba(232, 255, 72, 0.3);
+    background: rgba(var(--portfolio-accent-rgb), 0.12);
+    border-color: rgba(var(--portfolio-accent-rgb), 0.3);
     color: var(--portfolio-accent);
     transform: translateY(-1px);
 }
@@ -4304,8 +4381,8 @@ body.light .portfolio-expense-stat {
 
 .portfolio-blog-search:focus-within,
 .portfolio-blog-select:focus {
-    border-color: rgba(232, 255, 72, 0.45);
-    box-shadow: 0 0 0 3px rgba(232, 255, 72, 0.08);
+    border-color: rgba(var(--portfolio-accent-rgb), 0.45);
+    box-shadow: 0 0 0 3px rgba(var(--portfolio-accent-rgb), 0.08);
 }
 
 .portfolio-blog-search input,
@@ -4342,8 +4419,8 @@ body.light .portfolio-expense-stat {
 }
 
 .portfolio-hashtag-chip {
-    background: rgba(123, 184, 245, 0.08);
-    border: 1px solid rgba(123, 184, 245, 0.16);
+    background: rgba(var(--portfolio-accent-2-rgb), 0.08);
+    border: 1px solid rgba(var(--portfolio-accent-2-rgb), 0.16);
     border-radius: 999px;
     color: var(--portfolio-muted);
     cursor: pointer;
@@ -4355,8 +4432,8 @@ body.light .portfolio-expense-stat {
 
 .portfolio-hashtag-chip:hover,
 .portfolio-hashtag-chip.is-active {
-    background: rgba(123, 184, 245, 0.14);
-    border-color: rgba(123, 184, 245, 0.28);
+    background: rgba(var(--portfolio-accent-2-rgb), 0.14);
+    border-color: rgba(var(--portfolio-accent-2-rgb), 0.28);
     color: var(--portfolio-text);
 }
 
@@ -4520,7 +4597,7 @@ body.light .portfolio-expense-stat {
 
 .portfolio-blog-toc-link.is-active,
 .portfolio-blog-toc-link[aria-current="true"] {
-    background: rgba(123, 184, 245, 0.1);
+    background: rgba(var(--portfolio-accent-2-rgb), 0.1);
     border-color: var(--portfolio-accent);
     color: var(--portfolio-text);
     font-weight: 700;
@@ -4559,7 +4636,7 @@ body.light .portfolio-expense-stat {
     overscroll-behavior: contain;
     scroll-behavior: auto;
     scroll-padding-top: 1rem;
-    scrollbar-color: rgba(232, 255, 72, 0.45) transparent;
+    scrollbar-color: rgba(var(--portfolio-accent-rgb), 0.45) transparent;
     scrollbar-width: thin;
 }
 
@@ -4568,7 +4645,7 @@ body.light .portfolio-expense-stat {
 }
 
 .portfolio-blog-wrap.is-detail .portfolio-blog-detail::-webkit-scrollbar-thumb {
-    background: rgba(232, 255, 72, 0.35);
+    background: rgba(var(--portfolio-accent-rgb), 0.35);
     border-radius: 999px;
 }
 
@@ -4578,7 +4655,7 @@ body.light .portfolio-expense-stat {
 
 .portfolio-blog-back {
     align-items: center;
-    background: rgba(232, 255, 72, 0.06);
+    background: rgba(var(--portfolio-accent-rgb), 0.06);
     border: 1px solid var(--portfolio-border);
     border-radius: 999px;
     color: var(--portfolio-accent);
@@ -4821,7 +4898,7 @@ body.light .portfolio-expense-stat {
 
 .portfolio-reaction-btn:hover,
 .portfolio-reaction-btn.is-active {
-    border-color: rgba(232, 255, 72, 0.38);
+    border-color: rgba(var(--portfolio-accent-rgb), 0.38);
     color: var(--portfolio-accent);
     transform: translateY(-1px);
 }
@@ -5325,8 +5402,8 @@ body.light .portfolio-expense-stat {
 
 .portfolio-blog-author-avatar {
     align-items: center;
-    background: linear-gradient(135deg, rgba(232, 255, 72, 0.16), rgba(123, 184, 245, 0.14));
-    border: 1px solid rgba(232, 255, 72, 0.24);
+    background: linear-gradient(135deg, rgba(var(--portfolio-accent-rgb), 0.16), rgba(var(--portfolio-accent-2-rgb), 0.14));
+    border: 1px solid rgba(var(--portfolio-accent-rgb), 0.24);
     border-radius: 50%;
     color: var(--portfolio-accent);
     display: inline-flex;
@@ -5411,7 +5488,7 @@ body.light .portfolio-expense-stat {
 
 .portfolio-blog-list-shell .portfolio-blog-tag:hover,
 .portfolio-blog-inline-tags button:hover {
-    border-color: rgba(232, 255, 72, 0.35);
+    border-color: rgba(var(--portfolio-accent-rgb), 0.35);
     color: var(--portfolio-text);
 }
 
@@ -5466,7 +5543,7 @@ body.light .portfolio-expense-stat {
 
 .portfolio-blog-open-icon:hover,
 .portfolio-blog-open-icon:focus-visible {
-    border-color: rgba(232, 255, 72, 0.35);
+    border-color: rgba(var(--portfolio-accent-rgb), 0.35);
     color: var(--portfolio-accent);
     outline: 0;
     transform: translateX(2px);
@@ -5558,7 +5635,7 @@ body.light .portfolio-expense-stat {
     margin-bottom: 0;
 }
 
-@media (max-width: 1020px) {
+@media (max-width: 1024px) {
     .portfolio-blog-list-shell {
         grid-template-columns: 1fr;
     }
@@ -5848,7 +5925,7 @@ body.light .portfolio-expense-stat {
 
 .portfolio-click-burst {
     animation: portfolio-click-burst 0.65s ease-out forwards;
-    border: 1px solid rgba(232, 255, 72, 0.75);
+    border: 1px solid rgba(var(--portfolio-accent-rgb), 0.75);
     border-radius: 50%;
     height: 14px;
     pointer-events: none;
@@ -5922,12 +5999,12 @@ body.light .portfolio-expense-stat {
 @keyframes portfolio-logo-pulse {
     0%,
     100% {
-        text-shadow: 0 0 0 rgba(232, 255, 72, 0);
+        text-shadow: 0 0 0 rgba(var(--portfolio-accent-rgb), 0);
         transform: scale(1);
     }
 
     50% {
-        text-shadow: 0 0 18px rgba(232, 255, 72, 0.45);
+        text-shadow: 0 0 18px rgba(var(--portfolio-accent-rgb), 0.45);
         transform: scale(1.08);
     }
 }
@@ -5980,11 +6057,11 @@ body.light .portfolio-expense-stat {
 @keyframes portfolio-dot-pulse {
     0%,
     100% {
-        box-shadow: 0 0 0 0 rgba(232, 255, 72, 0.28);
+        box-shadow: 0 0 0 0 rgba(var(--portfolio-accent-rgb), 0.28);
     }
 
     50% {
-        box-shadow: 0 0 0 8px rgba(232, 255, 72, 0);
+        box-shadow: 0 0 0 8px rgba(var(--portfolio-accent-rgb), 0);
     }
 }
 
@@ -6213,9 +6290,9 @@ body.light .portfolio-expense-stat {
 
     .portfolio-nav-select select {
         background:
-            linear-gradient(135deg, rgba(232, 255, 72, 0.12), rgba(123, 184, 245, 0.08)),
+            linear-gradient(135deg, rgba(var(--portfolio-accent-rgb), 0.12), rgba(var(--portfolio-accent-2-rgb), 0.08)),
             var(--portfolio-bg-3);
-        border-color: rgba(232, 255, 72, 0.22);
+        border-color: rgba(var(--portfolio-accent-rgb), 0.22);
         box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
         font-size: 0.74rem;
         min-height: 34px;
@@ -6298,6 +6375,10 @@ body.light .portfolio-expense-stat {
     .portfolio-orbit-wrap {
         height: 300px;
         width: 300px;
+    }
+
+    .portfolio-orbit-ring-main {
+        --orbit-r: 160px;
     }
 
     .portfolio-avatar-circle {
@@ -6494,18 +6575,13 @@ body.light .portfolio-expense-stat {
         width: 260px;
     }
 
-    .portfolio-orbit-ring-1 {
-        height: 230px;
-        width: 230px;
-    }
-
-    .portfolio-orbit-ring-2 {
-        height: 350px;
-        width: 350px;
+    .portfolio-orbit-ring-main {
+        --orbit-r: 138px;
     }
 
     .portfolio-orbit-icon {
         font-size: 0.65rem;
+        margin-left: -31px;
         width: 62px;
     }
 

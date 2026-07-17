@@ -20,11 +20,11 @@ const PortfolioAbout = ({ avatarSrc, language }) => {
                     <div className="portfolio-role">{pick(aboutContent.role, language)}</div>
                     <p>{pick(aboutContent.bioPrimary, language)}</p>
                     <p className="portfolio-about-secondary">{pick(aboutContent.bioDescription, language)}</p>
-                    {/* <p className="portfolio-about-secondary">
+                    <p className="portfolio-about-secondary">
                         {pick(aboutContent.bioLead, language)}
                         <strong>{aboutContent.bioHighlight}</strong>
                         {pick(aboutContent.bioTail, language)}
-                    </p> */}
+                    </p>
                     <div className="portfolio-contact-row">
                         <a href="mailto:ngoctam2303001@gmail.com" className="portfolio-contact-chip">
                             <span className="chip-icon">✉</span>ngoctam2303001@gmail.com
@@ -38,9 +38,9 @@ const PortfolioAbout = ({ avatarSrc, language }) => {
                 </div>
             </div>
 
-            <div className="portfolio-section-heading">
+            <h2 className="portfolio-section-heading">
                 {pick(aboutContent.skillsTitle, language)}
-            </div>
+            </h2>
             <div className="portfolio-skill-columns">
                 {skillColumns.map((column, columnIndex) => (
                     <article
@@ -65,9 +65,9 @@ const PortfolioAbout = ({ avatarSrc, language }) => {
                 ))}
             </div>
 
-            <div className="portfolio-section-heading">
+            <h2 className="portfolio-section-heading">
                 {pick(aboutContent.experienceTitle, language)}
-            </div>
+            </h2>
             <div className="portfolio-timeline">
                 {experiences.map((experience) => (
                     <div
@@ -106,7 +106,7 @@ const PortfolioAbout = ({ avatarSrc, language }) => {
             </div>
         </section>
 
-        <PageFooter>
+        <PageFooter language={language}>
             <span>{pick(aboutContent.name, language)}</span> - {pick(aboutContent.footer, language)}
         </PageFooter>
     </div>

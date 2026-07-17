@@ -1,6 +1,8 @@
+import { aboutContent } from "../../data/portfolioContent";
+import { pick } from "../../utils/localization";
 import SocialLinks from "./SocialLinks";
 
-const PageFooter = ({ children }) => (
+const PageFooter = ({ children, language = "en" }) => (
     <footer className="portfolio-footer">
         <div className="portfolio-footer-inner">
             <div className="portfolio-footer-brand">
@@ -21,9 +23,9 @@ const PageFooter = ({ children }) => (
         </div>
 
         <div className="portfolio-footer-bottom">
-            <span>Tran Ngoc Tam</span>
-            <span>Backend Engineer</span>
-            <span>Ho Chi Minh City, VN</span>
+            <span>{pick(aboutContent.name, language)}</span>
+            <span>{pick(aboutContent.role, language)}</span>
+            <span>{pick(aboutContent.location, language)}</span>
         </div>
     </footer>
 );

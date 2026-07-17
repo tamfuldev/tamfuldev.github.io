@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { HelmetProvider } from 'react-helmet-async';
 import Base from './pages/Base';
 
 import Loader from './components/Loader';
@@ -90,6 +91,7 @@ function App() {
   };
 
   return (
+    <HelmetProvider>
     <LanguageProvider>
       <Router>
         <React.Suspense fallback={<Loader delay={80} />}>
@@ -98,6 +100,13 @@ function App() {
               <>
                 <Loader delay={400} />
                 <Base canAccessPrivatePages={isAdmin} />
+              </>
+            }
+            />
+            <Route path="/about" element={
+              <>
+                <Loader delay={300} />
+                <Base canAccessPrivatePages={isAdmin} initialPage="about" />
               </>
             }
             />
@@ -215,6 +224,7 @@ function App() {
         </React.Suspense>
       </Router>
     </LanguageProvider>
+    </HelmetProvider>
   );
 }
 

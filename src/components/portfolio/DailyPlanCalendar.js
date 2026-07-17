@@ -359,7 +359,7 @@ const DailyPlanCalendar = ({ language = "en" }) => {
                 </section>
             </section>
 
-            <PageFooter>{pick(copy.footer, language)}</PageFooter>
+            <PageFooter language={language}>{pick(copy.footer, language)}</PageFooter>
         </div>
     );
 };

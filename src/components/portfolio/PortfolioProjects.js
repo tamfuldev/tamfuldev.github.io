@@ -491,7 +491,7 @@ const PortfolioProjects = ({ language }) => {
                 document.body
             )}
 
-            <PageFooter>
+            <PageFooter language={language}>
                 <span>{pick(aboutContent.name, language)}</span> - {pick(projectsContent.footer, language)}
             </PageFooter>
         </div>

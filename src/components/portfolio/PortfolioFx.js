@@ -18,6 +18,12 @@ const PortfolioFx = () => {
             frameId = window.requestAnimationFrame(() => {
                 root.style.setProperty("--cursor-x", `${event.clientX}px`);
                 root.style.setProperty("--cursor-y", `${event.clientY}px`);
+                // Normalized -1..1 offset from viewport center, used to drive the
+                // hero's 3D parallax tilt.
+                const tiltX = (event.clientX / window.innerWidth - 0.5) * 2;
+                const tiltY = (event.clientY / window.innerHeight - 0.5) * 2;
+                root.style.setProperty("--tilt-x", tiltX.toFixed(3));
+                root.style.setProperty("--tilt-y", tiltY.toFixed(3));
             });
         };
 

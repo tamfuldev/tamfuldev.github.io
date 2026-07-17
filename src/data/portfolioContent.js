@@ -97,10 +97,10 @@ export const featuredProjects = [
     },
     {
         tag: localized("DevOps", "DevOps"),
-        title: localized("Containerized Deployment", "Triển khai bảng container"),
+        title: localized("Containerized Deployment", "Triển khai bằng container"),
         description: localized(
             "Dockerized multi-service applications ensuring consistent environments across development, staging, and production pipelines.",
-            "Đóng gói ứng dụng nhiều service bảng Docker để giữ môi trường dev, staging va production nhất quán."
+            "Đóng gói ứng dụng nhiều service bằng Docker để giữ môi trường dev, staging và production nhất quán."
         ),
         outcome: localized("Repeatable releases", "Release lặp lại ổn định"),
         tech: ["Docker", "Laravel", "Nginx"],
@@ -142,7 +142,7 @@ export const projectsContent = {
     eyebrow: localized("// production_case_studies", "// case_study_thuc_te"),
     description: localized(
         "A focused collection of backend systems, performance work, deployment pipelines, and product infrastructure I have built or improved.",
-        "Tổng hợp các hệ thống backend, tối ưu hiệu năng, pipeline triển khai và hạ tầng sản phẩm tối đa xây dựng hoặc cải tiến."
+        "Tổng hợp các hệ thống backend, tối ưu hiệu năng, pipeline triển khai và hạ tầng sản phẩm mà tôi đã xây dựng hoặc cải tiến."
     ),
     cta: localized("Open project", "Xem dự án"),
     impactLabel: localized("Impact", "Tác động"),
@@ -223,6 +223,7 @@ export const portfolioProjects = [
 export const aboutContent = {
     name: localized("Tran Ngoc Tam", "Trần Ngọc Tâm"),
     role: localized("Backend Engineer", "Kỹ sư Backend"),
+    location: localized("Ho Chi Minh City, VN", "TP. Hồ Chí Minh, Việt Nam"),
     bioPrimary: localized(
         "I build backends that don't wake people up at 3am.",
         "Tôi xây dựng những backend không khiến ai phải thức dậy lúc 3 giờ sáng."
@@ -400,7 +401,7 @@ export const experiences = [
 ];
 
 export const blogContent = {
-    title: localized("Writing and Thoughts", "Bài viết và chia sẽ"),
+    title: localized("Writing and Thoughts", "Bài viết và chia sẻ"),
     description: localized(
         "Deep dives on Laravel, backend architecture, performance tuning, and lessons from production systems.",
         "Những bài viết chuyên sâu về Laravel, kiến trúc backend, tối ưu hiệu năng và bài học từ hệ thống production."
