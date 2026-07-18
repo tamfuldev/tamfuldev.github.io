@@ -6704,3 +6704,324 @@ body.light .portfolio-expense-stat {
 .light .portfolio-project-modal-close {
     color: var(--portfolio-bg);
 }
+/* ===================================================================
+   AI Chat Assistant widget — palette "Halo", light/dark via tokens
+   =================================================================== */
+.portfolio-chat {
+    position: fixed;
+    right: clamp(1rem, 3vw, 1.75rem);
+    bottom: clamp(1rem, 3vw, 1.75rem);
+    z-index: 1200;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.85rem;
+    font-family: var(--portfolio-body-font);
+}
+
+.portfolio-chat-launcher {
+    align-items: center;
+    background: var(--portfolio-accent);
+    border: 0;
+    border-radius: 50%;
+    box-shadow: 0 12px 30px -8px rgba(var(--portfolio-accent-rgb), 0.55), 0 6px 16px rgba(0, 0, 0, 0.3);
+    color: var(--portfolio-button-ink);
+    cursor: pointer;
+    display: inline-flex;
+    height: 58px;
+    justify-content: center;
+    width: 58px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.portfolio-chat-launcher:hover {
+    background: var(--portfolio-accent-2);
+    transform: translateY(-2px) scale(1.04);
+}
+
+.portfolio-chat-launcher:active {
+    transform: translateY(0) scale(0.97);
+}
+
+.portfolio-chat-launcher::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    box-shadow: 0 0 0 0 rgba(var(--portfolio-accent-rgb), 0.5);
+    animation: portfolio-chat-ping 2.8s ease-out infinite;
+    pointer-events: none;
+}
+
+.portfolio-chat.is-open .portfolio-chat-launcher::after {
+    animation: none;
+}
+
+@keyframes portfolio-chat-ping {
+    0% { box-shadow: 0 0 0 0 rgba(var(--portfolio-accent-rgb), 0.45); }
+    70%, 100% { box-shadow: 0 0 0 18px rgba(var(--portfolio-accent-rgb), 0); }
+}
+
+.portfolio-chat-panel {
+    animation: portfolio-chat-in 0.28s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+    background: color-mix(in srgb, var(--portfolio-card) 94%, transparent);
+    backdrop-filter: blur(16px) saturate(1.2);
+    border: 1px solid var(--portfolio-border);
+    border-radius: 18px;
+    box-shadow: 0 30px 70px -24px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(var(--portfolio-accent-rgb), 0.06);
+    display: flex;
+    flex-direction: column;
+    height: min(560px, 72vh);
+    overflow: hidden;
+    width: min(380px, calc(100vw - 2rem));
+}
+
+@keyframes portfolio-chat-in {
+    from { opacity: 0; transform: translateY(16px) scale(0.97); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.portfolio-chat-head {
+    align-items: center;
+    background: linear-gradient(135deg, rgba(var(--portfolio-accent-rgb), 0.14), rgba(var(--portfolio-accent-2-rgb), 0.1)), var(--portfolio-bg-2);
+    border-bottom: 1px solid var(--portfolio-border);
+    display: flex;
+    gap: 0.75rem;
+    justify-content: space-between;
+    padding: 0.85rem 1rem;
+}
+
+.portfolio-chat-head-id {
+    align-items: center;
+    display: flex;
+    gap: 0.7rem;
+    min-width: 0;
+}
+
+.portfolio-chat-avatar {
+    align-items: center;
+    background: var(--portfolio-accent);
+    border-radius: 12px;
+    color: var(--portfolio-button-ink);
+    display: inline-flex;
+    flex: 0 0 auto;
+    font-family: var(--portfolio-head-font);
+    font-size: 1.05rem;
+    font-weight: 800;
+    height: 38px;
+    justify-content: center;
+    width: 38px;
+}
+
+.portfolio-chat-head-id strong {
+    color: var(--portfolio-text);
+    display: block;
+    font-family: var(--portfolio-head-font);
+    font-size: 0.95rem;
+    line-height: 1.2;
+}
+
+.portfolio-chat-head-id span {
+    color: var(--portfolio-muted);
+    display: block;
+    font-size: 0.74rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.portfolio-chat-close {
+    align-items: center;
+    background: transparent;
+    border: 0;
+    border-radius: 8px;
+    color: var(--portfolio-muted);
+    cursor: pointer;
+    display: inline-flex;
+    flex: 0 0 auto;
+    height: 34px;
+    justify-content: center;
+    transition: background 0.2s ease, color 0.2s ease;
+    width: 34px;
+}
+
+.portfolio-chat-close:hover {
+    background: var(--portfolio-bg-3);
+    color: var(--portfolio-text);
+}
+
+.portfolio-chat-log {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    flex: 1;
+    overflow-y: auto;
+    padding: 1rem;
+    scrollbar-width: thin;
+}
+
+.portfolio-chat-log::-webkit-scrollbar { width: 6px; }
+.portfolio-chat-log::-webkit-scrollbar-thumb {
+    background: var(--portfolio-border);
+    border-radius: 999px;
+}
+
+.portfolio-chat-msg {
+    border-radius: 14px;
+    font-size: 0.88rem;
+    line-height: 1.55;
+    max-width: 85%;
+    padding: 0.6rem 0.85rem;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+.portfolio-chat-msg.is-user {
+    align-self: flex-end;
+    background: var(--portfolio-accent);
+    border-bottom-right-radius: 4px;
+    color: var(--portfolio-button-ink);
+    font-weight: 500;
+}
+
+.portfolio-chat-msg.is-assistant {
+    align-self: flex-start;
+    background: var(--portfolio-bg-3);
+    border: 1px solid var(--portfolio-border);
+    border-bottom-left-radius: 4px;
+    color: var(--portfolio-text);
+}
+
+.portfolio-chat-msg.is-error {
+    border-color: rgba(248, 113, 113, 0.4);
+    color: #f87171;
+}
+
+.portfolio-chat-typing {
+    align-items: center;
+    display: inline-flex;
+    gap: 4px;
+}
+
+.portfolio-chat-typing span:not(.sr-only) {
+    animation: portfolio-chat-bounce 1.2s ease-in-out infinite;
+    background: var(--portfolio-muted);
+    border-radius: 50%;
+    display: inline-block;
+    height: 7px;
+    width: 7px;
+}
+
+.portfolio-chat-typing span:nth-child(2) { animation-delay: 0.15s; }
+.portfolio-chat-typing span:nth-child(3) { animation-delay: 0.3s; }
+
+@keyframes portfolio-chat-bounce {
+    0%, 60%, 100% { opacity: 0.35; transform: translateY(0); }
+    30% { opacity: 1; transform: translateY(-4px); }
+}
+
+.portfolio-chat-suggestions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-top: 0.35rem;
+}
+
+.portfolio-chat-suggestions button {
+    background: transparent;
+    border: 1px solid var(--portfolio-border);
+    border-radius: 999px;
+    color: var(--portfolio-accent);
+    cursor: pointer;
+    font-family: var(--portfolio-mono-font);
+    font-size: 0.74rem;
+    padding: 0.4rem 0.75rem;
+    transition: border-color 0.2s ease, background 0.2s ease, transform 0.2s ease;
+}
+
+.portfolio-chat-suggestions button:hover {
+    background: rgba(var(--portfolio-accent-rgb), 0.1);
+    border-color: rgba(var(--portfolio-accent-rgb), 0.4);
+    transform: translateY(-1px);
+}
+
+.portfolio-chat-input {
+    align-items: center;
+    border-top: 1px solid var(--portfolio-border);
+    display: flex;
+    gap: 0.5rem;
+    padding: 0.7rem 0.8rem 0.4rem;
+}
+
+.portfolio-chat-input input {
+    background: var(--portfolio-bg-3);
+    border: 1px solid var(--portfolio-border);
+    border-radius: 999px;
+    color: var(--portfolio-text);
+    flex: 1;
+    font: inherit;
+    font-size: 0.88rem;
+    min-width: 0;
+    outline: 0;
+    padding: 0.6rem 0.95rem;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.portfolio-chat-input input:focus {
+    border-color: rgba(var(--portfolio-accent-rgb), 0.5);
+    box-shadow: 0 0 0 3px rgba(var(--portfolio-accent-rgb), 0.14);
+}
+
+.portfolio-chat-input button {
+    align-items: center;
+    background: var(--portfolio-accent);
+    border: 0;
+    border-radius: 50%;
+    color: var(--portfolio-button-ink);
+    cursor: pointer;
+    display: inline-flex;
+    flex: 0 0 auto;
+    height: 40px;
+    justify-content: center;
+    transition: background 0.2s ease, transform 0.2s ease, opacity 0.2s ease;
+    width: 40px;
+}
+
+.portfolio-chat-input button:hover:not(:disabled) {
+    background: var(--portfolio-accent-2);
+    transform: scale(1.06);
+}
+
+.portfolio-chat-input button:disabled {
+    cursor: not-allowed;
+    opacity: 0.45;
+}
+
+.portfolio-chat-disclaimer {
+    color: var(--portfolio-muted);
+    font-family: var(--portfolio-mono-font);
+    font-size: 0.66rem;
+    margin: 0;
+    padding: 0 0.8rem 0.7rem;
+    text-align: center;
+}
+
+@media (max-width: 480px) {
+    .portfolio-chat {
+        right: 0.85rem;
+        bottom: 0.85rem;
+    }
+
+    .portfolio-chat-panel {
+        height: min(70vh, 540px);
+        width: calc(100vw - 1.7rem);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .portfolio-chat-launcher::after,
+    .portfolio-chat-panel,
+    .portfolio-chat-typing span:not(.sr-only) {
+        animation: none;
+    }
+}
