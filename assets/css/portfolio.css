@@ -6897,6 +6897,29 @@ body.light .portfolio-expense-stat {
     color: #f87171;
 }
 
+/* Nội dung tin nhắn giờ là <p>/<ul> — reset margin, giãn cách hợp lý. */
+.portfolio-chat-msg p {
+    margin: 0;
+}
+
+.portfolio-chat-msg p + p,
+.portfolio-chat-msg p + .portfolio-chat-list,
+.portfolio-chat-msg .portfolio-chat-list + p {
+    margin-top: 0.5rem;
+}
+
+.portfolio-chat-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    margin: 0;
+    padding-left: 1.15rem;
+}
+
+.portfolio-chat-list li {
+    padding-left: 0.1rem;
+}
+
 .portfolio-chat-typing {
     align-items: center;
     display: inline-flex;
