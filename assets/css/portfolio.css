@@ -5202,11 +5202,6 @@ body.light .portfolio-expense-stat {
     letter-spacing: 0;
 }
 
-.portfolio-blog-detail-excerpt,
-.portfolio-blog-detail-body {
-    max-width: 820px;
-}
-
 .portfolio-blog-detail-body p {
     font-size: 1.03rem;
     line-height: 1.9;
