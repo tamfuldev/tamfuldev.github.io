@@ -47,7 +47,7 @@ jobs:
           REACT_APP_ADMIN_EMAILS: ${{ secrets.REACT_APP_ADMIN_EMAILS }}
 
       - name: Configure Pages
-        uses: actions/configure-pages@v5
+        uses: actions/configure-pages@v6
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
